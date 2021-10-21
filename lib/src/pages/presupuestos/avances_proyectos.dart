@@ -134,7 +134,7 @@ class _AvancesproyectoshmState extends State<Avancesproyectoshm> {
               width: MediaQuery.of(context).size.width * 1,
               child: Listasisusados(widget.idHolder),
             ),
-            Text('desliza hacia abajo para actualizar la informacion')
+            Text('desliza hacia abajo actualizar la informacion')
           ],
         ),
       ),
