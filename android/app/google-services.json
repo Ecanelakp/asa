@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "144890202568",
+    "firebase_url": "https://flutter-varios-70552-default-rtdb.firebaseio.com",
+    "project_id": "flutter-varios-70552",
+    "storage_bucket": "flutter-varios-70552.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:144890202568:android:94a75dedfcc5f2da60d8fd",
+        "android_client_info": {
+          "package_name": "mx.asamexico.asaapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "144890202568-q0oph2n9pobb3258fujg8ds8mvc4tqnu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mx.asamexico.asaapp",
+            "certificate_hash": "a0a8855dbb2c971c9079523386216d8a964e56bc"
+          }
+        },
+        {
+          "client_id": "144890202568-2p0aqnk478f630objj82mi60508sq7p7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOaR_x_RO2rDmF11NgJymv9X0pAtW64ek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "144890202568-2p0aqnk478f630objj82mi60508sq7p7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
