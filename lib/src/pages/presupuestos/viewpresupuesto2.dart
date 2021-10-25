@@ -17,6 +17,7 @@ class _ViewpresupuestosState extends State<Viewpresupuestos> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Ver proyecto'),
+          backgroundColor: Color.fromRGBO(35, 56, 120, 1.0),
         ),
         body: Proyectocaratula(idp: widget.idp),
         floatingActionButton: FloatingActionButton(

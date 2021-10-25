@@ -78,6 +78,7 @@ class _GastosproyectosState extends State<Gastosproyectos> {
             child: Scaffold(
                 appBar: AppBar(
                   title: Text("Gasto proyectos"),
+                  backgroundColor: Color.fromRGBO(35, 56, 120, 1.0),
                   bottom: const TabBar(
                     tabs: <Widget>[
                       Tab(icon: Icon(Icons.edit_rounded)),

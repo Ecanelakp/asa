@@ -10,6 +10,7 @@ class Tareasproyectos extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Tareas"),
+        backgroundColor: Color.fromRGBO(35, 56, 120, 1.0),
       ),
       body: Center(
         child: Text("Tareas"),

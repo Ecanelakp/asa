@@ -1,4 +1,5 @@
 import 'package:asa_mexico/src/models/models_sistemas.dart';
+import 'package:asa_mexico/src/pages/presupuestos/signavances_proyectos.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -12,6 +13,7 @@ class Avancexdia extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Avance por dia'),
+        backgroundColor: Color.fromRGBO(35, 56, 120, 1.0),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -75,7 +77,16 @@ class Avances extends StatelessWidget {
                               style: (TextStyle(
                                   fontSize: 25,
                                   color: Color.fromRGBO(35, 56, 120, 1.0)))),
-                          //trailing:
+                          trailing: Icon(
+                            Icons.assignment_outlined,
+                            color: Colors.orange,
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SignAvance()));
+                          },
                           leading: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

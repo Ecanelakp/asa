@@ -42,6 +42,7 @@ dependencies:
   flutter_map:
   google_maps_flutter:
   photo_view: ^0.12.0
+  signature:
   
     
 dev_dependencies:

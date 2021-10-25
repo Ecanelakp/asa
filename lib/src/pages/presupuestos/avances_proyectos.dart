@@ -47,6 +47,7 @@ class _AvancesproyectoshmState extends State<Avancesproyectoshm> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Registro Avances'),
+        backgroundColor: Color.fromRGBO(35, 56, 120, 1.0),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

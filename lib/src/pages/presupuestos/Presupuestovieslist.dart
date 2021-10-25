@@ -256,6 +256,7 @@ class SecondScreen extends State<SecondScreenState> {
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromRGBO(35, 56, 120, 1.0),
         title: const Text('Ver proyecto'),
       ),
       body: FutureBuilder<List<Studentdata>>(

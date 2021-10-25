@@ -55,6 +55,7 @@ class _AvanceproyectosState extends State<Avanceproyectos> {
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.referencia),
+          backgroundColor: Color.fromRGBO(35, 56, 120, 1.0),
         ),
         body: Padding(
           padding: const EdgeInsets.all(10.0),

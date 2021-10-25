@@ -23,6 +23,7 @@ class _PresupuestosState extends State<Presupuestos2> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Proyectos'),
+          backgroundColor: Color.fromRGBO(35, 56, 120, 1.0),
           bottom: const TabBar(
             tabs: <Widget>[
               Tab(
