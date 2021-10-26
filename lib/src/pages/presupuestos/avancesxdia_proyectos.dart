@@ -68,43 +68,50 @@ class Avances extends StatelessWidget {
           if (!snapshot.hasData)
             return Center(child: CircularProgressIndicator());
 
-          return ListView(
-              children: snapshot.data
-                  .map((data) => Container(
-                          child: Card(
-                        child: ListTile(
-                          title: Text(data.fecha.toString(),
-                              style: (TextStyle(
-                                  fontSize: 25,
-                                  color: Color.fromRGBO(35, 56, 120, 1.0)))),
-                          trailing: Icon(
-                            Icons.assignment_outlined,
-                            color: Colors.orange,
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SignAvance()));
-                          },
-                          leading: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                data.cantidad.toString(),
+          return RefreshIndicator(
+            onRefresh: () => jsonsistemasavances(),
+            child: ListView(
+                children: snapshot.data
+                    .map((data) => Container(
+                            child: Card(
+                          child: ListTile(
+                            title: Text(data.fecha.toString(),
                                 style: (TextStyle(
-                                    fontSize: 30,
-                                    color: Color.fromRGBO(35, 56, 120, 1.0))),
-                              ),
-                              Text("Cantidad",
+                                    fontSize: 25,
+                                    color: Color.fromRGBO(35, 56, 120, 1.0)))),
+                            trailing: Icon(
+                              Icons.assignment_outlined,
+                              color: Colors.orange,
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SignAvance(
+                                          data.cantidad.toString(),
+                                          data.fecha.toString(),
+                                          data.sistemas)));
+                            },
+                            subtitle: Text(data.sistemas),
+                            leading: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  data.cantidad.toString(),
                                   style: (TextStyle(
-                                    fontSize: 10,
-                                  )))
-                            ],
+                                      fontSize: 30,
+                                      color: Color.fromRGBO(35, 56, 120, 1.0))),
+                                ),
+                                Text("Cantidad",
+                                    style: (TextStyle(
+                                      fontSize: 10,
+                                    )))
+                              ],
+                            ),
                           ),
-                        ),
-                      )))
-                  .toList());
+                        )))
+                    .toList()),
+          );
         });
   }
 }

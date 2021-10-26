@@ -4,6 +4,10 @@ import 'package:signature/signature.dart';
 import 'dart:ui';
 
 class SignAvance extends StatefulWidget {
+  final String cantidad;
+  final String fecha;
+  final String sistemas;
+  const SignAvance(this.cantidad, this.fecha, this.sistemas);
   @override
   State<SignAvance> createState() => _SignAvanceState();
 }
@@ -33,19 +37,59 @@ class _SignAvanceState extends State<SignAvance> {
               Icon(
                 Icons.assignment_outlined,
                 color: Colors.orange,
-                size: 20,
+                size: 40,
               ),
               SizedBox(
                 height: 20,
               ),
               Container(
-                child: Column(
-                  children: [
-                    Text('El avance del dia:'),
-                    Text('Es por la cantidad de:'),
-                  ],
-                ),
-              ),
+                  margin: EdgeInsets.all(10),
+                  child: Table(
+                    border: TableBorder.all(
+                      color: Color.fromRGBO(35, 56, 120, 1.0),
+                    ),
+                    children: [
+                      TableRow(children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text('Dia: '),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            widget.fecha,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ]),
+                      TableRow(children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text('Cantidad: '),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            widget.cantidad,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ]),
+                      TableRow(children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text('Sistema: '),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            widget.sistemas,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ]),
+                    ],
+                  )),
               SizedBox(
                 height: 20,
               ),
@@ -60,6 +104,10 @@ class _SignAvanceState extends State<SignAvance> {
                   backgroundColor: Colors.white,
                 ),
               ),
+              SizedBox(
+                height: 20,
+              ),
+              Text('Favor de firmar el acuse de avance'),
               SizedBox(
                 height: 20,
               ),
@@ -79,21 +127,7 @@ class _SignAvanceState extends State<SignAvance> {
                         if (_controller.isNotEmpty) {
                           final data = await _controller.toPngBytes();
                           if (data != null) {
-                            await Navigator.of(context).push(
-                              MaterialPageRoute<void>(
-                                builder: (BuildContext context) {
-                                  return Scaffold(
-                                    appBar: AppBar(),
-                                    body: Center(
-                                      child: Container(
-                                        color: Colors.grey[300],
-                                        child: Image.memory(data),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            );
+                            data != null ? registrar() : Container();
                           }
                         }
                       },
@@ -114,5 +148,9 @@ class _SignAvanceState extends State<SignAvance> {
         ),
       ),
     );
+  }
+
+  registrar() {
+    print('ok');
   }
 }
