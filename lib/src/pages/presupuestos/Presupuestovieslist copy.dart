@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Datainsert extends StatelessWidget {
   final String usuario;
   @override
-  const Datainsert(this.usuario, {Key key}) : super(key: key);
+  const Datainsert(this.usuario, {Key? key}) : super(key: key);
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
@@ -19,12 +19,12 @@ class Datainsert extends StatelessWidget {
 }
 
 class Studentdata {
-  int id;
+  int? id;
   dynamic referencia;
-  String proyecto;
-  String responsable;
-  String observaciones;
-  String nocliente;
+  String? proyecto;
+  String? responsable;
+  String? observaciones;
+  String? nocliente;
 
   Studentdata(
       {this.id,
@@ -46,13 +46,13 @@ class Studentdata {
 }
 
 class Logstareas {
-  int id;
+  int? id;
   dynamic referenciaproyecto;
 
-  String usuarioalta;
-  String comentarios;
-  String fechaalta;
-  int avance;
+  String? usuarioalta;
+  String? comentarios;
+  String? fechaalta;
+  int? avance;
 
   Logstareas(
       {this.id,
@@ -85,13 +85,13 @@ class MainListViewState extends State {
   );
 
   //String user = this.usuario;
-  Future<List<Studentdata>> fetchStudents() async {
+  Future<List<Studentdata>?> fetchStudents() async {
     var response = await http.get(apiurl);
 
     if (response.statusCode == 200) {
       final items = json.decode(response.body).cast<Map<String, dynamic>>();
       //print(this.usuario);
-      List<Studentdata> studentList = items.map<Studentdata>((json) {
+      List<Studentdata>? studentList = items.map<Studentdata>((json) {
         return Studentdata.fromJson(json);
       }).toList();
 
@@ -101,21 +101,21 @@ class MainListViewState extends State {
     }
   }
 
-  navigateToNextActivity(BuildContext context, int dataHolder) {
+  navigateToNextActivity(BuildContext context, int? dataHolder) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => SecondScreenState(dataHolder.toString())));
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Studentdata>>(
+    return FutureBuilder<List<Studentdata>?>(
       future: fetchStudents(),
       builder: (context, snapshot) {
         if (!snapshot.hasData)
           return Center(child: CircularProgressIndicator());
 
         return ListView(
-          children: snapshot.data
+          children: snapshot.data!
               .map((data) => Column(
                     children: <Widget>[
                       SizedBox(
@@ -200,17 +200,17 @@ class MainListViewState extends State {
                                       SizedBox(
                                         height: 5,
                                       ),
-                                      Text(data.proyecto,
+                                      Text(data.proyecto!,
                                           textAlign: TextAlign.left),
                                       SizedBox(
                                         height: 5,
                                       ),
-                                      Text(data.responsable,
+                                      Text(data.responsable!,
                                           textAlign: TextAlign.left),
                                       SizedBox(
                                         height: 5,
                                       ),
-                                      Text(data.nocliente,
+                                      Text(data.nocliente!,
                                           textAlign: TextAlign.left),
                                     ],
                                   )),
@@ -260,15 +260,15 @@ class SecondScreen extends State<SecondScreenState> {
   //SecondScreen(this.idHolder, this.usuario);
   //String usuariot = usuario;
   String estado = "";
-  bool error, sending, success;
-  String msg;
+  bool? error, sending, success;
+  String? msg;
 
   // API URL
   final url = Uri.parse(
     'https://asamexico.com.mx/php/controller/proyectosid.php',
   );
 
-  Future<List<Studentdata>> fetchStudent() async {
+  Future<List<Studentdata>?> fetchStudent() async {
     var data = {'id': int.parse(idHolder)};
 
     var response = await http.post(url, body: json.encode(data));
@@ -279,7 +279,7 @@ class SecondScreen extends State<SecondScreenState> {
       final items = json.decode(response.body).cast<Map<String, dynamic>>();
       print(response.body);
 
-      List<Studentdata> studentList = items.map<Studentdata>((json) {
+      List<Studentdata>? studentList = items.map<Studentdata>((json) {
         return Studentdata.fromJson(json);
       }).toList();
 
@@ -296,14 +296,14 @@ class SecondScreen extends State<SecondScreenState> {
       appBar: AppBar(
         title: const Text('Ver proyecto'),
       ),
-      body: FutureBuilder<List<Studentdata>>(
+      body: FutureBuilder<List<Studentdata>?>(
         future: fetchStudent(),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
             return Center(child: CircularProgressIndicator());
 
           return ListView(
-            children: snapshot.data
+            children: snapshot.data!
                 .map((data) => Column(
                       children: <Widget>[
                         SizedBox(
@@ -357,7 +357,7 @@ class SecondScreen extends State<SecondScreenState> {
                                         padding:
                                             EdgeInsets.fromLTRB(20, 0, 0, 10),
                                         child: Text(
-                                            'Proyecto: ' + data.proyecto,
+                                            'Proyecto: ' + data.proyecto!,
                                             style: TextStyle(
                                                 fontSize: 14.0,
                                                 color: Colors.black))),
@@ -365,7 +365,7 @@ class SecondScreen extends State<SecondScreenState> {
                                         padding:
                                             EdgeInsets.fromLTRB(20, 0, 0, 10),
                                         child: Text(
-                                            'Responsable: ' + data.responsable,
+                                            'Responsable: ' + data.responsable!,
                                             style: TextStyle(
                                                 fontSize: 14.0,
                                                 color: Colors.black))),
@@ -374,7 +374,7 @@ class SecondScreen extends State<SecondScreenState> {
                                             EdgeInsets.fromLTRB(20, 0, 0, 10),
                                         child: Text(
                                             'Descripcion: ' +
-                                                data.observaciones,
+                                                data.observaciones!,
                                             style: TextStyle(
                                                 fontSize: 14.0,
                                                 color: Colors.black))),
@@ -432,7 +432,7 @@ class SecondScreen extends State<SecondScreenState> {
   // }
 
   openPopup(BuildContext context, Studentdata data) {
-    int idp = (data.id);
+    int? idp = (data.id);
     print("$idp");
     Alert(
         context: context,
@@ -474,13 +474,13 @@ class SecondScreen extends State<SecondScreenState> {
   }
 
   Future<void> savedata(BuildContext context, Studentdata data) async {
-    String user = "";
+    String? user = "";
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     user = prefs.getString('nuser');
     // final urlinsert = Uri.parse(
     //   'https://asamexico.com.mx/php/controller/categoria.php?op=Insert');
-    int idp = (data.id);
+    int? idp = (data.id);
     //String idps = "$idp";
     var resi = await http.post(
         Uri.parse("https://asamexico.com.mx/php/controller/creartarea.php"),
@@ -553,15 +553,15 @@ class Logtareas extends State<LogtareasState> {
   );
 
   String estado = "";
-  bool error, sending, success;
-  String msg;
-  String user = "";
+  bool? error, sending, success;
+  String? msg;
+  String? user = "";
   // API URL
   final url = Uri.parse(
     'https://asamexico.com.mx/php/controller/tareasid.php',
   );
 
-  Future<List<Logstareas>> flistlogs() async {
+  Future<List<Logstareas>?> flistlogs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     user = prefs.getString('nuser');
 
@@ -576,7 +576,7 @@ class Logtareas extends State<LogtareasState> {
       final items = json.decode(response.body).cast<Map<String, dynamic>>();
       print(response.body);
 
-      List<Logstareas> logstarasList = items.map<Logstareas>((json) {
+      List<Logstareas>? logstarasList = items.map<Logstareas>((json) {
         return Logstareas.fromJson(json);
       }).toList();
 
@@ -588,14 +588,14 @@ class Logtareas extends State<LogtareasState> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Logstareas>>(
+    return FutureBuilder<List<Logstareas>?>(
       future: flistlogs(),
       builder: (context, snapshot) {
         if (!snapshot.hasData)
           return Center(child: CircularProgressIndicator());
 
         return ListView(
-          children: snapshot.data
+          children: snapshot.data!
               .map((data) => Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -616,16 +616,16 @@ class Logtareas extends State<LogtareasState> {
                               // trailing: Icon(Icons.arrow_forward_ios,
                               //     size: 30.0, color: Colors.blue),
                               //Agregamos el nombre con un Widget Text
-                              title: Text(data.comentarios,
+                              title: Text(data.comentarios!,
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 14.0)
                                   //le damos estilo a cada texto
                                   ),
                               subtitle: Text(
                                   'Fecha: ' +
-                                      data.fechaalta +
+                                      data.fechaalta! +
                                       '  @' +
-                                      data.usuarioalta,
+                                      data.usuarioalta!,
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                       color: Color.fromRGBO(35, 56, 120, 0.8))),

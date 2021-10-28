@@ -4,7 +4,7 @@ import 'package:asa_mexico/src/pages/materiales/pruebalista.dart';
 import 'package:flutter/material.dart';
 
 class Materialespage extends StatelessWidget {
-  const Materialespage({Key key}) : super(key: key);
+  const Materialespage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

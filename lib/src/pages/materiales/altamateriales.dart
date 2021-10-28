@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-String _tipoController;
-String _unidadController;
+String? _tipoController;
+String? _unidadController;
 TextEditingController _nombrectl = TextEditingController();
 TextEditingController _descripcionctl = TextEditingController();
 
 String estado = "";
 bool sending = false;
-String msg;
+String? msg;
 
 initState() {
   msg = "";

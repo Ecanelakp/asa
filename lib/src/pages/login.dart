@@ -15,10 +15,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPage extends State<LoginPage> {
-  String errormsg;
-  bool error, showprogress;
-  String username, password;
-  bool isChecked;
+  String? errormsg;
+  bool error = false, showprogress = false;
+  String? username, password;
+  bool? isChecked;
   var _username = TextEditingController();
   var _password = TextEditingController();
 
@@ -112,8 +112,8 @@ class _LoginPage extends State<LoginPage> {
 
       username = prefs.getString('user');
       password = prefs.getString('password');
-      _username.text = username;
-      _password.text = password;
+      _username.text = username!;
+      _password.text = password!;
     } else {
       setState(() {
         isChecked = false;
@@ -168,7 +168,7 @@ class _LoginPage extends State<LoginPage> {
             //show error message here
             margin: EdgeInsets.only(top: 10),
             padding: EdgeInsets.all(10),
-            child: error ? errmsg(errormsg) : Container(),
+            child: error ? errmsg(errormsg!) : Container(),
             //if error == true then show error message
             //else set empty container as child
           ),
@@ -256,7 +256,7 @@ class _LoginPage extends State<LoginPage> {
                   checkColor: Colors.white,
                   value: isChecked,
                   activeColor: Color.fromRGBO(35, 56, 120, 1.0),
-                  onChanged: (bool newValue) {
+                  onChanged: (bool? newValue) {
                     setState(() {
                       isChecked = newValue;
                     });
@@ -299,7 +299,7 @@ class _LoginPage extends State<LoginPage> {
     );
   }
 
-  InputDecoration myInputDecoration({String label, IconData icon}) {
+  InputDecoration myInputDecoration({String? label, IconData? icon}) {
     return InputDecoration(
       hintText: label, //show label as placeholder
       hintStyle: TextStyle(
@@ -318,12 +318,12 @@ class _LoginPage extends State<LoginPage> {
       enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
           borderSide: BorderSide(
-              color: Colors.red[300], width: 1)), //default border of input
+              color: Colors.red[300]!, width: 1)), //default border of input
 
       focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
           borderSide:
-              BorderSide(color: Colors.orange[200], width: 1)), //focus border
+              BorderSide(color: Colors.orange[200]!, width: 1)), //focus border
 
       fillColor: Color.fromRGBO(255, 255, 255, 0.9),
       filled: true, //set true if you want to show input background
@@ -338,7 +338,7 @@ class _LoginPage extends State<LoginPage> {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           color: Colors.red,
-          border: Border.all(color: Colors.red[300], width: 2)),
+          border: Border.all(color: Colors.red[300]!, width: 2)),
       child: Row(children: <Widget>[
         Container(
           margin: EdgeInsets.only(right: 6.00),

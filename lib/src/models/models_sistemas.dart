@@ -10,14 +10,14 @@ class Sistemas {
     this.unidad,
   });
 
-  int id;
-  int no;
-  String referencia;
-  String descripcion;
-  String sistema;
-  String cc;
-  int precioUnitario;
-  String unidad;
+  int? id;
+  int? no;
+  String? referencia;
+  String? descripcion;
+  String? sistema;
+  String? cc;
+  int? precioUnitario;
+  String? unidad;
 
   factory Sistemas.fromJson(Map<String, dynamic> json) => Sistemas(
         id: json["id"],
@@ -59,19 +59,19 @@ class Sistemasusadosp {
     this.sumAvance,
   });
 
-  int id;
-  int no;
+  int? id;
+  int? no;
   dynamic referencia;
-  int idSistema;
+  int? idSistema;
   dynamic referenciaSistema;
-  DateTime fechaReg;
-  String usuarioalta;
-  int cantidad;
-  String responsable;
-  String fechaInicio;
-  String unidad;
-  int avance;
-  double sumAvance;
+  DateTime? fechaReg;
+  String? usuarioalta;
+  int? cantidad;
+  String? responsable;
+  String? fechaInicio;
+  String? unidad;
+  int? avance;
+  double? sumAvance;
 
   factory Sistemasusadosp.fromJson(Map<String, dynamic> json) =>
       Sistemasusadosp(
@@ -104,15 +104,15 @@ class Avancesistemas {
     this.fecha,
   });
 
-  int id;
-  int idProyecto;
-  int idSistema;
-  DateTime fechaReg;
-  String usuarioReg;
+  int? id;
+  int? idProyecto;
+  int? idSistema;
+  DateTime? fechaReg;
+  String? usuarioReg;
   dynamic cantidad;
-  String comentarios;
-  int baja;
-  String fecha;
+  String? comentarios;
+  int? baja;
+  String? fecha;
 
   factory Avancesistemas.fromJson(Map<String, dynamic> json) => Avancesistemas(
         id: json["id"],
@@ -132,8 +132,8 @@ class Avancesistemasxd {
 
   dynamic cantidad;
 
-  String fecha;
-  String sistemas;
+  String? fecha;
+  String? sistemas;
 
   factory Avancesistemasxd.fromJson(Map<String, dynamic> json) =>
       Avancesistemasxd(

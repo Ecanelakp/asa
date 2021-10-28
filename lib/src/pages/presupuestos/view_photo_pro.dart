@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
 class Photoproview extends StatelessWidget {
-  final String urlimagen;
+  final String? urlimagen;
   Photoproview(this.urlimagen);
 
   @override
@@ -15,7 +15,7 @@ class Photoproview extends StatelessWidget {
       ),
       body: PhotoView(
         imageProvider: NetworkImage(
-          urlimagen,
+          urlimagen!,
         ),
         // Contained = the smallest possible size to fit one dimension of the screen
         minScale: PhotoViewComputedScale.contained * 0.8,

@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 //import 'package:shared_preferences/shared_preferences.dart';
 
 class Detallesfactura extends StatefulWidget {
-  final String uuid;
+  final String? uuid;
   Detallesfactura(this.uuid);
 
   @override
@@ -28,30 +28,30 @@ clearTextInput() {
   contactoctl.clear();
 }
 
-String _folio;
-String _nombrereceptor;
-String _total = '0.0';
-String _pagada;
-String _fecha;
-String _fechavigencia;
-String _email;
-String _contacto;
-String _notas;
+String? _folio;
+String? _nombrereceptor;
+String? _total = '0.0';
+String? _pagada;
+String? _fecha;
+String? _fechavigencia;
+String? _email;
+String? _contacto;
+String? _notas;
 String estado = "";
-bool error, sending, success;
-String msg;
+bool? error, sending, success;
+String? msg;
 
 final apiurl1 = Uri.parse(
   'https://asamexico.com.mx/php/controller/cfdiemitida.php',
 );
 
 class _DetallesfacturaState extends State<Detallesfactura> {
-  final String uuid;
+  final String? uuid;
 
   _DetallesfacturaState(this.uuid);
 
   // ignore: missing_return
-  Future<String> recibirString() async {
+  Future<String?> recibirString() async {
     var data = {'id': (this.uuid)};
     final respuesta = await http.post(apiurl1, body: json.encode(data));
     if (respuesta.statusCode == 200) {
@@ -85,8 +85,8 @@ class _DetallesfacturaState extends State<Detallesfactura> {
 
   @override
   Widget build(BuildContext context) {
-    dynamic totalf = double.parse(_total);
-    DateTime fecha1 = DateTime.parse(_fecha);
+    dynamic totalf = double.parse(_total!);
+    DateTime fecha1 = DateTime.parse(_fecha!);
     String fecha = DateFormat("dd-MM-yyyy").format(fecha1);
 
     final format = DateFormat("dd-MM-yyyy");
@@ -139,17 +139,17 @@ class _DetallesfacturaState extends State<Detallesfactura> {
                 child: new Column(children: <Widget>[
                   new ListTile(
                     leading: const Icon(Icons.account_circle_rounded),
-                    title: Text(_nombrereceptor),
+                    title: Text(_nombrereceptor!),
                     subtitle: const Text('Nombre Cliente'),
                   ),
                   new ListTile(
                     leading: const Icon(Icons.file_copy),
-                    title: Text(_folio),
+                    title: Text(_folio!),
                     subtitle: const Text('No. de Factura'),
                   ),
                   new ListTile(
                     leading: const Icon(Icons.label),
-                    title: Text(widget.uuid),
+                    title: Text(widget.uuid!),
                     subtitle: const Text('UUID Factura'),
                   ),
                   new ListTile(

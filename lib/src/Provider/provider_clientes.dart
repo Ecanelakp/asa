@@ -4,8 +4,8 @@ import 'dart:convert';
 
 class Providerclientes {
   String selectedSpinnerItem = '1104-001';
-  List data = [];
-  Future myFuture;
+  List? data = [];
+  Future? myFuture;
   final format = ("yyyy-MM-dd");
   TextEditingController referenciactl = TextEditingController();
   TextEditingController proyectoctl = TextEditingController();
@@ -14,8 +14,8 @@ class Providerclientes {
   TextEditingController observacionesctl = TextEditingController();
 
   String estado = "";
-  bool error, sending, success;
-  String msg;
+  bool? error, sending, success;
+  String? msg;
 
   final url = Uri.parse(
       'https://asamexico.com.mx/php/controller/clientes.php?op=GetClientes');

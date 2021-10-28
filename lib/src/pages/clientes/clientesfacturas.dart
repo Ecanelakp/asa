@@ -12,7 +12,7 @@ class Homefacturas extends StatefulWidget {
   final String usuario;
 
   @override
-  const Homefacturas(this.usuario, {Key key}) : super(key: key);
+  const Homefacturas(this.usuario, {Key? key}) : super(key: key);
 
   @override
   _HomefacturasState createState() => _HomefacturasState();

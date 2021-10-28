@@ -47,12 +47,12 @@ class _MateproyectosState extends State<Mateproyectos> {
 }
 
 class Listamaterial {
-  String nombre;
-  String unidad;
-  int noproducto;
-  int referencia;
+  String? nombre;
+  String? unidad;
+  int? noproducto;
+  int? referencia;
 
-  double cantidad;
+  double? cantidad;
   //int idproducto;
 
   Listamaterial(
@@ -74,7 +74,7 @@ class Listamaterial {
 }
 
 class Cargamateriales extends StatefulWidget {
-  final String id;
+  final String? id;
   @override
   Cargamateriales({this.id});
 
@@ -84,10 +84,10 @@ class Cargamateriales extends StatefulWidget {
 
 class _CargamaterialesState extends State<Cargamateriales> {
   String estado = "";
-  bool error, sending, success;
-  String msg;
+  bool? error, sending, success;
+  String? msg;
   TextEditingController cantidadctl = new TextEditingController();
-  String mensaje;
+  late String mensaje;
 
   @override
   void initState() {
@@ -99,7 +99,7 @@ class _CargamaterialesState extends State<Cargamateriales> {
     'https://asamexico.com.mx/php/controller/mateuseproyecto.php',
   );
 
-  Future<List<Listamaterial>> fetchStudents() async {
+  Future<List<Listamaterial>?> fetchStudents() async {
     var data = {'id': ("${widget.id}")};
     print('========$data=======');
 
@@ -110,7 +110,7 @@ class _CargamaterialesState extends State<Cargamateriales> {
     if (response.statusCode == 200) {
       final items = json.decode(response.body).cast<Map<String, dynamic>>();
       //print(this.usuario);
-      List<Listamaterial> studentList = items.map<Listamaterial>((json) {
+      List<Listamaterial>? studentList = items.map<Listamaterial>((json) {
         return Listamaterial.fromJson(json);
       }).toList();
 
@@ -122,14 +122,14 @@ class _CargamaterialesState extends State<Cargamateriales> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Listamaterial>>(
+    return FutureBuilder<List<Listamaterial>?>(
         future: fetchStudents(),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
             return Center(child: CircularProgressIndicator());
 
           return ListView(
-              children: snapshot.data
+              children: snapshot.data!
                   .map(
                     (data) => Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -139,14 +139,14 @@ class _CargamaterialesState extends State<Cargamateriales> {
                               color: Color.fromRGBO(35, 56, 120, 1.0)),
 
                           subtitle: Text(
-                              data.cantidad.toString() + "  " + data.unidad,
+                              data.cantidad.toString() + "  " + data.unidad!,
                               style: TextStyle(
                                   fontStyle: FontStyle.italic,
                                   fontSize: 14.0,
                                   color: Colors.red)),
                           //trailing:
                           //Agregamos el nombre con un Widget Text
-                          title: Text(data.nombre,
+                          title: Text(data.nombre!,
                               style:
                                   TextStyle(color: Colors.black, fontSize: 14.0)
                               //le damos estilo a cada texto
@@ -182,7 +182,7 @@ class _CargamaterialesState extends State<Cargamateriales> {
                                           // print(data.nombre);
                                           // print(data.unidad);
                                           // print(cantidadctl.text);
-                                          data.cantidad >=
+                                          data.cantidad! >=
                                                   double.parse(cantidadctl.text)
                                               ? retornoprod(
                                                   context,
@@ -216,9 +216,9 @@ class _CargamaterialesState extends State<Cargamateriales> {
         });
   }
 
-  Future<void> retornoprod(BuildContext context, int noproducto, int referencia,
-      String nombre) async {
-    String usuario;
+  Future<void> retornoprod(BuildContext context, int? noproducto, int? referencia,
+      String? nombre) async {
+    String? usuario;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     usuario = prefs.getString('nuser');
     //String idps = "$idp";

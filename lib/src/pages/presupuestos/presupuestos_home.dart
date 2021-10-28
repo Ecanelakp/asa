@@ -11,7 +11,7 @@ class Presupuestos2 extends StatefulWidget {
   _PresupuestosState createState() => _PresupuestosState();
   final String usuario;
 
-  const Presupuestos2(this.usuario, {Key key}) : super(key: key);
+  const Presupuestos2(this.usuario, {Key? key}) : super(key: key);
 }
 
 class _PresupuestosState extends State<Presupuestos2> {
@@ -51,13 +51,13 @@ class _PresupuestosState extends State<Presupuestos2> {
 class JsonSpinner extends StatefulWidget {
   JsonSpinnerWidget createState() => JsonSpinnerWidget();
   final String usuario;
-  const JsonSpinner(this.usuario, {Key key}) : super(key: key);
+  const JsonSpinner(this.usuario, {Key? key}) : super(key: key);
 }
 
 class JsonSpinnerWidget extends State<JsonSpinner> {
-  String selectedSpinnerItem = '1104-001';
-  List data = [];
-  Future myFuture;
+  String? selectedSpinnerItem = '1104-001';
+  List? data = [];
+  Future? myFuture;
   final format = ("yyyy-MM-dd");
   TextEditingController referenciactl = TextEditingController();
   TextEditingController proyectoctl = TextEditingController();
@@ -67,9 +67,9 @@ class JsonSpinnerWidget extends State<JsonSpinner> {
   TextEditingController fechapagoctl = new TextEditingController();
 
   String estado = "";
-  bool error, sending, success;
-  String msg;
-  String _fechapago;
+  bool error = false, sending = false, success = false;
+  String? msg;
+  String? _fechapago;
   final format1 = DateFormat("dd-MM-yyyy");
 
   final url = Uri.parse(
@@ -114,7 +114,7 @@ class JsonSpinnerWidget extends State<JsonSpinner> {
     var finaldate = DateTime.now();
 
     return FutureBuilder<String>(
-        future: myFuture,
+        future: myFuture!.then((value) => value as String),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
             return Center(child: CircularProgressIndicator());
@@ -148,7 +148,7 @@ class JsonSpinnerWidget extends State<JsonSpinner> {
                       DropdownButtonFormField(
                         // icon: Icon(Icons.account_circle,
                         //     color: Color.fromRGBO(35, 56, 120, 1.0)),
-                        items: data.map((item) {
+                        items: data!.map((item) {
                           return DropdownMenuItem(
                             child: Row(
                               children: [
@@ -161,7 +161,7 @@ class JsonSpinnerWidget extends State<JsonSpinner> {
                             value: item['Referencia'],
                           );
                         }).toList(),
-                        onChanged: (newVal) {
+                        onChanged: (dynamic newVal) {
                           setState(() {
                             selectedSpinnerItem = newVal;
                           });

@@ -7,14 +7,14 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class Studentdata {
-  int idrecepcion;
+  int? idrecepcion;
   dynamic rfcemisor;
   dynamic nemisor;
   dynamic folio;
   dynamic uuid;
   dynamic total;
-  String metodop;
-  int pagada;
+  String? metodop;
+  int? pagada;
   dynamic fecha;
 
   Studentdata({
@@ -49,7 +49,7 @@ class MainListView extends StatefulWidget {
   MainListViewState createState() => MainListViewState();
 }
 
-int nmes;
+int? nmes;
 
 class MainListViewState extends State {
   final apiurl = Uri.parse(
@@ -57,14 +57,14 @@ class MainListViewState extends State {
   );
 
   //String user = this.usuario;
-  Future<List<Studentdata>> fetchStudents() async {
+  Future<List<Studentdata>?> fetchStudents() async {
     var data = {'nmes': nmes.toString()};
     var response = await http.post(apiurl, body: json.encode(data));
 
     if (response.statusCode == 200) {
       final items = json.decode(response.body).cast<Map<String, dynamic>>();
       //print(this.usuario);
-      List<Studentdata> studentList = items.map<Studentdata>((json) {
+      List<Studentdata>? studentList = items.map<Studentdata>((json) {
         return Studentdata.fromJson(json);
       }).toList();
 
@@ -77,16 +77,16 @@ class MainListViewState extends State {
   @override
   Widget build(BuildContext context) {
     final wmes = Provider.of<Meses>(context);
-    nmes = wmes.mes;
+    nmes = wmes.mes as int?;
     fetchStudents();
-    return FutureBuilder<List<Studentdata>>(
+    return FutureBuilder<List<Studentdata>?>(
       future: fetchStudents(),
       builder: (context, snapshot) {
         if (!snapshot.hasData)
           return Center(child: CircularProgressIndicator());
 
         return ListView(
-          children: snapshot.data
+          children: snapshot.data!
               .map((data) => Container(
                   width: MediaQuery.of(context).size.width * 0.6,
                   //Centramos con el Widget <a href="https://zimbronapps.com/flutter/center/">Center</a>
@@ -137,7 +137,7 @@ class MainListViewState extends State {
     );
   }
 
-  iconcolor(int pagada) {
+  iconcolor(int? pagada) {
     print(pagada.toString());
     if (pagada == 1) {
       return Icon(Icons.check_circle, size: 30.0, color: Colors.green);

@@ -8,11 +8,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Gastosproyectos extends StatefulWidget {
   final String idholder;
-  final String referencia;
+  final String? referencia;
   const Gastosproyectos(
     this.idholder,
     this.referencia, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -22,16 +22,16 @@ class Gastosproyectos extends StatefulWidget {
 
 class _GastosproyectosState extends State<Gastosproyectos> {
   final String idholder;
-  final String referencia;
+  final String? referencia;
   String estado = "";
-  bool error, sending, success;
-  String msg;
+  bool? error, sending, success;
+  String? msg;
   TextEditingController cantidadctl = new TextEditingController();
   TextEditingController comentariosctl = new TextEditingController();
-  int selectedSpinnerItem;
-  String select;
-  List data = List();
-  Future myFuture;
+  int? selectedSpinnerItem;
+  String? select;
+  List? data = [];
+  Future? myFuture;
 
   final apiurl = Uri.parse(
     'https://asamexico.com.mx/php/controller/listaconceptogastos.php',
@@ -68,7 +68,7 @@ class _GastosproyectosState extends State<Gastosproyectos> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<String>(
-        future: myFuture,
+        future: myFuture!.then((value) => value as String),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
             return Center(child: CircularProgressIndicator());
@@ -98,14 +98,14 @@ class _GastosproyectosState extends State<Gastosproyectos> {
                       SizedBox(height: 10),
                       Container(
                         child: DropdownButton(
-                            items: data.map((item) {
+                            items: data!.map((item) {
                               return DropdownMenuItem(
                                 child: Text(item['Categoria']),
                                 //value: item['n'],
                                 value: (item['Categoria'].toString()),
                               );
                             }).toList(),
-                            onChanged: (newVal) {
+                            onChanged: (dynamic newVal) {
                               setState(() {
                                 select = newVal;
                                 print(select);
@@ -279,7 +279,7 @@ class _GastosproyectosState extends State<Gastosproyectos> {
   }
 
   Future<void> altagasto(BuildContext context) async {
-    String usuario;
+    String? usuario;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     usuario = prefs.getString('nuser');
     //String idps = "$idp";
@@ -350,11 +350,11 @@ class _GastosproyectosState extends State<Gastosproyectos> {
 }
 
 class Listamaterial {
-  int id;
-  String gasto;
-  String comentario;
+  int? id;
+  String? gasto;
+  String? comentario;
 
-  double monto;
+  double? monto;
 
   Listamaterial({
     this.id,
@@ -372,9 +372,9 @@ class Listamaterial {
 }
 
 class Cargamateriales extends StatefulWidget {
-  final String id;
+  final String? id;
   @override
-  Cargamateriales({Key key, this.id}) : super(key: key);
+  Cargamateriales({Key? key, this.id}) : super(key: key);
 
   @override
   _CargamaterialesState createState() => _CargamaterialesState();
@@ -385,7 +385,7 @@ class _CargamaterialesState extends State<Cargamateriales> {
     'https://asamexico.com.mx/php/controller/listagastosolicitados.php',
   );
 
-  Future<List<Listamaterial>> fetchStudents() async {
+  Future<List<Listamaterial>?> fetchStudents() async {
     var data = {'id': ("${widget.id}")};
     print('========$data=======');
 
@@ -396,7 +396,7 @@ class _CargamaterialesState extends State<Cargamateriales> {
     if (response.statusCode == 200) {
       final items = json.decode(response.body).cast<Map<String, dynamic>>();
       //print(this.usuario);
-      List<Listamaterial> studentList = items.map<Listamaterial>((json) {
+      List<Listamaterial>? studentList = items.map<Listamaterial>((json) {
         return Listamaterial.fromJson(json);
       }).toList();
 
@@ -412,14 +412,14 @@ class _CargamaterialesState extends State<Cargamateriales> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Listamaterial>>(
+    return FutureBuilder<List<Listamaterial>?>(
         future: fetchStudents(),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
             return Center(child: CircularProgressIndicator());
 
           return ListView(
-              children: snapshot.data
+              children: snapshot.data!
                   .map(
                     (data) => Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -444,12 +444,12 @@ class _CargamaterialesState extends State<Cargamateriales> {
                                 });
                               }),
                           //Agregamos el nombre con un Widget Text
-                          title: Text(data.gasto,
+                          title: Text(data.gasto!,
                               style:
                                   TextStyle(color: Colors.black, fontSize: 14.0)
                               //le damos estilo a cada texto
                               ),
-                          subtitle: Text(data.comentario,
+                          subtitle: Text(data.comentario!,
                               style: TextStyle(
                                   color: Colors.black87, fontSize: 14.0)
                               //le damos estilo a cada texto
@@ -462,7 +462,7 @@ class _CargamaterialesState extends State<Cargamateriales> {
         });
   }
 
-  Future<void> elimianarmate([int idproducto]) async {
+  Future<void> elimianarmate([int? idproducto]) async {
     String id = idproducto.toString();
     // final urlinsert = Uri.parse(
     //   'https://asamexico.com.mx/php/controller/categoria.php?op=Insert');

@@ -13,7 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Homegastos extends StatelessWidget {
   final String usuario;
   @override
-  const Homegastos(this.usuario, {Key key}) : super(key: key);
+  const Homegastos(this.usuario, {Key? key}) : super(key: key);
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -85,21 +85,21 @@ class Homegastos extends StatelessWidget {
 }
 
 class Studentdata {
-  int idrecepcion;
+  int? idrecepcion;
   dynamic rfcemisor;
   dynamic nemisor;
   dynamic folio;
   dynamic uuid;
   dynamic total;
-  String metodop;
+  String? metodop;
   dynamic fecha;
-  String departamento;
-  String categoria;
-  String concepto;
-  int pagada;
+  String? departamento;
+  String? categoria;
+  String? concepto;
+  int? pagada;
   dynamic fechapago;
-  String referenciacliente;
-  String moneda;
+  String? referenciacliente;
+  String? moneda;
   dynamic tipocambio;
 
   Studentdata(
@@ -147,7 +147,7 @@ class MainListView extends StatefulWidget {
   MainListViewState createState() => MainListViewState();
 }
 
-int nmes;
+int? nmes;
 
 class MainListViewState extends State {
   final apiurl = Uri.parse(
@@ -155,14 +155,14 @@ class MainListViewState extends State {
   );
 
   //String user = this.usuario;
-  Future<List<Studentdata>> fetchStudents() async {
+  Future<List<Studentdata>?> fetchStudents() async {
     var data = {'nmes': nmes.toString()};
     var response = await http.post(apiurl, body: json.encode(data));
     //print('====aqui =====$nmes===========aqui');
     if (response.statusCode == 200) {
       final items = json.decode(response.body).cast<Map<String, dynamic>>();
       //print(this.usuario);
-      List<Studentdata> studentList = items.map<Studentdata>((json) {
+      List<Studentdata>? studentList = items.map<Studentdata>((json) {
         return Studentdata.fromJson(json);
       }).toList();
 
@@ -177,14 +177,14 @@ class MainListViewState extends State {
     final wmes = Provider.of<Meses>(context);
     nmes = wmes.mes;
     fetchStudents();
-    return FutureBuilder<List<Studentdata>>(
+    return FutureBuilder<List<Studentdata>?>(
       future: fetchStudents(),
       builder: (context, snapshot) {
         if (!snapshot.hasData)
           return Center(child: CircularProgressIndicator());
 
         return ListView(
-          children: snapshot.data
+          children: snapshot.data!
               .map((data) => Container(
                     width: MediaQuery.of(context).size.width * 0.6,
                     //Centramos con el Widget <a href="https://zimbronapps.com/flutter/center/">Center</a>
@@ -229,7 +229,9 @@ class MainListViewState extends State {
                                     style: TextStyle(
                                         color: Colors.black54, fontSize: 11.0)),
                                 Text(
-                                    data.departamento + ' || ' + data.categoria,
+                                    data.departamento! +
+                                        ' || ' +
+                                        data.categoria!,
                                     style: TextStyle(
                                         color: Colors.black, fontSize: 11.0)),
                               ],
@@ -365,7 +367,7 @@ final apiurl1 = Uri.parse(
 
 class _PaginaState extends State<Pagina> {
   // ignore: missing_return
-  Future<String> recibirString() async {
+  Future<String?> recibirString() async {
     var data = {'nmes': nmes.toString()};
     final respuesta = await http.post(apiurl1, body: json.encode(data));
     if (respuesta.statusCode == 200) {
@@ -433,13 +435,13 @@ class MesesListViewState extends State {
   );
 
   //String user = this.usuario;
-  Future<List<Mesesc>> mesesc() async {
+  Future<List<Mesesc>?> mesesc() async {
     var response = await http.get(apiurl);
 
     if (response.statusCode == 200) {
       final items = json.decode(response.body).cast<Map<String, dynamic>>();
       //print(this.usuario);
-      List<Mesesc> studentList = items.map<Mesesc>((json) {
+      List<Mesesc>? studentList = items.map<Mesesc>((json) {
         return Mesesc.fromJson(json);
       }).toList();
 
@@ -452,7 +454,7 @@ class MesesListViewState extends State {
   @override
   Widget build(BuildContext context) {
     final wmes = Provider.of<Meses>(context);
-    return FutureBuilder<List<Mesesc>>(
+    return FutureBuilder<List<Mesesc>?>(
       future: mesesc(),
       builder: (context, snapshot) {
         if (!snapshot.hasData)
@@ -460,7 +462,7 @@ class MesesListViewState extends State {
 
         return ListView(
           scrollDirection: Axis.horizontal,
-          children: snapshot.data
+          children: snapshot.data!
               .map(
                 (data) => Container(
                     width: MediaQuery.of(context).size.width * 0.6,

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class Viewpresupuestos extends StatefulWidget {
   final idp;
-  const Viewpresupuestos(this.idp, {Key key}) : super(key: key);
+  const Viewpresupuestos(this.idp, {Key? key}) : super(key: key);
 
   @override
   _ViewpresupuestosState createState() => _ViewpresupuestosState();
@@ -36,8 +36,8 @@ class _ViewpresupuestosState extends State<Viewpresupuestos> {
 
 class Proyectocaratula extends StatelessWidget {
   const Proyectocaratula({
-    Key key,
-    @required this.idp,
+    Key? key,
+    required this.idp,
   }) : super(key: key);
 
   final idp;
@@ -63,8 +63,8 @@ class Proyectocaratula extends StatelessWidget {
 
 class Tareasproyectos extends StatelessWidget {
   const Tareasproyectos({
-    Key key,
-    @required this.idp,
+    Key? key,
+    required this.idp,
   }) : super(key: key);
 
   final idp;
@@ -82,8 +82,8 @@ class Tareasproyectos extends StatelessWidget {
 
 class Viewproyecto extends StatelessWidget {
   const Viewproyecto({
-    Key key,
-    @required this.idp,
+    Key? key,
+    required this.idp,
   }) : super(key: key);
 
   final idp;

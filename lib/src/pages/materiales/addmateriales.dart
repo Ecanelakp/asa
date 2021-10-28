@@ -18,16 +18,16 @@ void initState() {
 }
 
 String estado = "";
-bool error, sending, success;
-String msg;
+bool? error, sending, success;
+String? msg;
 
 class Addmaterial extends StatelessWidget {
-  final int idproducto;
-  final String nombre;
-  final String descripcion;
-  final String unidad;
-  final String tipo;
-  final double cantidad;
+  final int? idproducto;
+  final String? nombre;
+  final String? descripcion;
+  final String? unidad;
+  final String? tipo;
+  final double? cantidad;
 
   const Addmaterial(
       {this.idproducto,
@@ -36,7 +36,7 @@ class Addmaterial extends StatelessWidget {
       this.unidad,
       this.tipo,
       this.cantidad,
-      Key key})
+      Key? key})
       : super(key: key);
 
   @override
@@ -52,7 +52,7 @@ class Addmaterial extends StatelessWidget {
               SizedBox(
                 height: 30,
               ),
-              Text(nombre,
+              Text(nombre!,
                   style: TextStyle(
                       color: Color.fromRGBO(35, 56, 120, 1.0),
                       fontSize: 20.0,
@@ -83,7 +83,7 @@ class Addmaterial extends StatelessWidget {
                               ),
                               Flexible(
                                 child: Text(
-                                  descripcion,
+                                  descripcion!,
                                   overflow: TextOverflow.ellipsis,
                                   style: new TextStyle(
                                       fontSize: 16.0,
@@ -103,7 +103,7 @@ class Addmaterial extends StatelessWidget {
                               ),
                               Flexible(
                                 child: Text(
-                                  tipo,
+                                  tipo!,
                                   overflow: TextOverflow.ellipsis,
                                   style: new TextStyle(
                                       fontSize: 16.0,
@@ -123,7 +123,7 @@ class Addmaterial extends StatelessWidget {
                               ),
                               Flexible(
                                 child: Text(
-                                  cantidad.toString() + " " + unidad,
+                                  cantidad.toString() + " " + unidad!,
                                   overflow: TextOverflow.ellipsis,
                                   style: new TextStyle(
                                       fontSize: 16.0,
@@ -263,7 +263,7 @@ class Addmaterial extends StatelessWidget {
 }
 
 Future<void> altamovprod(BuildContext context, idproducto, nombre) async {
-  String usuario;
+  String? usuario;
   SharedPreferences prefs = await SharedPreferences.getInstance();
   usuario = prefs.getString('nuser');
   //String idps = "$idp";

@@ -14,17 +14,17 @@ class UserFilterDemo extends StatefulWidget {
 }
 
 class Debouncer {
-  final int milliseconds;
-  VoidCallback action;
-  Timer _timer;
+  final int? milliseconds;
+  VoidCallback? action;
+  Timer? _timer;
 
   Debouncer({this.milliseconds});
 
   run(VoidCallback action) {
     if (null != _timer) {
-      _timer.cancel();
+      _timer!.cancel();
     }
-    _timer = Timer(Duration(milliseconds: milliseconds), action);
+    _timer = Timer(Duration(milliseconds: milliseconds!), action);
   }
 }
 
@@ -32,8 +32,8 @@ class UserFilterDemoState extends State<UserFilterDemo> {
   // https://jsonplaceholder.typicode.com/users
 
   final _debouncer = Debouncer(milliseconds: 500);
-  List<User> users = List();
-  List<User> filteredUsers = List();
+  List<User>? users = [];
+  List<User>? filteredUsers = [];
 
   @override
   void initState() {
@@ -69,11 +69,11 @@ class UserFilterDemoState extends State<UserFilterDemo> {
             onChanged: (string) {
               _debouncer.run(() {
                 setState(() {
-                  filteredUsers = users
-                      .where((u) => (u.nombre
+                  filteredUsers = users!
+                      .where((u) => (u.nombre!
                               .toLowerCase()
                               .contains(string.toLowerCase()) ||
-                          u.descripcion
+                          u.descripcion!
                               .toLowerCase()
                               .contains(string.toLowerCase())))
                       .toList();
@@ -87,16 +87,16 @@ class UserFilterDemoState extends State<UserFilterDemo> {
         Expanded(
           child: ListView.builder(
             padding: EdgeInsets.all(10.0),
-            itemCount: filteredUsers.length,
+            itemCount: filteredUsers!.length,
             itemBuilder: (BuildContext context, int index) {
               return Card(
                 child: Padding(
                   padding: EdgeInsets.all(10.0),
                   child: ListTile(
                     leading: Text(
-                        filteredUsers[index].cantidad.toString() +
+                        filteredUsers![index].cantidad.toString() +
                             " " +
-                            filteredUsers[index].unidad,
+                            filteredUsers![index].unidad!,
                         style: TextStyle(
                             fontStyle: FontStyle.italic,
                             fontSize: 14.0,
@@ -107,13 +107,14 @@ class UserFilterDemoState extends State<UserFilterDemo> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => Addmaterial(
-                                    idproducto: filteredUsers[index].idproducto,
-                                    nombre: filteredUsers[index].nombre,
+                                    idproducto:
+                                        filteredUsers![index].idproducto,
+                                    nombre: filteredUsers![index].nombre,
                                     descripcion:
-                                        filteredUsers[index].descripcion,
-                                    unidad: filteredUsers[index].unidad,
-                                    tipo: filteredUsers[index].tipo,
-                                    cantidad: filteredUsers[index].cantidad,
+                                        filteredUsers![index].descripcion,
+                                    unidad: filteredUsers![index].unidad,
+                                    tipo: filteredUsers![index].tipo,
+                                    cantidad: filteredUsers![index].cantidad,
                                   )));
                     },
                     trailing: Icon(Icons.add_circle_outline_rounded,
@@ -121,13 +122,13 @@ class UserFilterDemoState extends State<UserFilterDemo> {
                     //Agregamos el nombre con un Widget Text
                     title: Text(
                         "Producto:      " +
-                            filteredUsers[index].nombre +
+                            filteredUsers![index].nombre! +
                             "  " +
-                            filteredUsers[index].descripcion,
+                            filteredUsers![index].descripcion!,
                         style: TextStyle(color: Colors.black, fontSize: 14.0)
                         //le damos estilo a cada texto
                         ),
-                    subtitle: Text('Tipo:    ' + filteredUsers[index].tipo,
+                    subtitle: Text('Tipo:    ' + filteredUsers![index].tipo!,
                         style:
                             TextStyle(color: Color.fromRGBO(35, 56, 120, 0.8))),
                   ),

@@ -1,10 +1,10 @@
 class User {
-  String nombre;
-  String descripcion;
-  String unidad;
-  String tipo;
-  double cantidad;
-  int idproducto;
+  String? nombre;
+  String? descripcion;
+  String? unidad;
+  String? tipo;
+  double? cantidad;
+  int? idproducto;
 
   User(
       {this.nombre,

@@ -21,18 +21,18 @@ class ClientesModel {
     this.email = '',
   });
 
-  String id;
-  String referencia;
-  String nombre;
-  String contacto;
-  String puesto;
-  String direccion;
-  String ciudad;
-  String colonia;
-  String estado;
-  String cp;
-  String rfc;
-  String email;
+  String? id;
+  String? referencia;
+  String? nombre;
+  String? contacto;
+  String? puesto;
+  String? direccion;
+  String? ciudad;
+  String? colonia;
+  String? estado;
+  String? cp;
+  String? rfc;
+  String? email;
 
   factory ClientesModel.fromJson(Map<String, dynamic> json) => ClientesModel(
         id: json["id"],

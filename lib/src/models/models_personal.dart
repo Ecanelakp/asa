@@ -1,13 +1,13 @@
 class Personallist {
-  String username;
-  String nombrecorto;
-  String acceso;
-  String puesto;
-  String fullname;
-  String tipo;
-  double latitude;
-  double longitude;
-  DateTime fechareg;
+  String? username;
+  String? nombrecorto;
+  String? acceso;
+  String? puesto;
+  String? fullname;
+  String? tipo;
+  double? latitude;
+  double? longitude;
+  DateTime? fechareg;
 
   Personallist({
     this.username,
@@ -44,11 +44,11 @@ class PersonallistP {
     this.fullname,
   });
 
-  String username;
-  String nombrecorto;
-  String acceso;
-  String puesto;
-  String fullname;
+  String? username;
+  String? nombrecorto;
+  String? acceso;
+  String? puesto;
+  String? fullname;
 
   factory PersonallistP.fromJson(Map<String, dynamic> json) => PersonallistP(
         username: json["username"],
@@ -74,17 +74,17 @@ class Locationpersonal {
     this.longitude,
   });
 
-  int id;
-  String user;
-  String nombre;
-  DateTime fechaReg;
-  String tipo;
-  String url;
-  int dia;
-  int mes;
-  String hora;
-  double latitude;
-  double longitude;
+  int? id;
+  String? user;
+  String? nombre;
+  DateTime? fechaReg;
+  String? tipo;
+  String? url;
+  int? dia;
+  int? mes;
+  String? hora;
+  double? latitude;
+  double? longitude;
 
   factory Locationpersonal.fromJson(Map<String, dynamic> json) =>
       Locationpersonal(

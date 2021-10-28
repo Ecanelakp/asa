@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class Loglastclientes extends StatelessWidget {
-  const Loglastclientes({Key key}) : super(key: key);
+  const Loglastclientes({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,13 +42,13 @@ class Lastlogscliente extends StatefulWidget {
 }
 
 class Logstareas {
-  int id;
+  int? id;
   dynamic referenciacliente;
 
-  String usuarioalta;
-  String comentarios;
-  String fechaalta;
-  String nombrecliente;
+  String? usuarioalta;
+  String? comentarios;
+  String? fechaalta;
+  String? nombrecliente;
 
   Logstareas(
       {this.id,
@@ -76,8 +76,8 @@ class Logtareas extends State<Lastlogscliente> {
   Logtareas();
 
   String estado = "";
-  bool error, sending, success;
-  String msg;
+  bool? error, sending, success;
+  String? msg;
   String user = "";
   // API URL
   final apiurl = Uri.parse(
@@ -85,13 +85,13 @@ class Logtareas extends State<Lastlogscliente> {
   );
 
   //String user = this.usuario;
-  Future<List<Logstareas>> fetchStudents() async {
+  Future<List<Logstareas>?> fetchStudents() async {
     var response = await http.get(apiurl);
 
     if (response.statusCode == 200) {
       final items = json.decode(response.body).cast<Map<String, dynamic>>();
       //print(this.usuario);
-      List<Logstareas> studentList = items.map<Logstareas>((json) {
+      List<Logstareas>? studentList = items.map<Logstareas>((json) {
         return Logstareas.fromJson(json);
       }).toList();
 
@@ -103,14 +103,14 @@ class Logtareas extends State<Lastlogscliente> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Logstareas>>(
+    return FutureBuilder<List<Logstareas>?>(
       future: fetchStudents(),
       builder: (context, snapshot) {
         if (!snapshot.hasData)
           return Center(child: CircularProgressIndicator());
 
         return ListView(
-          children: snapshot.data
+          children: snapshot.data!
               .map((data) => Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -118,7 +118,7 @@ class Logtareas extends State<Lastlogscliente> {
                         SizedBox(
                           height: 10,
                         ),
-                        Text(data.nombrecliente,
+                        Text(data.nombrecliente!,
                             style: TextStyle(
                                 color: Color.fromRGBO(35, 56, 120, 1.0),
                                 fontSize: 12.0)),
@@ -135,16 +135,16 @@ class Logtareas extends State<Lastlogscliente> {
                               // trailing: Icon(Icons.arrow_forward_ios,
                               //     size: 30.0, color: Colors.blue),
                               //Agregamos el nombre con un Widget Text
-                              title: Text(data.comentarios,
+                              title: Text(data.comentarios!,
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 14.0)
                                   //le damos estilo a cada texto
                                   ),
                               subtitle: Text(
                                   'Fecha: ' +
-                                      data.fechaalta +
+                                      data.fechaalta! +
                                       '  @' +
-                                      data.usuarioalta,
+                                      data.usuarioalta!,
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                       color: Color.fromRGBO(35, 56, 120, 0.8))),

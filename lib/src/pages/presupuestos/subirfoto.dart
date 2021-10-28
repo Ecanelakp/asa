@@ -6,13 +6,13 @@ import 'package:mime_type/mime_type.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-File _image;
+File? _image;
 //File foto;
-String secure_url;
-String idtarea;
+String? secure_url;
+String? idtarea;
 String estado = "";
-bool error, sending, success;
-String msg;
+bool? error, sending, success;
+String? msg;
 
 class Subirfoto extends StatefulWidget {
   final String idfoto;
@@ -44,7 +44,7 @@ class _SubirfotoState extends State<Subirfoto> {
                 ? ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.file(
-                      _image,
+                      _image!,
                       height: 200,
                       fit: BoxFit.cover,
                     ),
@@ -67,7 +67,7 @@ class _SubirfotoState extends State<Subirfoto> {
           ),
           child: TextButton.icon(
               onPressed: () {
-                subirImagen(_image, idfoto);
+                subirImagen(_image!, idfoto);
               },
               icon: Icon(Icons.photo_camera, size: 25.0, color: Colors.white),
               label: Text("Guardar imagen",
@@ -111,7 +111,7 @@ class _SubirfotoState extends State<Subirfoto> {
   }
 
   _imgFromCamera() async {
-    PickedFile pickedFile = await ImagePicker().getImage(
+    PickedFile? pickedFile = await ImagePicker().getImage(
       source: ImageSource.camera,
       maxWidth: 1800,
       maxHeight: 1800,
@@ -124,7 +124,7 @@ class _SubirfotoState extends State<Subirfoto> {
   }
 
   _imgFromGallery() async {
-    PickedFile pickedFile = await ImagePicker().getImage(
+    PickedFile? pickedFile = await ImagePicker().getImage(
       source: ImageSource.gallery,
       maxWidth: 1800,
       maxHeight: 1800,
@@ -136,11 +136,11 @@ class _SubirfotoState extends State<Subirfoto> {
     }
   }
 
-  Future<String> subirImagen(File _image, String idfoto) async {
+  Future<String?> subirImagen(File _image, String idfoto) async {
     final apiurl = Uri.parse(
       'https://api.cloudinary.com/v1_1/ecanelakp/image/upload?upload_preset=yad3zask',
     );
-    final mimeType = mime(_image.path).split('/');
+    final mimeType = mime(_image.path)!.split('/');
 
     final imageUploadRequest = http.MultipartRequest('POST', apiurl);
 
@@ -167,7 +167,7 @@ class _SubirfotoState extends State<Subirfoto> {
   }
 
 // ignore: missing_return
-  Future<String> upurlphoto() async {
+  Future<String?> upurlphoto() async {
     print(idtarea);
     print(secure_url);
 
