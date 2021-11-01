@@ -184,7 +184,7 @@ class _SistemasproyectoState extends State<Sistemasproyecto> {
           sending = false;
           error = true;
           msg = data["message"]; //error message from server
-          estado = "Error al guardar====1";
+          estado = "Error al guardar====12";
         });
       } else {
         estado = "Se ha actualizado";
