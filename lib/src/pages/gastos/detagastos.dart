@@ -14,17 +14,17 @@ TextEditingController referenciactl = new TextEditingController();
 TextEditingController tipocambioctl = new TextEditingController();
 
 //TextEditingController _deptoController = new TextEditingController();
-String _fechapago;
-String deptoController;
-String gastoController;
-String seldepartamento;
+String? _fechapago;
+String? deptoController;
+String? gastoController;
+String? seldepartamento;
 
-bool isPagada;
-String usuario;
+bool? isPagada;
+String? usuario;
 final format = DateFormat("dd-MM-yyyy");
 String estado = "";
-bool error, sending, success;
-String msg;
+bool? error, sending, success;
+String? msg;
 
 @override
 void dispose() {
@@ -45,20 +45,20 @@ initState() {
 }
 
 class Detagastos extends StatefulWidget {
-  final String fecha;
+  final String? fecha;
   //final String uuid;
-  final String nemisor;
-  final String total;
-  final String departamento;
-  final String categoria;
-  final String concepto;
-  final int pagada;
-  final String uuid;
-  final String referencia;
+  final String? nemisor;
+  final String? total;
+  final String? departamento;
+  final String? categoria;
+  final String? concepto;
+  final int? pagada;
+  final String? uuid;
+  final String? referencia;
   final dynamic tipocambio;
 
   const Detagastos(
-      {Key key,
+      {Key? key,
       this.nemisor,
       this.fecha,
       this.total,
@@ -177,8 +177,8 @@ class _DetagastosState extends State<Detagastos> {
     'VIATICOS',
   ];
   List<String> tipogasto = [];
-  String selectedDepartamentos;
-  String selectedgastos;
+  String? selectedDepartamentos;
+  String? selectedgastos;
 
   bool isPagada = false;
   @override
@@ -208,12 +208,12 @@ class _DetagastosState extends State<Detagastos> {
                             size: 30.0, color: Colors.green)
                         : Icon(Icons.close, size: 30.0, color: Colors.red),
                     title: Text(
-                      widget.nemisor,
+                      widget.nemisor!,
                       style: TextStyle(
                         color: Color.fromRGBO(35, 56, 120, 1.0),
                       ),
                     ),
-                    subtitle: Text(widget.fecha + "   Total: " + widget.total),
+                    subtitle: Text(widget.fecha! + "   Total: " + widget.total!),
                   ),
                 ),
               ),
@@ -224,8 +224,8 @@ class _DetagastosState extends State<Detagastos> {
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: widget.pagada == 1
-                              ? Colors.green[100]
-                              : Colors.red[100],
+                              ? Colors.green[100]!
+                              : Colors.red[100]!,
                         ),
                         borderRadius: BorderRadius.circular(20.0),
                         color: Colors.white,
@@ -425,8 +425,8 @@ class _DetagastosState extends State<Detagastos> {
   }
 
   Future<void> updatagasto(BuildContext context) async {
-    double tca;
-    double tc;
+    double? tca;
+    double? tc;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     usuario = prefs.getString('nuser');
     tipocambioctl.text == ""

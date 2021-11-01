@@ -5,7 +5,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CclientesState extends StatefulWidget {
-  final String idcliente;
+  final String? idcliente;
   //final String usuario;
   //final String usuario;
   CclientesState(
@@ -18,12 +18,12 @@ class CclientesState extends StatefulWidget {
 }
 
 class Studentdata {
-  int id;
+  int? id;
   dynamic referencia;
-  String nombre;
-  String contacto;
-  String puesto;
-  String direccion;
+  String? nombre;
+  String? contacto;
+  String? puesto;
+  String? direccion;
 
   Studentdata(
       {this.id,
@@ -45,12 +45,12 @@ class Studentdata {
 }
 
 class Logstareas {
-  int id;
+  int? id;
   dynamic referenciacliente;
 
-  String usuarioalta;
-  String comentarios;
-  String fechaalta;
+  String? usuarioalta;
+  String? comentarios;
+  String? fechaalta;
 
   Logstareas(
       {this.id,
@@ -71,23 +71,23 @@ class Logstareas {
 
 class Cclientes extends State<CclientesState> {
   //final String usuario;
-  final String idcliente;
+  final String? idcliente;
   TextEditingController comentariosctl = TextEditingController();
   TextEditingController idctl = TextEditingController();
   Cclientes(this.idcliente);
   //SecondScreen(this.idHolder, this.usuario);
   //String usuariot = usuario;
   String estado = "";
-  bool error, sending, success;
-  String msg;
+  bool? error, sending, success;
+  String? msg;
 
   // API URL
   final url = Uri.parse(
     'https://asamexico.com.mx/php/controller/clientesid.php',
   );
 
-  Future<List<Studentdata>> fetchStudent() async {
-    var data = {'id': int.parse(idcliente)};
+  Future<List<Studentdata>?> fetchStudent() async {
+    var data = {'id': int.parse(idcliente!)};
 
     var response = await http.post(url, body: json.encode(data));
 
@@ -97,7 +97,7 @@ class Cclientes extends State<CclientesState> {
       final items = json.decode(response.body).cast<Map<String, dynamic>>();
       print(response.body);
 
-      List<Studentdata> studentList = items.map<Studentdata>((json) {
+      List<Studentdata>? studentList = items.map<Studentdata>((json) {
         return Studentdata.fromJson(json);
       }).toList();
 
@@ -114,14 +114,14 @@ class Cclientes extends State<CclientesState> {
       appBar: AppBar(
         title: const Text('Log de cliente'),
       ),
-      body: FutureBuilder<List<Studentdata>>(
+      body: FutureBuilder<List<Studentdata>?>(
         future: fetchStudent(),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
             return Center(child: CircularProgressIndicator());
 
           return ListView(
-            children: snapshot.data
+            children: snapshot.data!
                 .map((data) => Column(
                       children: <Widget>[
                         SizedBox(
@@ -151,21 +151,21 @@ class Cclientes extends State<CclientesState> {
                                   Padding(
                                       padding:
                                           EdgeInsets.fromLTRB(20, 0, 0, 10),
-                                      child: Text('Cliente: ' + data.nombre,
+                                      child: Text('Cliente: ' + data.nombre!,
                                           style: TextStyle(
                                               fontSize: 14.0,
                                               color: Colors.white))),
                                   Padding(
                                       padding:
                                           EdgeInsets.fromLTRB(20, 0, 0, 10),
-                                      child: Text('Contacto: ' + data.contacto,
+                                      child: Text('Contacto: ' + data.contacto!,
                                           style: TextStyle(
                                               fontSize: 14.0,
                                               color: Colors.white))),
                                   Padding(
                                       padding:
                                           EdgeInsets.fromLTRB(20, 0, 0, 10),
-                                      child: Text('Puesto: ' + data.puesto,
+                                      child: Text('Puesto: ' + data.puesto!,
                                           style: TextStyle(
                                               fontSize: 14.0,
                                               color: Colors.white))),
@@ -224,7 +224,7 @@ class Cclientes extends State<CclientesState> {
   // }
 
   openPopup(BuildContext context, Studentdata data) {
-    int idp = (data.id);
+    int? idp = (data.id);
     print("$idp");
     Alert(
         context: context,
@@ -267,7 +267,7 @@ class Cclientes extends State<CclientesState> {
   }
 
   Future<void> savedata(BuildContext context, Studentdata data) async {
-    String user = "";
+    String? user = "";
     String idp = "";
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -332,7 +332,7 @@ class Cclientes extends State<CclientesState> {
 }
 
 class LogtareasState extends StatefulWidget {
-  final String idcliente;
+  final String? idcliente;
   //final String usuario;
   LogtareasState(this.idcliente);
 
@@ -343,7 +343,7 @@ class LogtareasState extends StatefulWidget {
 }
 
 class Logtareas extends State<LogtareasState> {
-  final String idcliente;
+  final String? idcliente;
   //final String usuario;
   //TextEditingController comentariosctl = TextEditingController();
   //TextEditingController idctl = TextEditingController();
@@ -352,15 +352,15 @@ class Logtareas extends State<LogtareasState> {
   );
 
   String estado = "";
-  bool error, sending, success;
-  String msg;
-  String user = "";
+  bool? error, sending, success;
+  String? msg;
+  String? user = "";
   // API URL
   final url = Uri.parse(
     'https://asamexico.com.mx/php/controller/logclientes.php',
   );
 
-  Future<List<Logstareas>> flistlogs() async {
+  Future<List<Logstareas>?> flistlogs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     user = prefs.getString('nuser');
 
@@ -375,7 +375,7 @@ class Logtareas extends State<LogtareasState> {
       final items = json.decode(response.body).cast<Map<String, dynamic>>();
       print(response.body);
 
-      List<Logstareas> logstarasList = items.map<Logstareas>((json) {
+      List<Logstareas>? logstarasList = items.map<Logstareas>((json) {
         return Logstareas.fromJson(json);
       }).toList();
 
@@ -387,14 +387,14 @@ class Logtareas extends State<LogtareasState> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Logstareas>>(
+    return FutureBuilder<List<Logstareas>?>(
       future: flistlogs(),
       builder: (context, snapshot) {
         if (!snapshot.hasData)
           return Center(child: CircularProgressIndicator());
 
         return ListView(
-          children: snapshot.data
+          children: snapshot.data!
               .map((data) => Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -415,16 +415,16 @@ class Logtareas extends State<LogtareasState> {
                               // trailing: Icon(Icons.arrow_forward_ios,
                               //     size: 30.0, color: Colors.blue),
                               //Agregamos el nombre con un Widget Text
-                              title: Text(data.comentarios,
+                              title: Text(data.comentarios!,
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 14.0)
                                   //le damos estilo a cada texto
                                   ),
                               subtitle: Text(
                                   'Fecha: ' +
-                                      data.fechaalta +
+                                      data.fechaalta! +
                                       '  @' +
-                                      data.usuarioalta,
+                                      data.usuarioalta!,
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                       color: Color.fromRGBO(35, 56, 120, 0.8))),

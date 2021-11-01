@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class Clienteview extends StatelessWidget {
   final String usuario;
   final String acceso;
-  const Clienteview(this.usuario, this.acceso, {Key key}) : super(key: key);
+  const Clienteview(this.usuario, this.acceso, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

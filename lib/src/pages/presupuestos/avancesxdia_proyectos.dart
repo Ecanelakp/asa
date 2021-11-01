@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 class Avancexdia extends StatelessWidget {
   final String idHolder;
-  final String referencia;
+  final String? referencia;
   const Avancexdia(this.idHolder, this.referencia);
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class Avances extends StatelessWidget {
 
   const Avances(this.idHolder, this.referencia);
 
-  Future<List<Avancesistemasxd>> jsonsistemasavances() async {
+  Future<List<Avancesistemasxd>?> jsonsistemasavances() async {
     print(idHolder);
     print(referencia);
     var data = {'idp': idHolder};
@@ -49,7 +49,8 @@ class Avances extends StatelessWidget {
     if (response.statusCode == 200) {
       final items = json.decode(response.body).cast<Map<String, dynamic>>();
       print(items);
-      List<Avancesistemasxd> sistemasList = items.map<Avancesistemasxd>((json) {
+      List<Avancesistemasxd>? sistemasList =
+          items.map<Avancesistemasxd>((json) {
         return Avancesistemasxd.fromJson(json);
       }).toList();
 
@@ -62,7 +63,7 @@ class Avances extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     jsonsistemasavances();
-    return FutureBuilder<List<Avancesistemasxd>>(
+    return FutureBuilder<List<Avancesistemasxd>?>(
         future: jsonsistemasavances(),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
@@ -71,7 +72,7 @@ class Avances extends StatelessWidget {
           return RefreshIndicator(
             onRefresh: () => jsonsistemasavances(),
             child: ListView(
-                children: snapshot.data
+                children: snapshot.data!
                     .map((data) => Container(
                             child: Card(
                           child: ListTile(
@@ -90,9 +91,9 @@ class Avances extends StatelessWidget {
                                       builder: (context) => SignAvance(
                                           data.cantidad.toString(),
                                           data.fecha.toString(),
-                                          data.sistemas)));
+                                          data.sistemas.toString())));
                             },
-                            subtitle: Text(data.sistemas),
+                            subtitle: Text(data.sistemas!),
                             leading: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [

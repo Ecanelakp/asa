@@ -12,8 +12,8 @@ class ListProyectos extends StatefulWidget {
 }
 
 class _ListProyectosState extends State<ListProyectos> {
-  List data;
-  Future myFuture;
+  List? data;
+  Future? myFuture;
   final url = Uri.parse(
     'https://asamexico.com.mx/php/controller/clientes.php?op=GetProyectos',
   );
@@ -24,7 +24,7 @@ class _ListProyectosState extends State<ListProyectos> {
       data = json.decode(response.body);
     });
 
-    print(data[1]["id"]);
+    print(data![1]["id"]);
 
     return "Success!";
   }
@@ -38,12 +38,12 @@ class _ListProyectosState extends State<ListProyectos> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<String>(
-        future: myFuture,
+        future: myFuture!.then((value) => value as String),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
             return Center(child: CircularProgressIndicator());
           return new ListView.builder(
-            itemCount: data == null ? 0 : data.length,
+            itemCount: data == null ? 0 : data!.length,
             itemBuilder: (BuildContext context, int index) {
               return Card(
                 child: new Padding(
@@ -57,14 +57,14 @@ class _ListProyectosState extends State<ListProyectos> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      Viewpresupuestos(data[index]["id"])));
+                                      Viewpresupuestos(data![index]["id"])));
                         },
                         leading: Icon(Icons.construction,
                             color: Color.fromRGBO(35, 56, 120, 1.0)),
-                        title: Text(data[index]["Proyecto"],
+                        title: Text(data![index]["Proyecto"],
                             style: TextStyle(
                                 color: Color.fromRGBO(35, 56, 120, 1.0))),
-                        subtitle: Text(data[index]["Referencia"]),
+                        subtitle: Text(data![index]["Referencia"]),
                         trailing: Icon(Icons.keyboard_arrow_right),
                         // tileColor: Color.fromRGBO(35, 56, 120, 1.0),
                       ),
@@ -76,7 +76,7 @@ class _ListProyectosState extends State<ListProyectos> {
                                 style: TextStyle(
                                     fontSize: 14.0,
                                     color: Color.fromRGBO(35, 56, 120, 1.0))),
-                            Text(data[index]["Responsable"]),
+                            Text(data![index]["Responsable"]),
                           ],
                         ),
                       ),

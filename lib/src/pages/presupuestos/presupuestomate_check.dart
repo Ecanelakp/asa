@@ -46,11 +46,11 @@ class _CheckmateState extends State<Checkmate> {
 }
 
 class Listamaterial {
-  String nombre;
-  String unidad;
+  String? nombre;
+  String? unidad;
 
-  double cantidad;
-  int idproducto;
+  double? cantidad;
+  int? idproducto;
 
   Listamaterial({this.nombre, this.cantidad, this.idproducto, this.unidad});
   factory Listamaterial.fromJson(Map<String, dynamic> json) {
@@ -63,7 +63,7 @@ class Listamaterial {
 }
 
 class Cargamateriales extends StatefulWidget {
-  final String id;
+  final String? id;
   @override
   Cargamateriales({this.id});
 
@@ -77,7 +77,7 @@ class _CargamaterialesState extends State<Cargamateriales> {
     'https://asamexico.com.mx/php/controller/checkmateproyecto.php',
   );
 
-  Future<List<Listamaterial>> fetchStudents() async {
+  Future<List<Listamaterial>?> fetchStudents() async {
     var data = {'id': ("${widget.id}")};
     print('========$data=======');
 
@@ -88,7 +88,7 @@ class _CargamaterialesState extends State<Cargamateriales> {
     if (response.statusCode == 200) {
       final items = json.decode(response.body).cast<Map<String, dynamic>>();
       //print(this.usuario);
-      List<Listamaterial> studentList = items.map<Listamaterial>((json) {
+      List<Listamaterial>? studentList = items.map<Listamaterial>((json) {
         return Listamaterial.fromJson(json);
       }).toList();
 
@@ -100,14 +100,14 @@ class _CargamaterialesState extends State<Cargamateriales> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Listamaterial>>(
+    return FutureBuilder<List<Listamaterial>?>(
         future: fetchStudents(),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
             return Center(child: CircularProgressIndicator());
 
           return ListView(
-              children: snapshot.data
+              children: snapshot.data!
                   .map(
                     (data) => Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -143,7 +143,7 @@ class _CargamaterialesState extends State<Cargamateriales> {
                             ),
                           ],
                           subtitle: Text(
-                              data.cantidad.toString() + "  " + data.unidad,
+                              data.cantidad.toString() + "  " + data.unidad!,
                               style: TextStyle(
                                   fontStyle: FontStyle.italic,
                                   fontSize: 14.0,
@@ -165,7 +165,7 @@ class _CargamaterialesState extends State<Cargamateriales> {
                                 });
                               }),
                           //Agregamos el nombre con un Widget Text
-                          title: Text(data.nombre,
+                          title: Text(data.nombre!,
                               style:
                                   TextStyle(color: Colors.black, fontSize: 14.0)
                               //le damos estilo a cada texto
@@ -178,7 +178,7 @@ class _CargamaterialesState extends State<Cargamateriales> {
         });
   }
 
-  Future<void> rechazarmate({int ids, String comentarios}) async {
+  Future<void> rechazarmate({int? ids, String? comentarios}) async {
     String id = ids.toString();
     // final urlinsert = Uri.parse(
     //   'https://asamexico.com.mx/php/controller/categoria.php?op=Insert');
@@ -227,7 +227,7 @@ class _CargamaterialesState extends State<Cargamateriales> {
     }
   }
 
-  Future<void> aceptarmate({int ids, String comentarios}) async {
+  Future<void> aceptarmate({int? ids, String? comentarios}) async {
     String id = ids.toString();
     // final urlinsert = Uri.parse(
     //   'https://asamexico.com.mx/php/controller/categoria.php?op=Insert');

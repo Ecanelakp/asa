@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 class Listaclientes extends StatelessWidget {
   final String usuario;
   @override
-  const Listaclientes(this.usuario, {Key key}) : super(key: key);
+  const Listaclientes(this.usuario, {Key? key}) : super(key: key);
   Widget build(BuildContext context) {
     return Center(
       child: MainListView(context),
@@ -18,9 +18,9 @@ class Listaclientes extends StatelessWidget {
 class Studentdata {
   dynamic id;
   dynamic referencia;
-  String cliente;
-  String contacto;
-  String puesto;
+  String? cliente;
+  String? contacto;
+  String? puesto;
 
   Studentdata(
       {this.id, this.referencia, this.cliente, this.contacto, this.puesto});
@@ -47,13 +47,13 @@ class MainListViewState extends State {
   );
 
   //String user = this.usuario;
-  Future<List<Studentdata>> fetchStudents() async {
+  Future<List<Studentdata>?> fetchStudents() async {
     var response = await http.get(apiurl);
 
     if (response.statusCode == 200) {
       final items = json.decode(response.body).cast<Map<String, dynamic>>();
       //print(this.usuario);
-      List<Studentdata> studentList = items.map<Studentdata>((json) {
+      List<Studentdata>? studentList = items.map<Studentdata>((json) {
         return Studentdata.fromJson(json);
       }).toList();
 
@@ -65,14 +65,14 @@ class MainListViewState extends State {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Studentdata>>(
+    return FutureBuilder<List<Studentdata>?>(
       future: fetchStudents(),
       builder: (context, snapshot) {
         if (!snapshot.hasData)
           return Center(child: CircularProgressIndicator());
 
         return ListView(
-          children: snapshot.data
+          children: snapshot.data!
               .map((data) => Card(
                     color: Colors.white,
                     child: ListTile(
@@ -88,7 +88,7 @@ class MainListViewState extends State {
                             ),
                             Text("Referencia: " + data.referencia.toString(),
                                 style: TextStyle(color: Colors.black54)),
-                            Text("Contacto: " + data.contacto,
+                            Text("Contacto: " + data.contacto!,
                                 style: TextStyle(color: Colors.black54)),
                             SizedBox(
                               height: 8,
@@ -106,7 +106,7 @@ class MainListViewState extends State {
                         trailing: Icon(Icons.arrow_forward_ios,
                             size: 30.0, color: Colors.redAccent),
                         //Agregamos el nombre con un Widget Text
-                        title: Text(data.cliente,
+                        title: Text(data.cliente!,
                             style: TextStyle(
                                 color: Color.fromRGBO(35, 56, 120, 1.0),
                                 fontSize: 14.0)

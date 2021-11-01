@@ -17,17 +17,17 @@ final url =
 final urlp =
     Uri.parse('https://asamexico.com.mx/php/controller/listapersonalp.php');
 
-String unidad = '';
-String _sistema;
-String _sistemareferencia;
-String _personal;
+String? unidad = '';
+String? _sistema;
+String? _sistemareferencia;
+String? _personal;
 String estado = "";
-bool error, sending, success;
-String msg;
+bool? error, sending, success;
+String? msg;
 
 class Sistemasproyecto extends StatefulWidget {
   final String idHolder;
-  final String referencia;
+  final String? referencia;
 
   Sistemasproyecto(this.idHolder, this.referencia);
 
@@ -138,7 +138,7 @@ class _SistemasproyectoState extends State<Sistemasproyecto> {
                     },
                     icon: Icon(Icons.save_sharp, size: 30, color: Colors.white),
                     label: Text(
-                      '      Guardar     ',
+                      '      Guardar      ',
                       style: TextStyle(
                         color: Colors.white,
                       ),
@@ -157,7 +157,7 @@ class _SistemasproyectoState extends State<Sistemasproyecto> {
         '$sistema==== $unidad ==== $personal =====$fechainicio====$id=====$referencia======$cantidad');
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String usuario = prefs.getString('nuser');
+    String? usuario = prefs.getString('nuser');
 
     var resi = await http.post(
         Uri.parse(
@@ -184,7 +184,7 @@ class _SistemasproyectoState extends State<Sistemasproyecto> {
           sending = false;
           error = true;
           msg = data["message"]; //error message from server
-          estado = "Error al guardar";
+          estado = "Error al guardar====";
         });
       } else {
         estado = "Se ha actualizado";
@@ -213,13 +213,13 @@ class Listasistemas extends StatefulWidget {
 }
 
 class _ListasistemasState extends State<Listasistemas> {
-  Future<List<Sistemas>> jsonsistemas() async {
+  Future<List<Sistemas>?> jsonsistemas() async {
     var response = await http.get(url);
 
     if (response.statusCode == 200) {
       final items = json.decode(response.body).cast<Map<String, dynamic>>();
       //print(items);
-      List<Sistemas> sistemasList = items.map<Sistemas>((json) {
+      List<Sistemas>? sistemasList = items.map<Sistemas>((json) {
         return Sistemas.fromJson(json);
       }).toList();
 
@@ -232,7 +232,7 @@ class _ListasistemasState extends State<Listasistemas> {
   @override
   Widget build(BuildContext context) {
     jsonsistemas();
-    return FutureBuilder<List<Sistemas>>(
+    return FutureBuilder<List<Sistemas>?>(
         future: jsonsistemas(),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
@@ -240,7 +240,7 @@ class _ListasistemasState extends State<Listasistemas> {
 
           return ListView(
               scrollDirection: Axis.horizontal,
-              children: snapshot.data
+              children: snapshot.data!
                   .map((data) => Container(
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: Card(
@@ -269,7 +269,7 @@ class _ListasistemasState extends State<Listasistemas> {
                               // },
                               children: [
                                 Text(
-                                  data.descripcion,
+                                  data.descripcion!,
                                   style: TextStyle(
                                       fontSize:
                                           MediaQuery.of(context).size.width *
@@ -277,7 +277,7 @@ class _ListasistemasState extends State<Listasistemas> {
                                 )
                               ],
                               title: Text(
-                                data.referencia,
+                                data.referencia!,
                               ),
                               // subtitle: Text(
                               //   data.descripcion,
@@ -299,13 +299,13 @@ class Listapersona extends StatefulWidget {
 }
 
 class _ListapersonaState extends State<Listapersona> {
-  Future<List<PersonallistP>> jsonpersonal() async {
+  Future<List<PersonallistP>?> jsonpersonal() async {
     var response = await http.get(urlp);
 
     if (response.statusCode == 200) {
       final items = json.decode(response.body).cast<Map<String, dynamic>>();
       //print(items);
-      List<PersonallistP> personalList = items.map<PersonallistP>((json) {
+      List<PersonallistP>? personalList = items.map<PersonallistP>((json) {
         return PersonallistP.fromJson(json);
       }).toList();
 
@@ -318,7 +318,7 @@ class _ListapersonaState extends State<Listapersona> {
   @override
   Widget build(BuildContext context) {
     jsonpersonal();
-    return FutureBuilder<List<PersonallistP>>(
+    return FutureBuilder<List<PersonallistP>?>(
         future: jsonpersonal(),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
@@ -326,7 +326,7 @@ class _ListapersonaState extends State<Listapersona> {
 
           return ListView(
               scrollDirection: Axis.horizontal,
-              children: snapshot.data
+              children: snapshot.data!
                   .map((data) => Container(
                       width: MediaQuery.of(context).size.width * 0.6,
                       child: Card(
@@ -345,9 +345,9 @@ class _ListapersonaState extends State<Listapersona> {
                                 color: Color.fromRGBO(35, 56, 120, 1.0),
                                 size: 20,
                               ),
-                              title: Text(data.fullname),
+                              title: Text(data.fullname!),
                               subtitle: Text(
-                                data.puesto,
+                                data.puesto!,
                                 style: TextStyle(
                                     fontSize:
                                         MediaQuery.of(context).size.width *

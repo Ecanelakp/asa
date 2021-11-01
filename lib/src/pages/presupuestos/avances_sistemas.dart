@@ -7,8 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 final url = '';
 
 String estado = "";
-bool error, sending, success;
-String msg;
+bool? error, sending, success;
+String? msg;
 TextEditingController _comentarios = new TextEditingController();
 TextEditingController _cantidad = new TextEditingController();
 
@@ -16,7 +16,7 @@ class Avanceproyectos extends StatefulWidget {
   final String idHolder;
   final String id;
   final String cantidad;
-  final String referencia;
+  final String? referencia;
 
   const Avanceproyectos(this.idHolder, this.id, this.cantidad, this.referencia);
 
@@ -31,7 +31,7 @@ class _AvanceproyectosState extends State<Avanceproyectos> {
 
   String _mensaje = "";
 
-  Future<String> recibirString() async {
+  Future<String?> recibirString() async {
     var data = {'idp': widget.idHolder, 'ids': widget.id};
     final respuesta = await http.post(apiurl1, body: json.encode(data));
     if (respuesta.statusCode == 200) {
@@ -54,7 +54,7 @@ class _AvanceproyectosState extends State<Avanceproyectos> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.referencia),
+          title: Text(widget.referencia!),
           backgroundColor: Color.fromRGBO(35, 56, 120, 1.0),
         ),
         body: Padding(
@@ -145,7 +145,7 @@ class _AvanceproyectosState extends State<Avanceproyectos> {
     print('');
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String usuario = prefs.getString('nuser');
+    String? usuario = prefs.getString('nuser');
 
     var resi = await http.post(
         Uri.parse(
@@ -197,7 +197,7 @@ class Avances extends StatelessWidget {
 
   const Avances(this.idHolder, this.id);
 
-  Future<List<Avancesistemas>> jsonsistemasavances() async {
+  Future<List<Avancesistemas>?> jsonsistemasavances() async {
     print(idHolder);
     print(id);
     var data = {'idp': idHolder, 'ids': id};
@@ -209,7 +209,7 @@ class Avances extends StatelessWidget {
     if (response.statusCode == 200) {
       final items = json.decode(response.body).cast<Map<String, dynamic>>();
       print(items);
-      List<Avancesistemas> sistemasList = items.map<Avancesistemas>((json) {
+      List<Avancesistemas>? sistemasList = items.map<Avancesistemas>((json) {
         return Avancesistemas.fromJson(json);
       }).toList();
 
@@ -222,21 +222,21 @@ class Avances extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     jsonsistemasavances();
-    return FutureBuilder<List<Avancesistemas>>(
+    return FutureBuilder<List<Avancesistemas>?>(
         future: jsonsistemasavances(),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
             return Center(child: CircularProgressIndicator());
 
           return ListView(
-              children: snapshot.data
+              children: snapshot.data!
                   .map((data) => Container(
                           child: Card(
                         child: ListTile(
                           title: Text(
-                            data.comentarios,
+                            data.comentarios!,
                           ),
-                          subtitle: Text('Usuario:  ' + data.usuarioReg),
+                          subtitle: Text('Usuario:  ' + data.usuarioReg!),
                           trailing: Text(data.fecha.toString(),
                               style: (TextStyle(
                                   fontSize: 25,

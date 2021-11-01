@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class Wlistamateriales extends StatelessWidget {
-  const Wlistamateriales({Key key}) : super(key: key);
+  const Wlistamateriales({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -73,12 +73,12 @@ class Listamateriales extends StatefulWidget {
 TextEditingController editingController = TextEditingController();
 
 class Listamaterial {
-  String nombre;
-  String descripcion;
-  String unidad;
-  String tipo;
-  double cantidad;
-  int idproducto;
+  String? nombre;
+  String? descripcion;
+  String? unidad;
+  String? tipo;
+  double? cantidad;
+  int? idproducto;
 
   Listamaterial(
       {this.nombre,
@@ -105,24 +105,24 @@ class Listamateria extends State<Listamateriales> {
   Listamateria();
 
   String estado = "";
-  bool error, sending, success;
-  String msg;
+  bool? error, sending, success;
+  String? msg;
   String user = "";
   // API URL
   final apiurl = Uri.parse(
     'https://asamexico.com.mx/php/controller/listamateriales.php',
   );
 
-  int get idp => null;
+  int? get idp => null;
 
   //String user = this.usuario;
-  Future<List<Listamaterial>> fetchStudents() async {
+  Future<List<Listamaterial>?> fetchStudents() async {
     var response = await http.get(apiurl);
 
     if (response.statusCode == 200) {
       final items = json.decode(response.body).cast<Map<String, dynamic>>();
       //print(this.usuario);
-      List<Listamaterial> studentList = items.map<Listamaterial>((json) {
+      List<Listamaterial>? studentList = items.map<Listamaterial>((json) {
         return Listamaterial.fromJson(json);
       }).toList();
 
@@ -134,21 +134,21 @@ class Listamateria extends State<Listamateriales> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Listamaterial>>(
+    return FutureBuilder<List<Listamaterial>?>(
         future: fetchStudents(),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
             return Center(child: CircularProgressIndicator());
 
           return ListView(
-              children: snapshot.data
+              children: snapshot.data!
                   .map(
                     (data) => Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Card(
                         child: ListTile(
                           leading: Text(
-                              data.cantidad.toString() + " " + data.unidad,
+                              data.cantidad.toString() + " " + data.unidad!,
                               style: TextStyle(
                                   fontStyle: FontStyle.italic,
                                   fontSize: 14.0,
@@ -173,14 +173,14 @@ class Listamateria extends State<Listamateriales> {
                           //Agregamos el nombre con un Widget Text
                           title: Text(
                               "Producto:      " +
-                                  data.nombre +
+                                  data.nombre! +
                                   "  " +
-                                  data.descripcion,
+                                  data.descripcion!,
                               style:
                                   TextStyle(color: Colors.black, fontSize: 14.0)
                               //le damos estilo a cada texto
                               ),
-                          subtitle: Text('Tipo:    ' + data.tipo,
+                          subtitle: Text('Tipo:    ' + data.tipo!,
                               style: TextStyle(
                                   color: Color.fromRGBO(35, 56, 120, 0.8))),
                         ),

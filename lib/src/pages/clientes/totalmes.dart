@@ -14,7 +14,7 @@ String _mensaje = "";
 final apiurl1 = Uri.parse(
   'https://asamexico.com.mx/php/controller/ventassummes.php',
 );
-int nmes;
+int? nmes;
 
 class _PaginaState extends State<Pagina> {
   //Future<String> futureAlbum;
@@ -24,7 +24,7 @@ class _PaginaState extends State<Pagina> {
   Widget build(BuildContext context) {
     final wmes = Provider.of<Meses>(context);
 
-    nmes = wmes.mes;
+    nmes = wmes.mes as int?;
     recibirString();
 
     dynamic gasto = double.parse(_mensaje);
@@ -45,7 +45,7 @@ class _PaginaState extends State<Pagina> {
   }
 
   // ignore: missing_return
-  Future<String> recibirString() async {
+  Future<String?> recibirString() async {
     var data = {'nmes': nmes.toString()};
     final respuesta = await http.post(apiurl1, body: json.encode(data));
 

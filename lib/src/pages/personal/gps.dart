@@ -9,7 +9,7 @@ class Gps extends StatefulWidget {
 class _GpsState extends State<Gps> {
   Geolocator geolocator = Geolocator();
 
-  Position userLocation;
+  Position? userLocation;
 
   @override
   void initState() {
@@ -31,9 +31,9 @@ class _GpsState extends State<Gps> {
           userLocation == null
               ? CircularProgressIndicator()
               : Text("Location:" +
-                  userLocation.latitude.toString() +
+                  userLocation!.latitude.toString() +
                   " " +
-                  userLocation.longitude.toString()),
+                  userLocation!.longitude.toString()),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: RaisedButton(
@@ -56,7 +56,7 @@ class _GpsState extends State<Gps> {
     );
   }
 
-  Future<Position> _getLocation() async {
+  Future<Position?> _getLocation() async {
     var currentLocation;
     try {
       currentLocation = await Geolocator.getCurrentPosition(

@@ -9,7 +9,7 @@ import 'maps_personal.dart';
 
 class Multiregistro extends StatefulWidget {
   const Multiregistro({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -40,9 +40,9 @@ class _MultiregistroState extends State<Multiregistro> {
                 ? CircularProgressIndicator()
                 : Text(
                     "Location:" +
-                        userLocation.latitude.toString() +
+                        userLocation!.latitude.toString() +
                         " " +
-                        userLocation.longitude.toString(),
+                        userLocation!.longitude.toString(),
                     style: TextStyle(color: Colors.white),
                   ),
           ),
@@ -55,7 +55,7 @@ class _MultiregistroState extends State<Multiregistro> {
     );
   }
 
-  Future<Position> _getLocation() async {
+  Future<Position?> _getLocation() async {
     var currentLocation;
     try {
       currentLocation = await Geolocator.getCurrentPosition(
@@ -67,14 +67,14 @@ class _MultiregistroState extends State<Multiregistro> {
   }
 }
 
-Position userLocation;
+Position? userLocation;
 String _tipo = 'entrada';
-bool sending;
-bool error;
-bool success;
-String msg; //error message from server
-String estado;
-String _acceso;
+bool? sending;
+bool? error;
+bool? success;
+String? msg; //error message from server
+String? estado;
+String? _acceso;
 Geolocator geolocator = Geolocator();
 
 class Multiregister extends StatefulWidget {
@@ -86,7 +86,7 @@ final apiurl = Uri.parse(
   'https://asamexico.com.mx/php/controller/listapersonal.php',
 );
 
-Future<List<Personallist>> listaregistro() async {
+Future<List<Personallist>?> listaregistro() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   _acceso = prefs.getString('acceso');
   var response = await http.get(apiurl);
@@ -94,7 +94,7 @@ Future<List<Personallist>> listaregistro() async {
   if (response.statusCode == 200) {
     final items = json.decode(response.body).cast<Map<String, dynamic>>();
     //print(response.body);
-    List<Personallist> personallist = items.map<Personallist>((json) {
+    List<Personallist>? personallist = items.map<Personallist>((json) {
       return Personallist.fromJson(json);
     }).toList();
 
@@ -108,14 +108,14 @@ class _MultiregisterState extends State<Multiregister> {
   @override
   Widget build(BuildContext context) {
     listaregistro();
-    return FutureBuilder<List<Personallist>>(
+    return FutureBuilder<List<Personallist>?>(
         future: listaregistro(),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
             return Center(child: CircularProgressIndicator());
 
           return ListView(
-              children: snapshot.data
+              children: snapshot.data!
                   .map((data) => Container(
                       width: MediaQuery.of(context).size.width * 0.6,
                       //Centramos con el Widget <a href="https://zimbronapps.com/flutter/center/">Center</a>
@@ -125,8 +125,8 @@ class _MultiregisterState extends State<Multiregister> {
                           leading: Icon(Icons.account_circle,
                               size: 30.0,
                               color: Color.fromRGBO(35, 56, 120, 1.0)),
-                          title: Text(data.fullname),
-                          subtitle: Text(data.puesto),
+                          title: Text(data.fullname!),
+                          subtitle: Text(data.puesto!),
                           trailing: Icon(Icons.access_alarm,
                               size: 30,
                               color: data.tipo == 'entrada'
@@ -157,7 +157,7 @@ class _MultiregisterState extends State<Multiregister> {
   }
 
   Future<void> registromulti(
-      String nombrecorto, String fullname, String tipo) async {
+      String? nombrecorto, String? fullname, String? tipo) async {
     var resi = await http.post(
         Uri.parse(
             "https://asamexico.com.mx/php/controller/asistenciapersonal.php"),
@@ -166,8 +166,8 @@ class _MultiregisterState extends State<Multiregister> {
           "nombre": fullname,
           "tipo": tipo == 'entrada' ? 'salida' : 'entrada',
           "fechareg": '0',
-          "latitude": userLocation.latitude.toString(),
-          "longitude": userLocation.longitude.toString(),
+          "latitude": userLocation!.latitude.toString(),
+          "longitude": userLocation!.longitude.toString(),
         }); //sending post request with header data
     print(nombrecorto);
     if (resi.statusCode == 200) {

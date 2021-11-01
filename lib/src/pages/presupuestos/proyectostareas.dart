@@ -3,7 +3,7 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
 
 class Tareasproyectos extends StatelessWidget {
-  const Tareasproyectos({Key key}) : super(key: key);
+  const Tareasproyectos({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class Tareasproyectos extends StatelessWidget {
 class SecondRoute extends StatelessWidget {
   TextEditingController fechaincioctl = new TextEditingController();
   //String _fechainicio;
-  String dropdownValue = 'First';
+  String? dropdownValue = 'First';
   @override
   Widget build(BuildContext context) {
     final format = DateFormat("dd-MM-yyyy");
@@ -69,7 +69,7 @@ class SecondRoute extends StatelessWidget {
                       title: Container(
                           child: DropdownButton<String>(
                         value: dropdownValue,
-                        onChanged: (String newValue) {
+                        onChanged: (String? newValue) {
                           setState(() {
                             dropdownValue = newValue;
                           });

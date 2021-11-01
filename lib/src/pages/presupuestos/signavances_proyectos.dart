@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:signature/signature.dart';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'dart:ui';
+import 'package:shared_preferences/shared_preferences.dart';
+
+String estado = "";
+bool error = false, sending = false, success = false;
+String msg = "";
 
 class SignAvance extends StatefulWidget {
   final String cantidad;
@@ -123,14 +129,18 @@ class _SignAvanceState extends State<SignAvance> {
                     IconButton(
                       icon: const Icon(Icons.check),
                       color: Colors.white,
-                      onPressed: () async {
-                        if (_controller.isNotEmpty) {
-                          final data = await _controller.toPngBytes();
-                          if (data != null) {
-                            data != null ? registrar() : Container();
-                          }
-                        }
+                      onPressed: () {
+                        print(widget.sistemas);
+                        guardar(widget.sistemas);
                       },
+                      // onPressed: () async {
+                      //   if (_controller.isNotEmpty) {
+                      //     final data = await _controller.toPngBytes();
+                      //     if (data != null) {
+                      //       data != null ? registrar() : Container();
+                      //     }
+                      //   }
+                      // },
                     ),
                     //CLEAR CANVAS
                     IconButton(
@@ -150,7 +160,44 @@ class _SignAvanceState extends State<SignAvance> {
     );
   }
 
-  registrar() {
-    print('ok');
+  void guardar(String sistemas) async {
+    print('=======$sistemas========');
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //String usuario = prefs.getString('nuser');
+
+    var resi = await http.post(
+        Uri.parse(
+            "https://asamexico.com.mx/php/controller/altasistemaproyec.php"),
+        body: {}); //sending post request with header data
+
+    if (resi.statusCode == 200) {
+      print(resi.body); //print raw response on console
+      var data = json.decode(resi.body); //decoding json to array
+      if (data["error"]) {
+        setState(() {
+          //refresh the UI when error is recieved from server
+          sending = false;
+          error = true;
+          msg = data["message"]; //error message from server
+          estado = "Error al guardar";
+        });
+      } else {
+        estado = "Se ha actualizado";
+        print("$estado");
+        Navigator.pop(context);
+        setState(() {
+          sending = false;
+          success = true;
+        });
+      }
+    } else {
+      //there is error
+      setState(() {
+        error = true;
+        msg = "Error during sendign data.";
+        sending = false;
+      });
+    }
   }
 }

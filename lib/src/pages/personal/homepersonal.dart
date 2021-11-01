@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 String tipo = 'salida';
 
 class Homepersonal extends StatefulWidget {
-  final String acceso;
+  final String? acceso;
 
   const Homepersonal({this.acceso});
   @override
@@ -19,16 +19,16 @@ class Homepersonal extends StatefulWidget {
 
 class HomepersonalState extends State<Homepersonal> {
   String _timeString = '';
-  String _nombre = '';
-  bool sending;
-  bool error;
-  bool success;
-  String msg; //error message from server
-  String estado;
-  String _usuario;
+  String? _nombre = '';
+  bool? sending;
+  bool? error;
+  bool? success;
+  String? msg; //error message from server
+  String? estado;
+  String? _usuario;
   Geolocator geolocator = Geolocator();
 
-  Position userLocation;
+  Position? userLocation;
   @override
   void initState() {
     _timeString =
@@ -73,11 +73,15 @@ class HomepersonalState extends State<Homepersonal> {
                     SizedBox(
                       height: 20,
                     ),
-                    Container(child: Movtipo()),
+                    Container(
+                      child: tipo == 'entrada'
+                          ? Text('Bienvenido')
+                          : Text('Hasta Luego'),
+                    ),
                     SizedBox(
                       height: 20,
                     ),
-                    Text(_nombre,
+                    Text(_nombre!,
                         style: TextStyle(
                           fontSize: 20,
                           color: Color.fromRGBO(35, 56, 120, 1.0),
@@ -89,9 +93,9 @@ class HomepersonalState extends State<Homepersonal> {
                         ? CircularProgressIndicator()
                         : Text(
                             "Location:" +
-                                userLocation.latitude.toString() +
+                                userLocation!.latitude.toString() +
                                 " " +
-                                userLocation.longitude.toString(),
+                                userLocation!.longitude.toString(),
                             style: TextStyle(color: Colors.white),
                           ),
                     Text(
@@ -111,6 +115,7 @@ class HomepersonalState extends State<Homepersonal> {
                               });
                             });
                             registro();
+                            recibirString();
                           },
                           icon: Icon(
                             Icons.timer,
@@ -160,7 +165,7 @@ class HomepersonalState extends State<Homepersonal> {
     });
   }
 
-  Future<Position> _getLocation() async {
+  Future<Position?> _getLocation() async {
     var currentLocation;
     try {
       currentLocation = await Geolocator.getCurrentPosition(
@@ -186,8 +191,8 @@ class HomepersonalState extends State<Homepersonal> {
           "nombre": _nombre,
           "tipo": _tipo,
           "fechareg": _timeString,
-          "latitude": userLocation.latitude.toString(),
-          "longitude": userLocation.longitude.toString(),
+          "latitude": userLocation!.latitude.toString(),
+          "longitude": userLocation!.longitude.toString(),
         }); //sending post request with header data
 
     if (resi.statusCode == 200) {
@@ -219,20 +224,11 @@ class HomepersonalState extends State<Homepersonal> {
       });
     }
   }
-}
 
-class Movtipo extends StatefulWidget {
-  @override
-  _MovtipoState createState() => _MovtipoState();
-}
-
-String _usuario = "";
-final apiurl1 = Uri.parse(
-  'https://asamexico.com.mx/php/controller/ultmovregistro.php',
-);
-
-class _MovtipoState extends State<Movtipo> {
-  Future<String> recibirString() async {
+  Future<String?> recibirString() async {
+    String? _usuario = "";
+    final apiurl1 =
+        Uri.parse('https://asamexico.com.mx/php/controller/ultmovregistro.php');
     SharedPreferences prefs = await SharedPreferences.getInstance();
     _usuario = prefs.getString('nuser');
     String _tipo1;
@@ -249,23 +245,10 @@ class _MovtipoState extends State<Movtipo> {
         }
 
         print("=========$tipo========");
+        recibirString();
       });
     } else {
       throw Exception("Fallo");
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    //print(latitude.toString());
-    recibirString();
-
-    if (tipo == null) {
-      return Text("Bienvenido", style: TextStyle(fontSize: 20));
-    } else if (tipo == 'entrada') {
-      return Text('Hasta luego', style: TextStyle(fontSize: 20));
-    } else if (tipo == 'salida') {
-      return Text('Bienvenido', style: TextStyle(fontSize: 20));
     }
   }
 }

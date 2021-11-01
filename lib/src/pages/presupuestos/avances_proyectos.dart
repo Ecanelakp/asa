@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 
 class Avancesproyectoshm extends StatefulWidget {
   final String idHolder;
-  final String referencia;
+  final String? referencia;
   Avancesproyectoshm(this.idHolder, this.referencia);
 
   @override
@@ -29,7 +29,7 @@ class _AvancesproyectoshmState extends State<Avancesproyectoshm> {
   }
 
   String _avance = '';
-  Future<String> recibirString() async {
+  Future<String?> recibirString() async {
     var data = {'idp': widget.idHolder};
     final respuesta = await http.post(apiurl1, body: json.encode(data));
     if (respuesta.statusCode == 200) {
@@ -164,7 +164,7 @@ class Listasisusados extends StatefulWidget {
 }
 
 class _ListasisusadosState extends State<Listasisusados> {
-  Future<List<Sistemasusadosp>> jsonsistemasused() async {
+  Future<List<Sistemasusadosp>?> jsonsistemasused() async {
     var data = {'idp': widget.idHolder};
     var response = await http.post(
         Uri.parse(
@@ -174,7 +174,7 @@ class _ListasisusadosState extends State<Listasisusados> {
     if (response.statusCode == 200) {
       final items = json.decode(response.body).cast<Map<String, dynamic>>();
       print(items);
-      List<Sistemasusadosp> sistemasList = items.map<Sistemasusadosp>((json) {
+      List<Sistemasusadosp>? sistemasList = items.map<Sistemasusadosp>((json) {
         return Sistemasusadosp.fromJson(json);
       }).toList();
 
@@ -195,14 +195,14 @@ class _ListasisusadosState extends State<Listasisusados> {
     jsonsistemasused();
     return RefreshIndicator(
       onRefresh: () => _refreshProducts(context),
-      child: FutureBuilder<List<Sistemasusadosp>>(
+      child: FutureBuilder<List<Sistemasusadosp>?>(
           future: jsonsistemasused(),
           builder: (context, snapshot) {
             if (!snapshot.hasData)
               return Center(child: CircularProgressIndicator());
 
             return ListView(
-                children: snapshot.data
+                children: snapshot.data!
                     .map((data) => Container(
                             child: Card(
                           child: ListTile(
@@ -212,11 +212,11 @@ class _ListasisusadosState extends State<Listasisusados> {
                             subtitle: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Responsable: ' + data.responsable),
+                                Text('Responsable: ' + data.responsable!),
                                 SizedBox(
                                   height: 5,
                                 ),
-                                Text('Fecha incio:' + data.fechaInicio),
+                                Text('Fecha incio:' + data.fechaInicio!),
                               ],
                             ),
                             trailing: Icon(

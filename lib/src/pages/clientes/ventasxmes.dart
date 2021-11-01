@@ -34,13 +34,13 @@ class MesesListViewState extends State {
   );
 
   //String user = this.usuario;
-  Future<List<Mesesc>> mesesc() async {
+  Future<List<Mesesc>?> mesesc() async {
     var response = await http.get(apiurl);
 
     if (response.statusCode == 200) {
       final items = json.decode(response.body).cast<Map<String, dynamic>>();
       //print(this.usuario);
-      List<Mesesc> studentList = items.map<Mesesc>((json) {
+      List<Mesesc>? studentList = items.map<Mesesc>((json) {
         return Mesesc.fromJson(json);
       }).toList();
 
@@ -53,7 +53,7 @@ class MesesListViewState extends State {
   @override
   Widget build(BuildContext context) {
     final wmes = Provider.of<Meses>(context);
-    return FutureBuilder<List<Mesesc>>(
+    return FutureBuilder<List<Mesesc>?>(
       future: mesesc(),
       builder: (context, snapshot) {
         if (!snapshot.hasData)
@@ -61,7 +61,7 @@ class MesesListViewState extends State {
 
         return ListView(
           scrollDirection: Axis.horizontal,
-          children: snapshot.data
+          children: snapshot.data!
               .map(
                 (data) => Container(
                     width: MediaQuery.of(context).size.width * 0.6,

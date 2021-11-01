@@ -11,18 +11,18 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:rflutter_alert/rflutter_alert.dart';
 
-File foto;
+File? foto;
 //String secure_url;
-String idtarea;
+String? idtarea;
 
 class Comentariosproyectos extends StatelessWidget {
   final String idholder;
-  final String referencia;
+  final String? referencia;
 
   const Comentariosproyectos(
     this.idholder,
     this.referencia, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -51,17 +51,17 @@ TextEditingController comentariosctl = TextEditingController();
 TextEditingController idctl = TextEditingController();
 
 String estado = "";
-bool error, sending, success;
-String msg;
+bool? error, sending, success;
+String? msg;
 
 class Logstareas {
-  int id;
+  int? id;
   dynamic referenciaproyecto;
 
-  String usuarioalta;
-  String comentarios;
-  String fechaalta;
-  String urlimagen;
+  String? usuarioalta;
+  String? comentarios;
+  String? fechaalta;
+  String? urlimagen;
 
   Logstareas({
     this.id,
@@ -104,15 +104,15 @@ class Logtareas extends State<LogtareasState> {
   );
 
   String estado = "";
-  bool error, sending, success;
-  String msg;
-  String user = "";
+  bool? error, sending, success;
+  String? msg;
+  String? user = "";
   // API URL
   final url = Uri.parse(
     'https://asamexico.com.mx/php/controller/tareasid.php',
   );
 
-  Future<List<Logstareas>> flistlogs() async {
+  Future<List<Logstareas>?> flistlogs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     user = prefs.getString('nuser');
 
@@ -128,7 +128,7 @@ class Logtareas extends State<LogtareasState> {
       final items = json.decode(response.body).cast<Map<String, dynamic>>();
       //print(response.body);
 
-      List<Logstareas> logstarasList = items.map<Logstareas>((json) {
+      List<Logstareas>? logstarasList = items.map<Logstareas>((json) {
         return Logstareas.fromJson(json);
       }).toList();
 
@@ -148,14 +148,14 @@ class Logtareas extends State<LogtareasState> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
         onRefresh: () => _refreshProducts(context),
-        child: FutureBuilder<List<Logstareas>>(
+        child: FutureBuilder<List<Logstareas>?>(
             future: flistlogs(),
             builder: (context, snapshot) {
               if (!snapshot.hasData)
                 return Center(child: CircularProgressIndicator());
 
               return ListView(
-                children: snapshot.data
+                children: snapshot.data!
                     .map((data) => Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
@@ -173,7 +173,7 @@ class Logtareas extends State<LogtareasState> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: ExpansionTile(
                                     leading: Text(
-                                      data.usuarioalta,
+                                      data.usuarioalta!,
                                       style: TextStyle(
                                           color:
                                               Color.fromRGBO(35, 56, 120, 0.8)),
@@ -181,14 +181,14 @@ class Logtareas extends State<LogtareasState> {
 
                                     //trailing:
                                     //Agregamos el nombre con un Widget Text
-                                    subtitle: Text(data.comentarios,
+                                    subtitle: Text(data.comentarios!,
                                         textAlign: TextAlign.justify,
                                         style: TextStyle(
                                           color: Colors.black,
                                         )
                                         //le damos estilo a cada texto
                                         ),
-                                    title: Text('Fecha: ' + data.fechaalta,
+                                    title: Text('Fecha: ' + data.fechaalta!,
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
                                             fontSize: 14,
@@ -213,7 +213,7 @@ class Logtareas extends State<LogtareasState> {
                                                                           data.urlimagen)));
                                                         },
                                                         child: Image.network(
-                                                            data.urlimagen,
+                                                            data.urlimagen!,
                                                             height: 200,
                                                             fit: BoxFit.cover),
                                                       ),
@@ -270,7 +270,7 @@ openPopup(BuildContext context, idholder, referencia) {
 }
 
 Future<void> savedata(BuildContext context, idholder, referencia) async {
-  String user;
+  String? user;
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   user = prefs.getString('nuser');

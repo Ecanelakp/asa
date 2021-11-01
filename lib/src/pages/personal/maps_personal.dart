@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Mapersonal extends StatefulWidget {
-  final String _fullname;
-  final String _tipo;
-  final double _latitude;
-  final double _longitude;
-  final DateTime _fechareg;
+  final String? _fullname;
+  final String? _tipo;
+  final double? _latitude;
+  final double? _longitude;
+  final DateTime? _fechareg;
 
   const Mapersonal(this._fullname, this._tipo, this._latitude, this._longitude,
       this._fechareg);
@@ -19,11 +19,11 @@ class Mapersonal extends StatefulWidget {
 }
 
 class _MapersonalState extends State<Mapersonal> {
-  final String _fullname;
-  final String _tipo;
-  final double _latitude;
-  final double _longitude;
-  final DateTime _fechareg;
+  final String? _fullname;
+  final String? _tipo;
+  final double? _latitude;
+  final double? _longitude;
+  final DateTime? _fechareg;
   double lat = 0.0;
 
   _MapersonalState(this._fullname, this._tipo, this._latitude, this._longitude,
@@ -47,11 +47,11 @@ class _MapersonalState extends State<Mapersonal> {
         child: GoogleMap(
           markers: {
             Marker(
-                markerId: MarkerId(_fullname),
-                position: LatLng(_latitude, _longitude),
+                markerId: MarkerId(_fullname!),
+                position: LatLng(_latitude!, _longitude!),
                 infoWindow: InfoWindow(
                     title: _fullname,
-                    snippet: _tipo + '  ' + _fechareg.toString())),
+                    snippet: _tipo! + '  ' + _fechareg.toString())),
           },
           initialCameraPosition: _currentPosition,
           onMapCreated: (GoogleMapController controller) {

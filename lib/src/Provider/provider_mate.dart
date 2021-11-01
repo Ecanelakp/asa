@@ -11,11 +11,11 @@ final url = Uri.parse(
 );
 
 class Services {
-  static Future<List<User>> getUsers() async {
+  static Future<List<User>?> getUsers() async {
     try {
       final response = await http.get(apiurl);
       if (response.statusCode == 200) {
-        List<User> list = parseUsers(response.body);
+        List<User>? list = parseUsers(response.body);
         return list;
       } else {
         throw Exception("Error");
@@ -25,7 +25,7 @@ class Services {
     }
   }
 
-  static List<User> parseUsers(String responseBody) {
+  static List<User>? parseUsers(String responseBody) {
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
     return parsed.map<User>((json) => User.fromJson(json)).toList();
   }

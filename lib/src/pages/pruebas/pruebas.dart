@@ -26,7 +26,7 @@ class UserList extends StatefulWidget {
 class _UserListState extends State<UserList> {
   final apiUrl = Uri.parse('https://randomuser.me/api/?results=10');
 
-  List<dynamic> _users = [];
+  List<dynamic>? _users = [];
 
   void fetchUsers() async {
     var result = await http.get(apiUrl);
@@ -35,7 +35,7 @@ class _UserListState extends State<UserList> {
     });
   }
 
-  String _name(dynamic user) {
+  String? _name(dynamic user) {
     return user['name']['title'] +
         " " +
         user['name']['first'] +
@@ -43,7 +43,7 @@ class _UserListState extends State<UserList> {
         user['name']['last'];
   }
 
-  String _location(dynamic user) {
+  String? _location(dynamic user) {
     return user['location']['country'];
   }
 
@@ -52,11 +52,11 @@ class _UserListState extends State<UserList> {
   }
 
   Widget _buildList() {
-    return _users.length != 0
+    return _users!.length != 0
         ? RefreshIndicator(
             child: ListView.builder(
                 padding: EdgeInsets.all(8),
-                itemCount: _users.length,
+                itemCount: _users!.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
                     child: Column(
@@ -65,10 +65,10 @@ class _UserListState extends State<UserList> {
                           leading: CircleAvatar(
                               radius: 30,
                               backgroundImage: NetworkImage(
-                                  _users[index]['picture']['large'])),
-                          title: Text(_name(_users[index])),
-                          subtitle: Text(_location(_users[index])),
-                          trailing: Text(_age(_users[index])),
+                                  _users![index]['picture']['large'])),
+                          title: Text(_name(_users![index])!),
+                          subtitle: Text(_location(_users![index])!),
+                          trailing: Text(_age(_users![index])),
                         )
                       ],
                     ),

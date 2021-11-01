@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 class Datainsert extends StatelessWidget {
   final String usuario;
   @override
-  const Datainsert(this.usuario, {Key key}) : super(key: key);
+  const Datainsert(this.usuario, {Key? key}) : super(key: key);
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -20,13 +20,13 @@ class Datainsert extends StatelessWidget {
 }
 
 class Studentdata {
-  int id;
+  int? id;
   dynamic referencia;
-  String proyecto;
-  String responsable;
-  String observaciones;
-  String nocliente;
-  double avance;
+  String? proyecto;
+  String? responsable;
+  String? observaciones;
+  String? nocliente;
+  double? avance;
 
   Studentdata(
       {this.id,
@@ -50,12 +50,12 @@ class Studentdata {
 }
 
 class Logstareas {
-  int id;
+  int? id;
   dynamic referenciaproyecto;
 
-  String usuarioalta;
-  String comentarios;
-  String fechaalta;
+  String? usuarioalta;
+  String? comentarios;
+  String? fechaalta;
 
   Logstareas(
       {this.id,
@@ -86,13 +86,13 @@ class MainListViewState extends State {
   );
 
   //String user = this.usuario;
-  Future<List<Studentdata>> fetchStudents() async {
+  Future<List<Studentdata>?> fetchStudents() async {
     var response = await http.get(apiurl);
 
     if (response.statusCode == 200) {
       final items = json.decode(response.body).cast<Map<String, dynamic>>();
       //print(this.usuario);
-      List<Studentdata> studentList = items.map<Studentdata>((json) {
+      List<Studentdata>? studentList = items.map<Studentdata>((json) {
         return Studentdata.fromJson(json);
       }).toList();
 
@@ -102,14 +102,14 @@ class MainListViewState extends State {
     }
   }
 
-  navigateToNextActivity(BuildContext context, int dataHolder) {
+  navigateToNextActivity(BuildContext context, int? dataHolder) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => SecondScreenState(dataHolder.toString())));
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Studentdata>>(
+    return FutureBuilder<List<Studentdata>?>(
       future: fetchStudents(),
       builder: (context, snapshot) {
         if (!snapshot.hasData)
@@ -130,7 +130,7 @@ class MainListViewState extends State {
               height: MediaQuery.of(context).size.height * 0.7,
               width: MediaQuery.of(context).size.width * 0.95,
               child: ListView(
-                children: snapshot.data
+                children: snapshot.data!
                     .map(
                       (data) => Card(
                         child: Container(
@@ -139,7 +139,7 @@ class MainListViewState extends State {
                             child: ListTile(
                               leading: Icon(
                                 Icons.construction,
-                                color: data.avance > 60
+                                color: data.avance! > 60
                                     ? Colors.green
                                     : Colors.red,
                               ),
@@ -156,10 +156,10 @@ class MainListViewState extends State {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Descripcion: ' + data.observaciones,
+                                    'Descripcion: ' + data.observaciones!,
                                     textAlign: TextAlign.left,
                                   ),
-                                  Text('Responsable: ' + data.responsable,
+                                  Text('Responsable: ' + data.responsable!,
                                       textAlign: TextAlign.left),
                                 ],
                               ),
@@ -170,7 +170,7 @@ class MainListViewState extends State {
                                     data.avance.toString() + '%',
                                     textAlign: TextAlign.left,
                                     style: (TextStyle(
-                                      color: data.avance > 50
+                                      color: data.avance! > 50
                                           ? Colors.green
                                           : Colors.red,
                                     )),
@@ -222,15 +222,15 @@ class SecondScreen extends State<SecondScreenState> {
   //SecondScreen(this.idHolder, this.usuario);
   //String usuariot = usuario;
   String estado = "";
-  bool error, sending, success;
-  String msg;
+  bool? error, sending, success;
+  String? msg;
 
   // API URL
   final url = Uri.parse(
     'https://asamexico.com.mx/php/controller/proyectosid.php',
   );
 
-  Future<List<Studentdata>> fetchStudent() async {
+  Future<List<Studentdata>?> fetchStudent() async {
     var data = {'id': int.parse(idHolder)};
 
     var response = await http.post(url, body: json.encode(data));
@@ -241,7 +241,7 @@ class SecondScreen extends State<SecondScreenState> {
       final items = json.decode(response.body).cast<Map<String, dynamic>>();
       print(response.body);
 
-      List<Studentdata> studentList = items.map<Studentdata>((json) {
+      List<Studentdata>? studentList = items.map<Studentdata>((json) {
         return Studentdata.fromJson(json);
       }).toList();
 
@@ -259,14 +259,14 @@ class SecondScreen extends State<SecondScreenState> {
         backgroundColor: Color.fromRGBO(35, 56, 120, 1.0),
         title: const Text('Ver proyecto'),
       ),
-      body: FutureBuilder<List<Studentdata>>(
+      body: FutureBuilder<List<Studentdata>?>(
         future: fetchStudent(),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
             return Center(child: CircularProgressIndicator());
 
           return ListView(
-            children: snapshot.data
+            children: snapshot.data!
                 .map((data) => Column(
                       children: <Widget>[
                         SizedBox(
@@ -321,7 +321,7 @@ class SecondScreen extends State<SecondScreenState> {
                                         padding:
                                             EdgeInsets.fromLTRB(20, 0, 0, 10),
                                         child: Text(
-                                            'Proyecto: ' + data.proyecto,
+                                            'Proyecto: ' + data.proyecto!,
                                             style: TextStyle(
                                                 fontSize: 14.0,
                                                 color: Colors.black))),
@@ -329,7 +329,7 @@ class SecondScreen extends State<SecondScreenState> {
                                         padding:
                                             EdgeInsets.fromLTRB(20, 0, 0, 10),
                                         child: Text(
-                                            'Responsable: ' + data.responsable,
+                                            'Responsable: ' + data.responsable!,
                                             style: TextStyle(
                                                 fontSize: 14.0,
                                                 color: Colors.black))),
@@ -338,7 +338,7 @@ class SecondScreen extends State<SecondScreenState> {
                                             EdgeInsets.fromLTRB(20, 0, 0, 10),
                                         child: Text(
                                             'Descripcion: ' +
-                                                data.observaciones,
+                                                data.observaciones!,
                                             style: TextStyle(
                                                 fontSize: 14.0,
                                                 color: Colors.black))),
@@ -491,16 +491,16 @@ class SecondScreen extends State<SecondScreenState> {
 }
 
 class Sliderbarpro extends StatefulWidget {
-  final String id;
-  final String referencia;
-  final double avance;
+  final String? id;
+  final String? referencia;
+  final double? avance;
   const Sliderbarpro({this.id, this.referencia, this.avance});
   @override
   _SliderbarproState createState() => _SliderbarproState();
 }
 
 class _SliderbarproState extends State<Sliderbarpro> {
-  double _currentSliderValue = 0;
+  double? _currentSliderValue = 0;
   @override
   void initState() {
     _currentSliderValue = widget.avance;
@@ -511,13 +511,13 @@ class _SliderbarproState extends State<Sliderbarpro> {
     return Column(
       children: [
         Slider(
-          value: _currentSliderValue,
+          value: _currentSliderValue!,
           min: 0,
           max: 100,
           divisions: 5,
           activeColor:
-              _currentSliderValue < 50 ? Colors.redAccent : Colors.green,
-          label: _currentSliderValue.round().toString(),
+              _currentSliderValue! < 50 ? Colors.redAccent : Colors.green,
+          label: _currentSliderValue!.round().toString(),
           onChanged: (double value) {
             setState(() {
               //print(widget.referencia);
@@ -552,7 +552,7 @@ class _SliderbarproState extends State<Sliderbarpro> {
     );
   }
 
-  Future<void> actualizaravance({int ids, String comentarios}) async {
+  Future<void> actualizaravance({int? ids, String? comentarios}) async {
     // final urlinsert = Uri.parse(
     //   'https://asamexico.com.mx/php/controller/categoria.php?op=Insert');
 
@@ -590,7 +590,7 @@ class _SliderbarproState extends State<Sliderbarpro> {
     }
   }
 
-  Future<void> cerrarproyecto({int ids, String comentarios}) async {
+  Future<void> cerrarproyecto({int? ids, String? comentarios}) async {
     // final urlinsert = Uri.parse(
     //   'https://asamexico.com.mx/php/controller/categoria.php?op=Insert');
 
