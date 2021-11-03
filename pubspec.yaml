@@ -43,7 +43,8 @@ dependencies:
   google_maps_flutter: ^2.0.9
   photo_view: ^0.13.0
   signature: ^4.1.1
-  mailer:
+  flutter_image_compress:
+  
   
     
 dev_dependencies:

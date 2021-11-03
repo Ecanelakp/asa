@@ -50,8 +50,8 @@ android {
         applicationId "mx.asamexico.asaapp"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 37
-        versionName "1.5.2"
+        versionCode 38
+        versionName "1.5.3"
        
     }
 
