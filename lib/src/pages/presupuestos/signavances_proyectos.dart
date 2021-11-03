@@ -1,9 +1,11 @@
+import 'package:asa_mexico/src/pages/pruebas/pruebas2.dart';
 import 'package:flutter/material.dart';
 import 'package:signature/signature.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:ui';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:developer';
 
 String estado = "";
 bool error = false, sending = false, success = false;
@@ -130,8 +132,10 @@ class _SignAvanceState extends State<SignAvance> {
                       icon: const Icon(Icons.check),
                       color: Colors.white,
                       onPressed: () {
+                        log('hola');
                         print(widget.sistemas);
-                        guardar(widget.sistemas);
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => MyApp1()));
                       },
                       // onPressed: () async {
                       //   if (_controller.isNotEmpty) {

@@ -279,7 +279,7 @@ class _LoginPage extends State<LoginPage> {
             padding: EdgeInsets.all(10),
             margin: EdgeInsets.only(top: 20),
             child: Text(
-              "Asamexico  v1.5.1 ©",
+              "Asamexico  v1.5.2 ©",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,

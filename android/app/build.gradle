@@ -39,7 +39,7 @@ if (keystorePropertiesFile.exists()) {
 
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -48,10 +48,10 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "mx.asamexico.asaapp"
-        minSdkVersion 20
-        targetSdkVersion 30
-        versionCode 36
-        versionName "1.5.1"
+        minSdkVersion 21
+        targetSdkVersion 31
+        versionCode 37
+        versionName "1.5.2"
        
     }
 

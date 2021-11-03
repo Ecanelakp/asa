@@ -66,7 +66,7 @@ class Sistemasusadosp {
   dynamic referenciaSistema;
   DateTime? fechaReg;
   String? usuarioalta;
-  int? cantidad;
+  double? cantidad;
   String? responsable;
   String? fechaInicio;
   String? unidad;
@@ -82,7 +82,7 @@ class Sistemasusadosp {
         referenciaSistema: json["Referencia_sistema"],
         fechaReg: DateTime.parse(json["Fecha_reg"]),
         usuarioalta: json["Usuarioalta"],
-        cantidad: json["Cantidad"],
+        cantidad: json["Cantidad"].toDouble(),
         responsable: json["Responsable"],
         fechaInicio: json["Fecha_inicio"],
         unidad: json["Unidad"],
