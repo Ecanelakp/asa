@@ -1,3 +1,4 @@
+import 'package:asa_mexico/src/pages/presupuestos/proyectoscomentarios.dart';
 import 'package:flutter/material.dart';
 
 import 'package:signature/signature.dart';
@@ -6,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'dart:ui';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:developer';
+import 'dart:typed_data';
 
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 
@@ -13,21 +15,29 @@ String estado = "";
 bool error = false, sending = false, success = false;
 String msg = "";
 
-String _toname = 'Agustin Perez';
-String _encargado = 'Edgardo Shancez';
-String _puesto = 'Encargado de frezzers';
-String _cantidad = '2.02';
-String _sistemas = 'Sistema de Reconstruccion de agujeros';
+//String _toname = 'Agustin Perez';
+// String _encargado = 'Edgardo Shancez';
+// String _puesto = 'Encargado de frezzers';
+// String _cantidad = '2.02';
+
 String _titulo = 'Avance por dia';
-String _date = '03/11/2021';
+
 String _firma = '';
+String _usuario = '';
+
+TextEditingController _toname = new TextEditingController();
+TextEditingController _encargado = new TextEditingController();
+TextEditingController _puesto = new TextEditingController();
+TextEditingController _correo = new TextEditingController();
+TextEditingController _comentarios = new TextEditingController();
 
 class SignAvance extends StatefulWidget {
   final String cantidad;
   final String fecha;
   final String sistemas;
+  final String correon;
 
-  const SignAvance(this.cantidad, this.fecha, this.sistemas);
+  const SignAvance(this.cantidad, this.fecha, this.sistemas, this.correon);
   @override
   State<SignAvance> createState() => _SignAvanceState();
 }
@@ -41,6 +51,12 @@ final SignatureController _firmacontroller = SignatureController(
 dispose() {
   _firma = '';
   _firmacontroller.clear();
+  _comentarios.clear();
+  _correo.clear();
+  _encargado.clear();
+  _toname.clear();
+  _puesto.clear();
+
   _firma = '';
 }
 
@@ -48,6 +64,7 @@ class _SignAvanceState extends State<SignAvance> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text('Generar acuse de Avance'),
         backgroundColor: Color.fromRGBO(35, 56, 120, 1.0),
@@ -128,6 +145,7 @@ class _SignAvanceState extends State<SignAvance> {
                           border: OutlineInputBorder(),
                           labelText: "Entregado a:",
                         ),
+                        controller: _toname,
                       )),
                   Container(
                       padding: EdgeInsets.all(5),
@@ -136,15 +154,17 @@ class _SignAvanceState extends State<SignAvance> {
                           border: OutlineInputBorder(),
                           labelText: "correo:",
                         ),
+                        controller: _correo,
+                        keyboardType: TextInputType.emailAddress,
                       )),
                   Container(
                       padding: EdgeInsets.all(5),
                       child: TextField(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: "Puesto:",
-                        ),
-                      )),
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Puesto:",
+                          ),
+                          controller: _puesto)),
                   Container(
                       padding: EdgeInsets.all(5),
                       child: TextField(
@@ -152,6 +172,7 @@ class _SignAvanceState extends State<SignAvance> {
                           border: OutlineInputBorder(),
                           labelText: "Comentarios:",
                         ),
+                        controller: _comentarios,
                       )),
                   SizedBox(
                     height: 5,
@@ -199,10 +220,16 @@ class _SignAvanceState extends State<SignAvance> {
                           onPressed: () async {
                             if (_firmacontroller.isNotEmpty) {
                               final data = await _firmacontroller.toPngBytes();
-                              // final data2 = await Image.memory (data, )
-                              if (data != null) {
+                              final Uint8List bytes =
+                                  data!.buffer.asUint8List();
+                              final pngBytes =
+                                  await FlutterImageCompress.compressWithList(
+                                      bytes,
+                                      quality: 40,
+                                      format: CompressFormat.jpeg);
+                              if (pngBytes != null) {
                                 setState(() {
-                                  _firma = base64Encode(data);
+                                  _firma = base64Encode(pngBytes);
 
                                   sendmail();
                                 });
@@ -234,7 +261,10 @@ class _SignAvanceState extends State<SignAvance> {
   }
 
   Future sendmail() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _usuario = prefs.getString('nuser')!;
     log(_firma);
+    log(widget.correon);
     final url = Uri.parse(
         'https://asamexico.com.mx/php/controller/notificacionavancesmail.php');
     final reponse = await http.post(url,
@@ -243,13 +273,16 @@ class _SignAvanceState extends State<SignAvance> {
         },
         body: json.encode({
           'titiulo': _titulo,
-          'to_name': _toname,
-          'fecha': _date,
-          'quatity': _cantidad,
-          'system': _sistemas,
-          'user': 'Joel',
-          'nameencargado': _encargado,
-          'puesto': _puesto,
+          'to_name': _toname.text,
+          'fecha': widget.fecha,
+          'quatity': widget.cantidad,
+          'system': widget.sistemas,
+          'user': _usuario,
+          'nameencargado': _encargado.text,
+          'puesto': _puesto.text,
+          'para': widget.correon,
+          'cc': _correo.text,
+          'comentarios': comentariosctl.text,
           'firma': _firma
         }));
 

@@ -6,7 +6,7 @@ class Meses with ChangeNotifier {
   int get mes => _mes!;
 
   set mes(int? numero) {
-    int? _mes = numero;
+    _mes = numero;
 
     notifyListeners();
   }

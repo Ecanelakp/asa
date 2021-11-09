@@ -91,7 +91,8 @@ class Avances extends StatelessWidget {
                                       builder: (context) => SignAvance(
                                           data.cantidad.toString(),
                                           data.fecha.toString(),
-                                          data.sistemas.toString())));
+                                          data.sistemas.toString(),
+                                          data.correon.toString())));
                             },
                             subtitle: Text(data.sistemas!),
                             leading: Column(

@@ -1,6 +1,9 @@
 //import 'package:asa_mexico/src/pages/gastos/listagastos.dart';
 
+import 'dart:developer';
+
 import 'package:asa_mexico/src/Provider/meselectg.dart';
+
 import 'package:asa_mexico/src/pages/gastos/detagastos.dart';
 
 import 'package:flutter/material.dart';
@@ -10,6 +13,8 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+String _nmes = '';
+
 class Homegastos extends StatelessWidget {
   final String usuario;
   @override
@@ -18,11 +23,12 @@ class Homegastos extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Gastos'),
+          backgroundColor: Color.fromRGBO(35, 56, 120, 1.0),
         ),
         body: Container(
           constraints: new BoxConstraints.expand(),
           child: ChangeNotifierProvider(
-            create: (_) => Meses(),
+            create: (_) => Mesesg(),
             child: Stack(children: [
               Container(
                   height: MediaQuery.of(context).size.height * 0.25,
@@ -147,8 +153,6 @@ class MainListView extends StatefulWidget {
   MainListViewState createState() => MainListViewState();
 }
 
-int? nmes;
-
 class MainListViewState extends State {
   final apiurl = Uri.parse(
     'https://asamexico.com.mx/php/controller/gastosxmes.php',
@@ -156,7 +160,7 @@ class MainListViewState extends State {
 
   //String user = this.usuario;
   Future<List<Studentdata>?> fetchStudents() async {
-    var data = {'nmes': nmes.toString()};
+    var data = {'nmes': _nmes.toString()};
     var response = await http.post(apiurl, body: json.encode(data));
     //print('====aqui =====$nmes===========aqui');
     if (response.statusCode == 200) {
@@ -174,8 +178,8 @@ class MainListViewState extends State {
 
   @override
   Widget build(BuildContext context) {
-    final wmes = Provider.of<Meses>(context);
-    nmes = wmes.mes;
+    final wmes = Provider.of<Mesesg>(context);
+    _nmes = wmes.mesg;
     fetchStudents();
     return FutureBuilder<List<Studentdata>?>(
       future: fetchStudents(),
@@ -368,7 +372,7 @@ final apiurl1 = Uri.parse(
 class _PaginaState extends State<Pagina> {
   // ignore: missing_return
   Future<String?> recibirString() async {
-    var data = {'nmes': nmes.toString()};
+    var data = {'nmes': _nmes.toString()};
     final respuesta = await http.post(apiurl1, body: json.encode(data));
     if (respuesta.statusCode == 200) {
       //log(respuesta.body.toString());
@@ -389,9 +393,9 @@ class _PaginaState extends State<Pagina> {
 
   @override
   Widget build(BuildContext context) {
-    final wmes = Provider.of<Meses>(context);
+    final wmes = Provider.of<Mesesg>(context);
 
-    nmes = wmes.mes;
+    _nmes = wmes.mesg;
     recibirString();
     dynamic gasto = double.parse(_mensaje);
 
@@ -453,7 +457,7 @@ class MesesListViewState extends State {
 
   @override
   Widget build(BuildContext context) {
-    final wmes = Provider.of<Meses>(context);
+    final wmes = Provider.of<Mesesg>(context);
     return FutureBuilder<List<Mesesc>?>(
       future: mesesc(),
       builder: (context, snapshot) {
@@ -475,9 +479,8 @@ class MesesListViewState extends State {
                                 .format(data.total),
                             style: TextStyle(color: Colors.white)),
                         onTap: () {
-                          wmes.mes = data.nmes;
-                          setState(() {});
-                          print(data.nmes);
+                          wmes.mesg = data.nmes.toString();
+                          log(wmes.mesg);
                         },
                         subtitle: Text(data.mes,
                             style: TextStyle(color: Colors.white60)

@@ -128,17 +128,19 @@ class Avancesistemas {
 }
 
 class Avancesistemasxd {
-  Avancesistemasxd({this.cantidad, this.fecha, this.sistemas});
+  Avancesistemasxd({this.cantidad, this.fecha, this.sistemas, this.correon});
 
   dynamic cantidad;
 
   String? fecha;
   String? sistemas;
+  String? correon;
 
   factory Avancesistemasxd.fromJson(Map<String, dynamic> json) =>
       Avancesistemasxd(
         cantidad: (json["Cantidad"]),
         fecha: json["fecha"],
         sistemas: json["Sistemas"],
+        correon: json["correon"],
       );
 }

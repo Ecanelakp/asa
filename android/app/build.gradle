@@ -51,7 +51,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 31
         versionCode 38
-        versionName "1.5.3"
+        versionName "1.5.4"
        
     }
 

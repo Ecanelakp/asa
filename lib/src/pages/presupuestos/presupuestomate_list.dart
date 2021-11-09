@@ -88,6 +88,7 @@ class _CargamaterialesState extends State<Cargamateriales> {
   String? msg;
   TextEditingController cantidadctl = new TextEditingController();
   late String mensaje;
+  String? _usuario;
 
   @override
   void initState() {
@@ -102,7 +103,8 @@ class _CargamaterialesState extends State<Cargamateriales> {
   Future<List<Listamaterial>?> fetchStudents() async {
     var data = {'id': ("${widget.id}")};
     print('========$data=======');
-
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _usuario = prefs.getString('nuser');
     var response = await http.post(apiurl, body: json.encode(data));
 
     //var response = await http.get(apiurl);
@@ -169,36 +171,41 @@ class _CargamaterialesState extends State<Cargamateriales> {
                                   SizedBox(
                                     width: 50,
                                   ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        color: Colors.redAccent),
-                                    child: TextButton.icon(
-                                        onPressed: () {
-                                          //print(data.idproducto);
-                                          // print(data.referencia.toString());
-                                          // print(data.noproducto.toString());
-                                          // print(data.nombre);
-                                          // print(data.unidad);
-                                          // print(cantidadctl.text);
-                                          data.cantidad! >=
-                                                  double.parse(cantidadctl.text)
-                                              ? retornoprod(
-                                                  context,
-                                                  data.noproducto,
-                                                  data.referencia,
-                                                  data.nombre)
-                                              : _showAlertDialog();
-                                        },
-                                        icon: Icon(
-                                            Icons.arrow_forward_ios_outlined,
-                                            color: Colors.white),
-                                        label: Text(
-                                          "Regresar al almacen",
-                                          style: TextStyle(color: Colors.white),
-                                        )),
-                                  )
+                                  _usuario != 'jmedina'
+                                      ? Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                              color: Colors.redAccent),
+                                          child: TextButton.icon(
+                                              onPressed: () {
+                                                //print(data.idproducto);
+                                                // print(data.referencia.toString());
+                                                // print(data.noproducto.toString());
+                                                // print(data.nombre);
+                                                // print(data.unidad);
+                                                // print(cantidadctl.text);
+                                                data.cantidad! >=
+                                                        double.parse(
+                                                            cantidadctl.text)
+                                                    ? retornoprod(
+                                                        context,
+                                                        data.noproducto,
+                                                        data.referencia,
+                                                        data.nombre)
+                                                    : _showAlertDialog();
+                                              },
+                                              icon: Icon(
+                                                  Icons
+                                                      .arrow_forward_ios_outlined,
+                                                  color: Colors.white),
+                                              label: Text(
+                                                "Regresar al almacen",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              )),
+                                        )
+                                      : Container()
                                 ],
                               ),
                             ),
@@ -216,8 +223,8 @@ class _CargamaterialesState extends State<Cargamateriales> {
         });
   }
 
-  Future<void> retornoprod(BuildContext context, int? noproducto, int? referencia,
-      String? nombre) async {
+  Future<void> retornoprod(BuildContext context, int? noproducto,
+      int? referencia, String? nombre) async {
     String? usuario;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     usuario = prefs.getString('nuser');

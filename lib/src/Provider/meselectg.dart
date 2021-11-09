@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
-class Meses with ChangeNotifier {
-  int? _mes = 10;
+class Mesesg with ChangeNotifier {
+  String _mesg = '11';
 
-  int get mes => _mes!;
+  String get mesg {
+    return _mesg;
+  }
 
-  set mes(int? numero) {
-    int? _mes = numero;
+  set mesg(String numero) {
+    _mesg = numero;
 
     notifyListeners();
   }
