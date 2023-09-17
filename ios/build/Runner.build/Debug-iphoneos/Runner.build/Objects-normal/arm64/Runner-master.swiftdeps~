@@ -1,5 +1,0 @@
-version: "Apple Swift version 5.4 (swiftlang-1205.0.26.9 clang-1205.0.19.55)"
-options: "6edeb6dd03eee38d0db4369e1b62159e"
-build_time: [1621353612, 876543000]
-inputs:
-  "/Users/asamex/development/asa flutter/flutter/ASA/flutter/asa_mexico/ios/Runner/AppDelegate.swift": [1614161830, 0]

@@ -1,6 +1,8 @@
 //import 'package:asa_mexico/src/Provider/push_notification.dart';
-import 'package:asa_mexico/src/pages/login.dart';
+
 //import 'package:asa_mexico/src/pages/presupuestos/presupuestolist_home.dart';
+
+import 'package:asamexico/app/login/login_app.dart';
 import 'package:flutter/material.dart';
 //import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -33,10 +35,8 @@ class _MyAppState extends State<MyApp> {
         routes: {
           //'home': (BuildContext context) => Homepage(fullname),
           //'presupesto': (BuildContext context) => Presupuestos(),
-          'login': (BuildContext context) => LoginPage(),
+          'login': (BuildContext context) => login_app(),
         },
-        theme: ThemeData(
-            primaryColor: Color.fromRGBO(35, 56, 120, 1.0),
-            accentColor: Colors.red));
+        theme: ThemeData());
   }
 }
