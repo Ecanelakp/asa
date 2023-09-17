@@ -151,7 +151,7 @@ class _entregado_proyectosState extends State<entregado_proyectos> {
                                                     (-1)) -
                                                 (double.tryParse(_materiales[
                                                         index]
-                                                    .cantidad_disponible)!))! >=
+                                                    .cantidad_disponible)!)) >=
                                             double.tryParse(
                                                 _cantretorno[index].text)!
                                     ? azuls
@@ -165,7 +165,7 @@ class _entregado_proyectosState extends State<entregado_proyectos> {
                                                           (-1)) -
                                                       (double.tryParse(_materiales[
                                                               index]
-                                                          .cantidad_disponible)!))! >=
+                                                          .cantidad_disponible)!)) >=
                                                   double.tryParse(
                                                       _cantretorno[index].text)!
                                           ? setState(() {
