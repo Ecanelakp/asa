@@ -90,7 +90,7 @@ class _login_appState extends State<login_app> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          'Version: 1.0.1',
+                          'Version: 1.5.6',
                           style: GoogleFonts.sulphurPoint(
                               textStyle: TextStyle(color: gris)),
                         ),
