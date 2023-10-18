@@ -1,4 +1,4 @@
-package com.example.asamexico
+package mx.asamexico.asaapp
 
 import io.flutter.embedding.android.FlutterActivity
 

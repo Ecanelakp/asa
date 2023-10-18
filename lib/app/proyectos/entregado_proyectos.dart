@@ -1,5 +1,6 @@
 import 'package:asamexico/app/variables/colors.dart';
 import 'package:asamexico/app/variables/servicesurl.dart';
+import 'package:asamexico/app/variables/variables.dart';
 
 import 'package:asamexico/models/proyectos_model.dart';
 import 'package:flutter/material.dart';
@@ -214,7 +215,7 @@ class _entregado_proyectosState extends State<entregado_proyectos> {
       'id_proyecto': widget._id,
       'cantidad': _cantidad,
       'usuario_asig': 'test@asamexico.mx',
-      'usuario': 'ecanela@asamexico.mx',
+      'usuario': usuario,
       'status': 2,
     };
     print(data);

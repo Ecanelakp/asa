@@ -1,5 +1,6 @@
 import 'package:asamexico/app/variables/colors.dart';
 import 'package:asamexico/app/variables/servicesurl.dart';
+import 'package:asamexico/app/variables/variables.dart';
 import 'package:asamexico/models/productos_model.dart';
 import 'package:asamexico/models/proyectos_model.dart';
 import 'package:flutter/material.dart';
@@ -126,7 +127,7 @@ class _retorno_proyectosState extends State<retorno_proyectos> {
       'tipo': 'act_mov_prod',
       'id_producto': _idProducto,
       'id_mov': _id,
-      'usuario_asig': 'ecanela@asamexico.mx',
+      'usuario_asig': usuario,
       'status': 3,
       'cantidad': _cantidad
     };

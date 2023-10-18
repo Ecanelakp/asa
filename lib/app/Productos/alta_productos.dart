@@ -1,6 +1,7 @@
 import 'package:asamexico/app/home/lateral_app.dart';
 import 'package:asamexico/app/variables/colors.dart';
 import 'package:asamexico/app/variables/servicesurl.dart';
+import 'package:asamexico/app/variables/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
@@ -265,7 +266,7 @@ class _alta_productosState extends State<alta_productos> {
       'unidad': _selunidad,
       'inventario': _cantinicial.text,
       'tipo_prod': _tipoprod,
-      'usuario': 'ecanela@asamexico.mx',
+      'usuario': usuario,
       'nombre': _articulo.text,
     };
     print(data);

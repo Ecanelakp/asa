@@ -1,5 +1,6 @@
 import 'package:asamexico/app/variables/colors.dart';
 import 'package:asamexico/app/variables/servicesurl.dart';
+import 'package:asamexico/app/variables/variables.dart';
 import 'package:asamexico/models/catalogossat_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -322,7 +323,7 @@ class _alta_clientesState extends State<alta_clientes> {
   Future guardar() async {
     var data = {
       'tipo': 'alta_clientes',
-      'usuario': 'ecanela@asamexico.mx',
+      'usuario': usuario,
       'rfc_cliente': _rfc.text.toUpperCase(),
       'email': _email.text,
       'razon_social': _razonsocial.text.toUpperCase(),

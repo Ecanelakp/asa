@@ -3,6 +3,7 @@ import 'package:asamexico/app/clientes/home_clientes.dart';
 import 'package:asamexico/app/home/home_app.dart';
 import 'package:asamexico/app/proyectos/home_proyectos.dart';
 import 'package:asamexico/app/variables/colors.dart';
+import 'package:asamexico/app/variables/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -31,12 +32,11 @@ class menulateral extends StatelessWidget {
                     ),
                   ),
                   subtitle: Text(
-                    'Dirección ',
-                    style:
-                        GoogleFonts.itim(textStyle: TextStyle(color: blanco)),
+                    perfil.toUpperCase(),
+                    style: GoogleFonts.itim(textStyle: TextStyle(color: rojo)),
                   ),
                   title: Text(
-                    'Juan Perez Perez ',
+                    nombre,
                     style:
                         GoogleFonts.itim(textStyle: TextStyle(color: blanco)),
                   ),

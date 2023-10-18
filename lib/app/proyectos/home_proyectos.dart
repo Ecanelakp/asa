@@ -3,6 +3,7 @@ import 'package:asamexico/app/home/lateral_app.dart';
 import 'package:asamexico/app/proyectos/menu_proyectos.dart';
 import 'package:asamexico/app/variables/colors.dart';
 import 'package:asamexico/app/variables/servicesurl.dart';
+import 'package:asamexico/app/variables/variables.dart';
 
 import 'package:asamexico/models/proyectos_model.dart';
 import 'package:flutter/material.dart';
@@ -249,7 +250,7 @@ class _home_proyectosState extends State<home_proyectos> {
       'nombre': _titulo.text,
       'observaciones': _observaciones.text,
       'id_cliente': '1',
-      'usuario': 'ecanela@asamexico.mx',
+      'usuario': usuario,
     };
     print(data);
     final reponse = await http.post(urlproyectos,
