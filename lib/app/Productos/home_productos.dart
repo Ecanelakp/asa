@@ -1,5 +1,6 @@
 import 'package:asamexico/app/Productos/alta_productos.dart';
 import 'package:asamexico/app/Productos/detallemov_producto.dart';
+import 'package:asamexico/app/Productos/inventarios_productos.dart';
 import 'package:asamexico/app/home/lateral_app.dart';
 import 'package:asamexico/app/variables/colors.dart';
 import 'package:asamexico/app/variables/servicesurl.dart';
@@ -21,8 +22,19 @@ class home_productos extends StatelessWidget {
           style: GoogleFonts.itim(textStyle: TextStyle(color: blanco)),
         ),
         backgroundColor: azulp,
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => inventario_productos()));
+              },
+              icon: Icon(Icons.list))
+        ],
       ),
-      drawer: menulateral(),
+
+      //drawer: menulateral(),
       backgroundColor: blanco,
       body: _listadeproductos(),
       floatingActionButton: FloatingActionButton(

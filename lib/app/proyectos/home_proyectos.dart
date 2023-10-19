@@ -86,11 +86,12 @@ class _home_proyectosState extends State<home_proyectos> {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 menu_proyectos(
-                                                    data.id,
-                                                    data.nombre,
-                                                    data.observaciones,
-                                                    data.idCliente,
-                                                    data.fecha)));
+                                                  data.id,
+                                                  data.nombre,
+                                                  data.observaciones,
+                                                  data.idCliente,
+                                                  data.fecha,
+                                                )));
 
                                     // detalle_proyectos(
                                     //     data.id,

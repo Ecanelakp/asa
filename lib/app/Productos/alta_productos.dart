@@ -39,7 +39,8 @@ List<String> _presentacion = [
   'SACOS',
   'CAJA',
   'BOTE',
-  'CARTUCHO'
+  'CARTUCHO',
+  'UNIDAD'
 
   // ... Agrega más códigos de monedas aquí ...
 ];
@@ -53,6 +54,25 @@ class alta_productos extends StatefulWidget {
 
 class _alta_productosState extends State<alta_productos> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    _codigo.clear();
+    _articulo.clear();
+
+    _cantinicial.text = '0';
+    _descripcion.clear();
+
+    _isMaterial = false;
+    _isHerramienta = false;
+    _isInsumo = false;
+    _tipoprod = '';
+    _selunidad = 'Selecciona unidad...';
+    _selpresentacion = 'Selecciona presentacion...';
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -62,7 +82,7 @@ class _alta_productosState extends State<alta_productos> {
         ),
         backgroundColor: azulp,
       ),
-      drawer: menulateral(),
+      //drawer: menulateral(),
       backgroundColor: blanco,
       body: Container(
         decoration: BoxDecoration(
@@ -160,7 +180,7 @@ class _alta_productosState extends State<alta_productos> {
               _campos(_codigo, 'Codigo', 1),
               _campos(_articulo, 'Nombre Corto', 1),
               _campos(_descripcion, 'Descripcion', 4),
-              _campos(_cantinicial, 'Inventario Incial', 1),
+              //   _campos(_cantinicial, 'Inventario Incial', 1),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: DropdownButton<String>(
@@ -203,32 +223,39 @@ class _alta_productosState extends State<alta_productos> {
                   }).toList(),
                 ),
               ),
-              Container(
-                child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(primary: rojo),
-                        onPressed: () {
-                          guardardatos();
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Icon(
-                                Icons.save,
-                                color: blanco,
-                              ),
-                              Text(
-                                'Registrar producto',
-                                style: GoogleFonts.itim(
-                                    textStyle: TextStyle(color: blanco)),
-                              ),
-                            ],
-                          ),
-                        ))),
-              ),
+              _codigo.text != '' &&
+                      _descripcion.text != '' &&
+                      _selunidad != 'Selecciona unidad...' &&
+                      _selpresentacion != 'Selecciona presentacion...' &&
+                      _tipoprod != ''
+                  ? Container(
+                      child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(primary: rojo),
+                              onPressed: () {
+                                guardardatos();
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Icon(
+                                      Icons.save,
+                                      color: blanco,
+                                    ),
+                                    Text(
+                                      'Registrar producto',
+                                      style: GoogleFonts.itim(
+                                          textStyle: TextStyle(color: blanco)),
+                                    ),
+                                  ],
+                                ),
+                              ))),
+                    )
+                  : Container(),
             ],
           ),
         ),
@@ -264,7 +291,7 @@ class _alta_productosState extends State<alta_productos> {
       'descripcion': _descripcion.text,
       'presentacion': _selpresentacion,
       'unidad': _selunidad,
-      'inventario': _cantinicial.text,
+      'inventario': '0',
       'tipo_prod': _tipoprod,
       'usuario': usuario,
       'nombre': _articulo.text,
@@ -286,6 +313,6 @@ class _alta_productosState extends State<alta_productos> {
       backgroundColor: (azulp),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    // Navigator.pop(context);
+    Navigator.pop(context);
   }
 }

@@ -46,7 +46,7 @@ class menu_proyectos extends StatelessWidget {
                 //         : ""),
               ],
             ),
-            title: Text('Proyecto-Materiales',
+            title: Text('Proyecto:' + _observaciones,
                 style: GoogleFonts.sulphurPoint(
                   textStyle: TextStyle(color: blanco),
                 )),
@@ -71,7 +71,7 @@ class menu_proyectos extends StatelessWidget {
             ),
             child: TabBarView(
               children: [
-                envioprods_proyectos(_id),
+                envioprods_proyectos(_id, _nombre, _observaciones),
                 entregado_proyectos(_id),
                 retorno_proyectos(_id),
                 // Text('1'),

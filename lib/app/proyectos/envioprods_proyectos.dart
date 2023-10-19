@@ -1,3 +1,4 @@
+import 'package:asamexico/app/proyectos/pdfmateriales_proyecto.dart';
 import 'package:asamexico/app/variables/colors.dart';
 import 'package:asamexico/app/variables/servicesurl.dart';
 import 'package:asamexico/app/variables/variables.dart';
@@ -15,11 +16,16 @@ String _nombre = '';
 String _idprod = '';
 double _cantsuf = 0;
 double _cantenviada = 0;
+List _materiales = [];
 
 class envioprods_proyectos extends StatefulWidget {
   final String _id;
+  final String _nombre;
+  final String _observaciones;
   const envioprods_proyectos(
     this._id,
+    this._nombre,
+    this._observaciones,
   );
 
   @override
@@ -57,6 +63,9 @@ class _envioprods_proyectosState extends State<envioprods_proyectos> {
           items.map<Modellistaproyprods>((json) {
         return Modellistaproyprods.fromJson(json);
       }).toList();
+      _materiales = items.map<Modellistaproyprods>((json) {
+        return Modellistaproyprods.fromJson(json);
+      }).toList();
       setState(() {});
       return studentList;
     } else {
@@ -68,10 +77,13 @@ class _envioprods_proyectosState extends State<envioprods_proyectos> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text('Busca y agrega materiales por entregar al proyecto',
-            style: GoogleFonts.sulphurPoint(
-              textStyle: TextStyle(color: gris),
-            )),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text('Busca y agrega materiales por entregar al proyecto',
+              style: GoogleFonts.sulphurPoint(
+                textStyle: TextStyle(color: gris),
+              )),
+        ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: _Agregarproductos(),
@@ -143,9 +155,10 @@ class _envioprods_proyectosState extends State<envioprods_proyectos> {
                                           child: IconButton(
                                               onPressed: () {
                                                 actprodproyect(
-                                                    data.id,
-                                                    data.idProducto,
-                                                    data.cantidad);
+                                                  data.id,
+                                                  data.idProducto,
+                                                  data.cantidad,
+                                                );
                                               },
                                               icon: Icon(
                                                 Icons.check,
@@ -159,6 +172,29 @@ class _envioprods_proyectosState extends State<envioprods_proyectos> {
                             .toList());
                   }),
             )),
+        Container(
+          child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: rojo),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => pdfmateriales_proyecto(
+                                _materiales,
+                                widget._nombre,
+                                widget._observaciones)));
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Generar PDF',
+                      style:
+                          GoogleFonts.itim(textStyle: TextStyle(color: blanco)),
+                    ),
+                  ))),
+        ),
       ],
     );
   }
