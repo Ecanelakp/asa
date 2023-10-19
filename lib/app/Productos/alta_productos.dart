@@ -109,70 +109,79 @@ class _alta_productosState extends State<alta_productos> {
               Row(
                 children: [
                   Flexible(
-                    child: CheckboxListTile(
-                      title: Text('Materiales',
+                    child: Card(
+                      elevation: 10,
+                      child: CheckboxListTile(
+                        title: Text('Materiales',
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.itim(
+                              textStyle: TextStyle(color: azulp),
+                            )),
+                        value: _isMaterial,
+                        onChanged: (newValue) {
+                          setState(() {
+                            _isMaterial = newValue!;
+                            // Desactiva la opción de Persona Moral si Persona Física está seleccionada
+                            if (_isMaterial) {
+                              _isHerramienta = false;
+                              _isInsumo = false;
+                              _tipoprod = 'Material';
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    child: Card(
+                      elevation: 10,
+                      child: CheckboxListTile(
+                        title: Text(
+                          'Herramientas',
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.itim(
                             textStyle: TextStyle(color: azulp),
-                          )),
-                      value: _isMaterial,
-                      onChanged: (newValue) {
-                        setState(() {
-                          _isMaterial = newValue!;
-                          // Desactiva la opción de Persona Moral si Persona Física está seleccionada
-                          if (_isMaterial) {
-                            _isHerramienta = false;
-                            _isInsumo = false;
-                            _tipoprod = 'Material';
-                          }
-                        });
-                      },
+                          ),
+                        ),
+                        value: _isHerramienta,
+                        onChanged: (newValue) {
+                          setState(() {
+                            _isHerramienta = newValue!;
+                            // Desactiva la opción de Persona Física si Persona Moral está seleccionada
+                            if (_isHerramienta) {
+                              _isMaterial = false;
+                              _isInsumo = false;
+                              _tipoprod = 'Herramientas';
+                            }
+                          });
+                        },
+                      ),
                     ),
                   ),
                   Flexible(
-                    child: CheckboxListTile(
-                      title: Text(
-                        'Herramientas',
-                        overflow: TextOverflow.ellipsis,
-                        style: GoogleFonts.itim(
-                          textStyle: TextStyle(color: azulp),
+                    child: Card(
+                      elevation: 10,
+                      child: CheckboxListTile(
+                        title: Text(
+                          'Insumos',
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.itim(
+                            textStyle: TextStyle(color: azulp),
+                          ),
                         ),
+                        value: _isInsumo,
+                        onChanged: (newValue) {
+                          setState(() {
+                            _isInsumo = newValue!;
+                            // Desactiva la opción de Persona Física si Persona Moral está seleccionada
+                            if (_isInsumo) {
+                              _isMaterial = false;
+                              _isHerramienta = false;
+                              _tipoprod = 'Insumos';
+                            }
+                          });
+                        },
                       ),
-                      value: _isHerramienta,
-                      onChanged: (newValue) {
-                        setState(() {
-                          _isHerramienta = newValue!;
-                          // Desactiva la opción de Persona Física si Persona Moral está seleccionada
-                          if (_isHerramienta) {
-                            _isMaterial = false;
-                            _isInsumo = false;
-                            _tipoprod = 'Herramientas';
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                  Flexible(
-                    child: CheckboxListTile(
-                      title: Text(
-                        'Insumos',
-                        overflow: TextOverflow.ellipsis,
-                        style: GoogleFonts.itim(
-                          textStyle: TextStyle(color: azulp),
-                        ),
-                      ),
-                      value: _isInsumo,
-                      onChanged: (newValue) {
-                        setState(() {
-                          _isInsumo = newValue!;
-                          // Desactiva la opción de Persona Física si Persona Moral está seleccionada
-                          if (_isInsumo) {
-                            _isMaterial = false;
-                            _isHerramienta = false;
-                            _tipoprod = 'Insumos';
-                          }
-                        });
-                      },
                     ),
                   ),
                 ],
