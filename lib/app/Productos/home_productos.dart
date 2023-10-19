@@ -11,6 +11,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 TextEditingController _buscar = TextEditingController();
+String _tipo = '';
 
 class home_productos extends StatelessWidget {
   @override
@@ -63,12 +64,15 @@ class _listadeproductosState extends State<_listadeproductos> {
     // TODO: implement initState
     super.initState();
     listaprod();
+    _tipo = '';
   }
 
   Future<List<Modellistaproductos>> listaprod() async {
     //print('======$notmes======');
     var data = {
       'tipo': 'lista_productos',
+      'palabra': _buscar.text,
+      'tipo_mat': _tipo,
     };
     //print(data);
     final response = await http.post(urlproductos,
@@ -85,7 +89,7 @@ class _listadeproductosState extends State<_listadeproductos> {
           items.map<Modellistaproductos>((json) {
         return Modellistaproductos.fromJson(json);
       }).toList();
-      setState(() {});
+      //setState(() {});
       return studentList;
     } else {
       throw Exception('Failed to load data from Server.');
@@ -113,6 +117,59 @@ class _listadeproductosState extends State<_listadeproductos> {
         ),
       ),
       child: Column(children: [
+        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CircleAvatar(
+              backgroundColor: azuls,
+              child: TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _tipo = 'Material';
+                      listaprod();
+                    });
+                  },
+                  child: Text(
+                    'A',
+                    style: TextStyle(color: blanco),
+                  )),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CircleAvatar(
+              backgroundColor: rojo,
+              child: TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _tipo = 'Herramientas';
+                      listaprod();
+                    });
+                  },
+                  child: Text(
+                    'B',
+                    style: TextStyle(color: blanco),
+                  )),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CircleAvatar(
+              backgroundColor: Colors.black38,
+              child: TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _tipo = 'Insumos';
+                      listaprod();
+                    });
+                  },
+                  child: Text(
+                    'C',
+                    style: TextStyle(color: blanco),
+                  )),
+            ),
+          )
+        ]),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextField(

@@ -131,6 +131,7 @@ class _inventario_productosState extends State<inventario_productos> {
     final pdf = pw.Document();
     final image = await imageFromAssetBundle('assets/images/asaazul.jpg');
     pdf.addPage(pw.MultiPage(
+      maxPages: 50,
       margin: const pw.EdgeInsets.all(10),
       pageFormat: PdfPageFormat.letter,
       build: (context) {
@@ -181,8 +182,8 @@ class _inventario_productosState extends State<inventario_productos> {
   pw.Widget _productos(List<Modellistaproductos> _inventario) {
     final headers = [
       'Tipo',
-      'NOmbre',
-      'Desripcion',
+      'Nombre',
+      'Descripcion',
       'Inv. Sistema',
       'Inv Fisico',
       'Dif'
@@ -200,7 +201,7 @@ class _inventario_productosState extends State<inventario_productos> {
       //border: null,
 
       headerDecoration: pw.BoxDecoration(color: PdfColors.grey300),
-      headerHeight: 30,
+      headerHeight: 15,
       cellAlignments: {
         0: pw.Alignment.centerLeft,
         1: pw.Alignment.centerLeft,
@@ -211,7 +212,7 @@ class _inventario_productosState extends State<inventario_productos> {
       data: [headers, ...rows],
 
       cellStyle: pw.TextStyle(
-        fontSize: 8,
+        fontSize: 6,
 
         // color: PdfColors.black,
         // fontStyle: pw.FontStyle.italic,
