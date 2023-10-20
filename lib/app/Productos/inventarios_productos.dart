@@ -129,54 +129,61 @@ class _inventario_productosState extends State<inventario_productos> {
 
   Future<Uint8List> makePdf(List inventario) async {
     final pdf = pw.Document();
-    final image = await imageFromAssetBundle('assets/images/asaazul.jpg');
-    pdf.addPage(pw.MultiPage(
-      maxPages: 50,
-      margin: const pw.EdgeInsets.all(10),
-      pageFormat: PdfPageFormat.letter,
-      build: (context) {
-        return [
-          pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
-            pw.Column(
-                mainAxisAlignment: pw.MainAxisAlignment.center,
-                crossAxisAlignment: pw.CrossAxisAlignment.center,
-                children: [
-                  pw.Container(
-                      width: 50,
-                      height: 50,
-                      child: pw.Align(
-                        child: pw.Center(
-                          child: pw.Image(image),
-                        ),
-                        alignment: pw.Alignment.center,
-                      )),
-                  pw.SizedBox(width: 10),
-                  pw.Text(
-                    "Automatización de Sistemas y Asesoria",
-                  ),
-                  pw.Center(child: pw.Text('Hoja de inventario')),
-                ]),
+    //final image = (await rootBundle.load('assets/images/asaazul.jpg')).buffer.asUint8List();
+
+    // Función para crear una página con el contenido del inventario
+    pw.Widget _buildInventarioPage() {
+      return pw.Container(
+        padding: pw.EdgeInsets.all(20),
+        child: pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.center,
+          children: [
+            // pw.Container(
+            //   width: 50,
+            //   height: 50,
+            //   child: pw.Align(
+            //     child: pw.Center(
+            //       child: pw.Image(PdfImage(
+            //         pdf,
+            //         image: image,
+            //         width: 50,
+            //         height: 50,
+            //       )),
+            //     ),
+            //     alignment: pw.Alignment.center,
+            //   ),
+            // ),
+            pw.SizedBox(height: 10),
+            pw.Text("Automatización de Sistemas y Asesoría"),
+            pw.Center(child: pw.Text('Hoja de inventario')),
             pw.Divider(),
             pw.Center(child: pw.Text('Fecha')),
             pw.Divider(),
             _productos(_inventario),
-          ])
+          ],
+        ),
+      );
+    }
+
+    // Agregar páginas de inventario usando pw.MultiPage
+    pdf.addPage(pw.MultiPage(
+      build: (context) {
+        return [
+          _buildInventarioPage(),
+          // Puedes agregar más páginas de inventario aquí si es necesario.
+          // _buildInventarioPage(),
+          // _buildInventarioPage(),
         ];
       },
-      footer: _buildFooter,
+      pageFormat: PdfPageFormat.letter.copyWith(
+        marginLeft: 20,
+        marginTop: 10,
+        marginRight: 20,
+        marginBottom: 20,
+      ),
     ));
 
     return pdf.save();
-  }
-
-  pw.Widget _buildFooter(pw.Context context) {
-    return pw.Container(
-        child: pw.Align(
-      alignment: pw.Alignment.center,
-      child: pw.Text(
-          'Miravalle 805 Int. 3, Col. Miravalle, Delg. Benito Juarez CP. 03580 CDMX',
-          style: pw.TextStyle(fontSize: 10)),
-    ));
   }
 
   pw.Widget _productos(List<Modellistaproductos> _inventario) {
