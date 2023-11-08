@@ -52,3 +52,74 @@ class Modellistaclientes {
         activo: json["activo"],
       );
 }
+
+class Modellistcontactos {
+  String id;
+  String idCliente;
+  String nombre;
+  String telefono;
+  String ubicacion;
+  String correo;
+  String puesto;
+  String status;
+
+  Modellistcontactos({
+    required this.id,
+    required this.idCliente,
+    required this.nombre,
+    required this.telefono,
+    required this.ubicacion,
+    required this.correo,
+    required this.puesto,
+    required this.status,
+  });
+
+  factory Modellistcontactos.fromJson(Map<String, dynamic> json) =>
+      Modellistcontactos(
+        id: json["id"],
+        idCliente: json["id_cliente"],
+        nombre: json["nombre"],
+        telefono: json["telefono"],
+        ubicacion: json["ubicacion"],
+        correo: json["correo"],
+        puesto: json["puesto"],
+        status: json["status"],
+      );
+}
+
+class Modellistinteracciones {
+  String id;
+  String idCliente;
+  String idContacto;
+  String titulo;
+  String descripcion;
+  DateTime fecha;
+  String fechaRecordatorio;
+  String usuario;
+  String status;
+
+  Modellistinteracciones({
+    required this.id,
+    required this.idCliente,
+    required this.idContacto,
+    required this.titulo,
+    required this.descripcion,
+    required this.fecha,
+    required this.fechaRecordatorio,
+    required this.usuario,
+    required this.status,
+  });
+
+  factory Modellistinteracciones.fromJson(Map<String, dynamic> json) =>
+      Modellistinteracciones(
+        id: json["id"],
+        idCliente: json["id_cliente"],
+        idContacto: json["id_contacto"],
+        titulo: json["titulo"],
+        descripcion: json["descripcion"],
+        fecha: DateTime.parse(json["fecha"]),
+        fechaRecordatorio: json["fecha_recordatorio"],
+        usuario: json["usuario"],
+        status: json["status"],
+      );
+}

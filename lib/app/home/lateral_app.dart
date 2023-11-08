@@ -1,5 +1,7 @@
 import 'package:asamexico/app/Productos/home_productos.dart';
-import 'package:asamexico/app/clientes/home_clientes.dart';
+import 'package:asamexico/app/crm/cotizaciones/homecotizacion_clientes.dart';
+import 'package:asamexico/app/crm/clientes/home_clientes.dart';
+import 'package:asamexico/app/compras/home_compras.dart';
 import 'package:asamexico/app/home/home_app.dart';
 import 'package:asamexico/app/proyectos/home_proyectos.dart';
 import 'package:asamexico/app/variables/colors.dart';
@@ -23,22 +25,26 @@ class menulateral extends StatelessWidget {
           DrawerHeader(
             child: Container(
               child: Center(
-                child: ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: azuls,
-                    child: Icon(
-                      Icons.person,
-                      color: blanco,
+                child: Card(
+                  color: Colors.black38,
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: azulp,
+                      child: Icon(
+                        Icons.person,
+                        color: blanco,
+                      ),
                     ),
-                  ),
-                  subtitle: Text(
-                    perfil.toUpperCase(),
-                    style: GoogleFonts.itim(textStyle: TextStyle(color: rojo)),
-                  ),
-                  title: Text(
-                    nombre,
-                    style:
-                        GoogleFonts.itim(textStyle: TextStyle(color: blanco)),
+                    subtitle: Text(
+                      perfil.toUpperCase(),
+                      style:
+                          GoogleFonts.itim(textStyle: TextStyle(color: rojo)),
+                    ),
+                    title: Text(
+                      nombre,
+                      style:
+                          GoogleFonts.itim(textStyle: TextStyle(color: blanco)),
+                    ),
                   ),
                 ),
               ),
@@ -47,30 +53,13 @@ class menulateral extends StatelessWidget {
               color: azulp,
               image: DecorationImage(
                 colorFilter: ColorFilter.mode(
-                  Color.fromARGB(200, 245, 245, 245).withOpacity(0.2),
+                  Color.fromARGB(200, 245, 245, 245).withOpacity(0.4),
                   BlendMode.modulate,
                 ),
                 image: AssetImage('assets/images/asaazul.jpg'),
                 fit: BoxFit.contain,
               ),
             ),
-          ),
-          Card(
-            elevation: 10,
-            child: ListTile(
-                leading: Icon(
-                  Icons.home,
-                  color: azuls,
-                ),
-                title: Text('Inicio',
-                    style: GoogleFonts.itim(
-                      textStyle: TextStyle(),
-                    )),
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Home_app()));
-                  //Navigator.pop(context);
-                }),
           ),
           Card(
             elevation: 10,
@@ -111,26 +100,86 @@ class menulateral extends StatelessWidget {
           ),
           Card(
             elevation: 10,
-            child: ListTile(
+            child: ExpansionTile(
               leading: Icon(
-                Icons.person,
-                color: azuls,
+                Icons.dashboard_customize,
+                color: rojo,
               ),
-              title: Text('Clientes',
+              title: Text('CRM',
                   style: GoogleFonts.itim(
                     textStyle: TextStyle(),
                   )),
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => home_clientes()));
-              },
+              children: [
+                Card(
+                  elevation: 10,
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.person,
+                      color: azuls,
+                    ),
+                    title: Text('Clientes',
+                        style: GoogleFonts.itim(
+                          textStyle: TextStyle(),
+                        )),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => home_clientes()));
+                    },
+                  ),
+                ),
+                Card(
+                  elevation: 10,
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.request_quote,
+                      color: azuls,
+                    ),
+                    title: Text('Cotizaciones',
+                        style: GoogleFonts.itim(
+                          textStyle: TextStyle(),
+                        )),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => homecotizacion_clientes()));
+                    },
+                  ),
+                ),
+              ],
             ),
+          ),
+          Card(
+            elevation: 10,
+            child: ListTile(
+                leading: Icon(
+                  Icons.shopping_cart,
+                  color: azuls,
+                ),
+                title: Text('Compras',
+                    style: GoogleFonts.itim(
+                      textStyle: TextStyle(),
+                    )),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => home_compras()));
+                  //Navigator.pop(context);
+                }),
+          ),
+          SizedBox(
+            height: 30,
           ),
           ListTile(
             title: Text('Cerrar session',
                 style: GoogleFonts.itim(
-                  textStyle: TextStyle(color: Colors.redAccent),
+                  textStyle: TextStyle(color: rojo),
                 )),
+            leading: Icon(
+              Icons.exit_to_app,
+              color: rojo,
+            ),
             onTap: () {
               // // Actualiza el estado de la aplicación
               // ...
@@ -139,6 +188,19 @@ class menulateral extends StatelessWidget {
               // Navigator.pop(context);
             },
           ),
+          SizedBox(
+            height: 100,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(version,
+                  style: GoogleFonts.itim(
+                    textStyle: TextStyle(color: gris, fontSize: 8),
+                  )),
+            ),
+          )
         ],
       ),
     );

@@ -46,7 +46,7 @@ class menu_proyectos extends StatelessWidget {
                 //         : ""),
               ],
             ),
-            title: Text('Proyecto:' + _observaciones,
+            title: Text('Proyecto: ' + _observaciones,
                 style: GoogleFonts.sulphurPoint(
                   textStyle: TextStyle(color: blanco),
                 )),

@@ -189,7 +189,7 @@ class _alta_productosState extends State<alta_productos> {
               _campos(_codigo, 'Codigo', 1),
               _campos(_articulo, 'Nombre Corto', 1),
               _campos(_descripcion, 'Descripcion', 4),
-              //   _campos(_cantinicial, 'Inventario Incial', 1),
+              _campos(_cantinicial, 'Inventario Incial', 1),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: DropdownButton<String>(
@@ -236,7 +236,8 @@ class _alta_productosState extends State<alta_productos> {
                       _descripcion.text != '' &&
                       _selunidad != 'Selecciona unidad...' &&
                       _selpresentacion != 'Selecciona presentacion...' &&
-                      _tipoprod != ''
+                      _tipoprod != '' &&
+                      _cantinicial.text != ''
                   ? Container(
                       child: Padding(
                           padding: const EdgeInsets.all(20.0),

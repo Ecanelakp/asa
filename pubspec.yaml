@@ -40,6 +40,10 @@ dependencies:
   shared_preferences:
   printing: ^5.10.0
   pdf: ^3.8.4
+  responsive_grid: ^2.1.0
+  datetime_picker_formfield: 
+  url_launcher: ^6.1.10
+  syncfusion_flutter_charts: ^23.1.38 
   
 
 dev_dependencies:

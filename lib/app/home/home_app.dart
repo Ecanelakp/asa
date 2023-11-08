@@ -35,7 +35,7 @@ class Home_app extends StatelessWidget {
         //   ),
         // ),
         child: Center(
-            child: Text('Aqui veras las notificaciones mas relevantes del dia',
+            child: Text('Aqui veras las notificaciones más relevantes del día',
                 style: GoogleFonts.itim(
                   textStyle: TextStyle(color: gris),
                 ))),

@@ -15,6 +15,7 @@ import 'package:http/http.dart' as http;
 
 List<Modellistaproductos> _inventario = [];
 String _tipo = '';
+DateTime? _hoy;
 
 class inventario_productos extends StatefulWidget {
   const inventario_productos({super.key});
@@ -29,6 +30,7 @@ class _inventario_productosState extends State<inventario_productos> {
     // TODO: implement initState
     super.initState();
     listaprod();
+    _hoy = DateTime.now();
   }
 
   Future<List> listaprod() async {
@@ -118,6 +120,23 @@ class _inventario_productosState extends State<inventario_productos> {
                     style: TextStyle(color: blanco),
                   )),
             ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CircleAvatar(
+              backgroundColor: gris,
+              child: TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _tipo = '';
+                      listaprod();
+                    });
+                  },
+                  child: Icon(
+                    Icons.list,
+                    color: blanco,
+                  )),
+            ),
           )
         ],
       ),
@@ -129,59 +148,47 @@ class _inventario_productosState extends State<inventario_productos> {
 
   Future<Uint8List> makePdf(List inventario) async {
     final pdf = pw.Document();
-    //final image = (await rootBundle.load('assets/images/asaazul.jpg')).buffer.asUint8List();
-
-    // Función para crear una página con el contenido del inventario
-    pw.Widget _buildInventarioPage() {
-      return pw.Container(
-        padding: pw.EdgeInsets.all(20),
-        child: pw.Column(
-          crossAxisAlignment: pw.CrossAxisAlignment.center,
-          children: [
-            // pw.Container(
-            //   width: 50,
-            //   height: 50,
-            //   child: pw.Align(
-            //     child: pw.Center(
-            //       child: pw.Image(PdfImage(
-            //         pdf,
-            //         image: image,
-            //         width: 50,
-            //         height: 50,
-            //       )),
-            //     ),
-            //     alignment: pw.Alignment.center,
-            //   ),
-            // ),
-            pw.SizedBox(height: 10),
-            pw.Text("Automatización de Sistemas y Asesoría"),
-            pw.Center(child: pw.Text('Hoja de inventario')),
-            pw.Divider(),
-            pw.Center(child: pw.Text('Fecha')),
-            pw.Divider(),
-            _productos(_inventario),
-          ],
-        ),
-      );
-    }
-
-    // Agregar páginas de inventario usando pw.MultiPage
+    final image = await imageFromAssetBundle('assets/images/asaazul.jpg');
     pdf.addPage(pw.MultiPage(
+      margin: const pw.EdgeInsets.all(20),
+      pageFormat: PdfPageFormat.letter,
       build: (context) {
         return [
-          _buildInventarioPage(),
-          // Puedes agregar más páginas de inventario aquí si es necesario.
-          // _buildInventarioPage(),
-          // _buildInventarioPage(),
+          pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+            pw.Column(
+                mainAxisAlignment: pw.MainAxisAlignment.center,
+                crossAxisAlignment: pw.CrossAxisAlignment.center,
+                children: [
+                  pw.Container(
+                      width: 50,
+                      height: 100,
+                      child: pw.Align(
+                        child: pw.Center(
+                          child: pw.Image(image),
+                        ),
+                        alignment: pw.Alignment.center,
+                      )),
+                  pw.SizedBox(width: 10),
+                  pw.Text(
+                    "Automatización de Sistemas y Asesoria",
+                  ),
+                  pw.Center(child: pw.Text('Inventario ' + _tipo)),
+                ]),
+            pw.Align(
+                alignment: pw.Alignment.centerRight,
+                child: pw.Text(
+                    'Fecha: ' +
+                        DateFormat('dd/MM/yyyy').format(_hoy!).toString(),
+                    textAlign: pw.TextAlign.right)),
+            pw.Divider(),
+          ]),
+          _productos(_inventario),
         ];
       },
-      pageFormat: PdfPageFormat.letter.copyWith(
-        marginLeft: 20,
-        marginTop: 10,
-        marginRight: 20,
-        marginBottom: 20,
-      ),
+      //footer: _buildFooter,
     ));
+
+    // Agregar páginas de inventario usando pw.MultiPage
 
     return pdf.save();
   }

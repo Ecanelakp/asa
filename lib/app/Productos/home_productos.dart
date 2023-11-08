@@ -155,7 +155,7 @@ class _listadeproductosState extends State<_listadeproductos> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: CircleAvatar(
-              backgroundColor: Colors.black38,
+              backgroundColor: azulp,
               child: TextButton(
                   onPressed: () {
                     setState(() {
@@ -166,6 +166,23 @@ class _listadeproductosState extends State<_listadeproductos> {
                   child: Text(
                     'C',
                     style: TextStyle(color: blanco),
+                  )),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CircleAvatar(
+              backgroundColor: gris,
+              child: TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _tipo = '';
+                      listaprod();
+                    });
+                  },
+                  child: Icon(
+                    Icons.list,
+                    color: blanco,
                   )),
             ),
           )
@@ -206,7 +223,7 @@ class _listadeproductosState extends State<_listadeproductos> {
                                           elevation: 10,
                                           child: ListTile(
                                             subtitle: Text(
-                                              data.descripcion,
+                                              data.id + '-' + data.descripcion,
                                               style: GoogleFonts.itim(
                                                   textStyle:
                                                       TextStyle(color: gris)),

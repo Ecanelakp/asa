@@ -154,7 +154,7 @@ class _login_appState extends State<login_app> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          'Version: 1.5.64',
+                          version,
                           style: GoogleFonts.sulphurPoint(
                               textStyle: TextStyle(color: gris)),
                         ),

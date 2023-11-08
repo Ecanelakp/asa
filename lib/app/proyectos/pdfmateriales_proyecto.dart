@@ -10,6 +10,8 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
+final List<String> dataList = [];
+
 class pdfmateriales_proyecto extends StatefulWidget {
   final _materiales;
   final String _nombre;
@@ -78,7 +80,6 @@ class _pdfmateriales_proyectoState extends State<pdfmateriales_proyecto> {
       },
       footer: _buildFooter,
     ));
-
     return pdf.save();
   }
 
