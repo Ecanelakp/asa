@@ -151,7 +151,24 @@ class _homecotizacion_clientesState extends State<homecotizacion_clientes> {
                                     ),
                                   ),
                                   Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
+                                      Card(
+                                          elevation: 10,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Align(
+                                              alignment: Alignment.centerRight,
+                                              child: Text(
+                                                  NumberFormat.simpleCurrency()
+                                                      .format(double.tryParse(
+                                                          data.total
+                                                              .toString())),
+                                                  style: GoogleFonts.itim(
+                                                      textStyle: TextStyle(
+                                                          color: azulp))),
+                                            ),
+                                          )),
                                       Row(
                                         children: [
                                           Card(
@@ -196,18 +213,6 @@ class _homecotizacion_clientesState extends State<homecotizacion_clientes> {
                                                                   blanco))))),
                                         ],
                                       ),
-                                      Card(
-                                          elevation: 10,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(
-                                                NumberFormat.simpleCurrency()
-                                                    .format(double.tryParse(
-                                                        data.total.toString())),
-                                                style: GoogleFonts.itim(
-                                                    textStyle: TextStyle(
-                                                        color: azulp))),
-                                          ))
                                     ],
                                   ),
                                 ],

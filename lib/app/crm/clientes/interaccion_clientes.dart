@@ -86,11 +86,14 @@ class _interacciones_clientesState extends State<interacciones_clientes> {
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Text(data.descripcion,
-                                                textAlign: TextAlign.justify,
-                                                style: GoogleFonts.itim(
-                                                    textStyle: TextStyle(
-                                                        color: gris))),
+                                            child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(data.descripcion,
+                                                  textAlign: TextAlign.justify,
+                                                  style: GoogleFonts.itim(
+                                                      textStyle: TextStyle(
+                                                          color: gris))),
+                                            ),
                                           )
                                         ],
                                         leading: IconButton(

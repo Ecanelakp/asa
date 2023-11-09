@@ -1,3 +1,4 @@
+import 'package:asamexico/app/crm/clientes/contactodetalles_clientes.dart';
 import 'package:asamexico/app/crm/clientes/interaccion_clientes.dart';
 import 'package:asamexico/app/variables/colors.dart';
 import 'package:asamexico/app/variables/servicesurl.dart';
@@ -72,7 +73,20 @@ class _listacontactos_clientesState extends State<listacontactos_clientes> {
                               children: [
                                 Flexible(
                                     child: ListTile(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                contactodetalles_clientes(
+                                                    data.id,
+                                                    data.idCliente,
+                                                    data.correo,
+                                                    data.nombre,
+                                                    data.puesto,
+                                                    data.telefono,
+                                                    data.ubicacion)));
+                                  },
                                   title: Text(data.nombre,
                                       style: GoogleFonts.itim(
                                           textStyle: TextStyle(color: azulp))),

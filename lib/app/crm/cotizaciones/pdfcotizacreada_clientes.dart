@@ -105,7 +105,7 @@ class _pdfcotizacioncreada_clientesState
                   padding: const pw.EdgeInsets.all(8.0),
                   child: pw.Text('    ')),
               pw.Container(
-                  width: 120,
+                  width: 100,
                   child: pw.Align(
                     child: pw.Center(
                       child: pw.Image(image),
@@ -114,7 +114,7 @@ class _pdfcotizacioncreada_clientesState
                   )),
             ]),
             pw.Container(
-                padding: const pw.EdgeInsets.all(8.0),
+                padding: const pw.EdgeInsets.all(5),
                 child: pw.Text('Cotización')),
             pw.Container(
                 child: pw.Row(
