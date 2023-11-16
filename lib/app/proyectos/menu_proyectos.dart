@@ -1,3 +1,4 @@
+import 'package:asamexico/app/proyectos/blog_proyectos.dart';
 import 'package:asamexico/app/proyectos/entregado_proyectos.dart';
 import 'package:asamexico/app/proyectos/envioprods_proyectos.dart';
 import 'package:asamexico/app/proyectos/retorno_proyectos.dart';
@@ -76,6 +77,17 @@ class menu_proyectos extends StatelessWidget {
                 retorno_proyectos(_id),
                 // Text('1'),
               ],
+            ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: rojo,
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => blog_proyectos(_id)));
+            },
+            child: Icon(
+              Icons.comment,
+              color: blanco,
             ),
           ),
         ));

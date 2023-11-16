@@ -33,12 +33,12 @@ class _chartcotizacion_clientesState extends State<chartcotizacion_clientes> {
 
     if (response.statusCode == 200) {
       final items = json.decode(response.body).cast<Map<String, dynamic>>();
-      print(response.body);
+      // print(response.body);
 
       List<Modelliscoti> studentList = items.map<Modelliscoti>((json) {
         return Modelliscoti.fromJson(json);
       }).toList();
-      setState(() {});
+      // setState(() {});
       chartData = items.map<Modelliscoti>((json) {
         return Modelliscoti.fromJson(json);
       }).toList();
@@ -83,7 +83,7 @@ class _chartcotizacion_clientesState extends State<chartcotizacion_clientes> {
                     legend: Legend(
                         isVisible: true, position: LegendPosition.bottom),
                     series: <ChartSeries<Modelliscoti, String>>[
-                      ColumnSeries<Modelliscoti, String>(
+                      StackedColumnSeries<Modelliscoti, String>(
                         dataSource: chartData,
 
                         xValueMapper: (Modelliscoti sales, _) =>

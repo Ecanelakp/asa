@@ -146,3 +146,37 @@ class Modellineascoti {
         status: json["status"],
       );
 }
+
+class Modelblogproyectos {
+  String id;
+  String idProyecto;
+  String titulo;
+  String observacion;
+  DateTime fecha;
+  String fechaAvance;
+  String usuario;
+  String status;
+
+  Modelblogproyectos({
+    required this.id,
+    required this.idProyecto,
+    required this.titulo,
+    required this.observacion,
+    required this.fecha,
+    required this.fechaAvance,
+    required this.usuario,
+    required this.status,
+  });
+
+  factory Modelblogproyectos.fromJson(Map<String, dynamic> json) =>
+      Modelblogproyectos(
+        id: json["id"],
+        idProyecto: json["id_proyecto"],
+        titulo: json["titulo"],
+        observacion: json["observacion"],
+        fecha: DateTime.parse(json["fecha"]),
+        fechaAvance: json["fecha_avance"],
+        usuario: json["usuario"],
+        status: json["status"],
+      );
+}

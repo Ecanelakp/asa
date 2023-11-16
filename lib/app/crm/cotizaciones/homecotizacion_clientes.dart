@@ -40,7 +40,7 @@ class _homecotizacion_clientesState extends State<homecotizacion_clientes> {
 
     if (response.statusCode == 200) {
       final items = json.decode(response.body).cast<Map<String, dynamic>>();
-      //print(response.body);
+      // print(response.body);
 
       List<Modelliscoti> studentList = items.map<Modelliscoti>((json) {
         return Modelliscoti.fromJson(json);
@@ -109,6 +109,7 @@ class _homecotizacion_clientesState extends State<homecotizacion_clientes> {
                               child: Row(
                                 children: [
                                   Flexible(
+                                    flex: 2,
                                     child: ListTile(
                                       onTap: (() {
                                         Navigator.push(
@@ -135,6 +136,7 @@ class _homecotizacion_clientesState extends State<homecotizacion_clientes> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(data.comentarios,
+                                              overflow: TextOverflow.ellipsis,
                                               style: GoogleFonts.itim(
                                                   textStyle: TextStyle())),
                                           Text(
@@ -145,75 +147,109 @@ class _homecotizacion_clientesState extends State<homecotizacion_clientes> {
                                         ],
                                       ),
                                       title: Text(data.nombreCliente,
+                                          overflow: TextOverflow.ellipsis,
                                           style: GoogleFonts.itim(
                                               textStyle:
                                                   TextStyle(color: azulp))),
                                     ),
                                   ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Card(
-                                          elevation: 10,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Align(
-                                              alignment: Alignment.centerRight,
-                                              child: Text(
-                                                  NumberFormat.simpleCurrency()
-                                                      .format(double.tryParse(
-                                                          data.total
-                                                              .toString())),
-                                                  style: GoogleFonts.itim(
-                                                      textStyle: TextStyle(
-                                                          color: azulp))),
-                                            ),
-                                          )),
-                                      Row(
-                                        children: [
-                                          Card(
-                                              elevation: 10,
-                                              color: gris,
-                                              child: TextButton(
-                                                  onPressed: () {},
-                                                  child: Text('R',
-                                                      style: GoogleFonts.itim(
-                                                          textStyle: TextStyle(
-                                                              color:
-                                                                  blanco))))),
-                                          Card(
-                                              elevation: 10,
-                                              color: rojo,
-                                              child: TextButton(
-                                                  onPressed: () {},
-                                                  child: Text('C',
-                                                      style: GoogleFonts.itim(
-                                                          textStyle: TextStyle(
-                                                              color:
-                                                                  blanco))))),
-                                          Card(
-                                              elevation: 10,
-                                              color: azuls,
-                                              child: TextButton(
-                                                  onPressed: () {},
-                                                  child: Text('P',
-                                                      style: GoogleFonts.itim(
-                                                          textStyle: TextStyle(
-                                                              color:
-                                                                  blanco))))),
-                                          Card(
-                                              elevation: 10,
-                                              color: azulp,
-                                              child: TextButton(
-                                                  onPressed: () {},
-                                                  child: Text('A',
-                                                      style: GoogleFonts.itim(
-                                                          textStyle: TextStyle(
-                                                              color:
-                                                                  blanco))))),
-                                        ],
-                                      ),
-                                    ],
+                                  Flexible(
+                                    flex: 2,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        Card(
+                                            elevation: 10,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Align(
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                child: Text(
+                                                    NumberFormat
+                                                            .simpleCurrency()
+                                                        .format(double.tryParse(
+                                                            data.total
+                                                                .toString())),
+                                                    style: GoogleFonts.itim(
+                                                        textStyle: TextStyle(
+                                                            color: azulp))),
+                                              ),
+                                            )),
+                                        SingleChildScrollView(
+                                          child: Row(
+                                            children: [
+                                              Card(
+                                                  elevation: 10,
+                                                  color: data.status == '2'
+                                                      ? rojo
+                                                      : blanco,
+                                                  child: TextButton(
+                                                      onPressed: () {
+                                                        status(data.id, '2');
+                                                      },
+                                                      child: Text('C',
+                                                          style: GoogleFonts.itim(
+                                                              textStyle: TextStyle(
+                                                                  color: data.status ==
+                                                                          '2'
+                                                                      ? blanco
+                                                                      : rojo))))),
+                                              Card(
+                                                  elevation: 10,
+                                                  color: data.status == '1'
+                                                      ? gris
+                                                      : blanco,
+                                                  child: TextButton(
+                                                      onPressed: () {
+                                                        status(data.id, '1');
+                                                      },
+                                                      child: Text('R',
+                                                          style: GoogleFonts.itim(
+                                                              textStyle: TextStyle(
+                                                                  color: data.status ==
+                                                                          '1'
+                                                                      ? blanco
+                                                                      : gris))))),
+                                              Card(
+                                                  elevation: 10,
+                                                  color: data.status == '3'
+                                                      ? azuls
+                                                      : blanco,
+                                                  child: TextButton(
+                                                      onPressed: () {
+                                                        status(data.id, '3');
+                                                      },
+                                                      child: Text('P',
+                                                          style: GoogleFonts.itim(
+                                                              textStyle: TextStyle(
+                                                                  color: data.status ==
+                                                                          '3'
+                                                                      ? blanco
+                                                                      : azuls))))),
+                                              Card(
+                                                  elevation: 10,
+                                                  color: data.status == '4'
+                                                      ? azulp
+                                                      : blanco,
+                                                  child: TextButton(
+                                                      onPressed: () {
+                                                        status(data.id, '4');
+                                                      },
+                                                      child: Text('A',
+                                                          style: GoogleFonts.itim(
+                                                              textStyle: TextStyle(
+                                                                  color: data.status ==
+                                                                          '4'
+                                                                      ? blanco
+                                                                      : azulp))))),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
@@ -236,5 +272,25 @@ class _homecotizacion_clientesState extends State<homecotizacion_clientes> {
         ),
       ),
     );
+  }
+
+  Future status(String _id, String _status) async {
+    var data = {
+      'tipo': 'cabecera_status',
+      'status': _status,
+      'id': _id,
+    };
+    print(data);
+
+    var res = await http.post(urlventas,
+        headers: {
+          "Accept": "application/json",
+        },
+        body: json.encode(data));
+
+    print(res.body);
+    setState(() {
+      listacoti();
+    });
   }
 }
