@@ -76,7 +76,7 @@ class _blog_proyectosState extends State<blog_proyectos> {
                                       child: ListTile(
                                         leading: Text(
                                             DateFormat('dd/MM')
-                                                .format(data.fecha)
+                                                .format(data.fechaAvance)
                                                 .toString(),
                                             style: GoogleFonts.itim(
                                                 textStyle:

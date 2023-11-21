@@ -153,7 +153,7 @@ class Modelblogproyectos {
   String titulo;
   String observacion;
   DateTime fecha;
-  String fechaAvance;
+  DateTime fechaAvance;
   String usuario;
   String status;
 
@@ -175,7 +175,7 @@ class Modelblogproyectos {
         titulo: json["titulo"],
         observacion: json["observacion"],
         fecha: DateTime.parse(json["fecha"]),
-        fechaAvance: json["fecha_avance"],
+        fechaAvance: DateTime.parse(json["fecha_avance"]),
         usuario: json["usuario"],
         status: json["status"],
       );

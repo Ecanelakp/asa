@@ -15,3 +15,5 @@ var urlinteracciones =
 var urlcompras = new Uri.https(webservice, '/php/general/compras.php');
 
 var urlventas = new Uri.https(webservice, '/php/general/ventas.php');
+
+var urltareas = new Uri.https(webservice, '/php/general/tareas.php');
