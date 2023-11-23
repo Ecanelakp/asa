@@ -71,7 +71,9 @@ class _alta_tareasState extends State<alta_tareas> {
               padding: const EdgeInsets.all(8.0),
               child: TextField(
                 controller: _titulo,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  setState(() {});
+                },
                 style: GoogleFonts.itim(textStyle: TextStyle(color: azulp)),
                 decoration: InputDecoration(
                   labelText: 'Titulo',
@@ -121,7 +123,9 @@ class _alta_tareasState extends State<alta_tareas> {
             child: TextField(
               controller: _descripcion,
               maxLines: 3,
-              onChanged: (value) {},
+              onChanged: (value) {
+                setState(() {});
+              },
               style: GoogleFonts.itim(textStyle: TextStyle(color: azulp)),
               decoration: InputDecoration(
                 labelText: 'Descripcion',
@@ -254,13 +258,23 @@ class _alta_tareasState extends State<alta_tareas> {
                     }))),
         Card(
           elevation: 10,
-          color: azulp,
+          color: _tareas.length == 0 ||
+                  _titulo.text == '' ||
+                  _descripcion.text == '' ||
+                  _fecha.text == ''
+              ? gris
+              : azulp,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: IconButton(
                 onPressed: () {
                   setState(() {
-                    altacabecera();
+                    _tareas.length == 0 ||
+                            _titulo.text == '' ||
+                            _descripcion.text == '' ||
+                            _fecha.text == ''
+                        ? print('nada')
+                        : altacabecera();
                     // usuarios_tarea('1');
                   });
                 },
@@ -268,6 +282,25 @@ class _alta_tareasState extends State<alta_tareas> {
                   Icons.save,
                   color: blanco,
                 )),
+          ),
+        ),
+        Container(
+          width: 400,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: _tareas.length == 0 ||
+                    _titulo.text == '' ||
+                    _descripcion.text == '' ||
+                    _fecha.text == ''
+                ? Text(
+                    'Completa los campos necesarios como: Título, Descripción, asigna uno o varios responsables',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.sulphurPoint(
+                        textStyle: TextStyle(color: gris)))
+                : Text('Listo!',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.sulphurPoint(
+                        textStyle: TextStyle(color: azuls))),
           ),
         )
       ]),

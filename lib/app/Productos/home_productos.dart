@@ -221,41 +221,68 @@ class _listadeproductosState extends State<_listadeproductos> {
                                   .map((data) => Container(
                                         child: Card(
                                           elevation: 10,
-                                          child: ListTile(
-                                            subtitle: Text(
-                                              data.id + '-' + data.descripcion,
-                                              style: GoogleFonts.itim(
-                                                  textStyle:
-                                                      TextStyle(color: gris)),
-                                            ),
-                                            title: Text(
-                                              data.tipo + ' :  ' + data.nombre,
-                                              style: GoogleFonts.itim(
-                                                  textStyle:
-                                                      TextStyle(color: azulp)),
-                                            ),
-                                            trailing: Text(
-                                              data.inventario +
-                                                  ' ' +
-                                                  data.unidad,
-                                              style: GoogleFonts.itim(
-                                                  textStyle:
-                                                      TextStyle(color: azuls)),
-                                            ),
-                                            onTap: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          detallemov_productos(
-                                                              data.descripcion,
-                                                              data.id,
-                                                              data.nombre,
-                                                              data.presentacion,
-                                                              data.tipo,
-                                                              data.unidad,
-                                                              data.inventario)));
-                                            },
+                                          child: Row(
+                                            children: [
+                                              Flexible(
+                                                child: ExpansionTile(
+                                                  onExpansionChanged: (value) {
+                                                    print(value);
+                                                  },
+                                                  children: [
+                                                    Text(data.descripcion,
+                                                        style: GoogleFonts.itim(
+                                                            textStyle:
+                                                                TextStyle(
+                                                                    color:
+                                                                        gris))),
+                                                  ],
+                                                  leading: Text(data.tipo,
+                                                      style: GoogleFonts.itim(
+                                                          textStyle: TextStyle(
+                                                              color: azuls))),
+                                                  subtitle: Text(
+                                                      data.descripcion,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: GoogleFonts.itim(
+                                                          textStyle: TextStyle(
+                                                              color: gris))),
+                                                  title: Text(
+                                                    data.nombre,
+                                                    style: GoogleFonts.itim(
+                                                        textStyle: TextStyle(
+                                                            color: azulp)),
+                                                  ),
+                                                  trailing: Text(
+                                                    data.inventario +
+                                                        ' ' +
+                                                        data.unidad,
+                                                    style: GoogleFonts.itim(
+                                                        textStyle: TextStyle(
+                                                            color: azuls)),
+                                                  ),
+                                                ),
+                                              ),
+                                              IconButton(
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                detallemov_productos(
+                                                                    data.descripcion,
+                                                                    data.id,
+                                                                    data.nombre,
+                                                                    data.presentacion,
+                                                                    data.tipo,
+                                                                    data.unidad,
+                                                                    data.inventario)));
+                                                  },
+                                                  icon: Icon(
+                                                    Icons.arrow_forward_ios,
+                                                    color: rojo,
+                                                  ))
+                                            ],
                                           ),
                                         ),
                                       ))
