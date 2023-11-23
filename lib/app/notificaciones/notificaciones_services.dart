@@ -8,14 +8,20 @@ Future<void> initNotifficacions() async {
       AndroidInitializationSettings('@mipmap/launcher_icon');
 
   const DarwinInitializationSettings initializationSettingsIOS =
-      DarwinInitializationSettings();
+      DarwinInitializationSettings(
+    requestAlertPermission: true,
+    requestBadgePermission: true,
+    requestSoundPermission: true,
+  );
 
   const InitializationSettings initializationSettings = InitializationSettings(
     android: initializationSettingsAndroid,
     iOS: initializationSettingsIOS,
   );
 
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  await flutterLocalNotificationsPlugin.initialize(
+    initializationSettings,
+  );
 }
 
 Future<void> mostrarNotificaciones(String _usuarioorigen, String _asunto,
@@ -26,8 +32,7 @@ Future<void> mostrarNotificaciones(String _usuarioorigen, String _asunto,
       AndroidNotificationDetails('you_channel_id', 'you_channel_name',
           playSound: true);
   const NotificationDetails notificationDetails = NotificationDetails(
-    android: androidNotificationDetails,
-  );
+      android: androidNotificationDetails, iOS: DarwinNotificationDetails());
 
   await flutterLocalNotificationsPlugin.show(
       1, _asunto, _notificacion, notificationDetails);
