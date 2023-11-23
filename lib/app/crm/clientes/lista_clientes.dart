@@ -1,8 +1,8 @@
-import 'package:asamexico/app/crm/cotizaciones/homecotizacion_clientes.dart';
-import 'package:asamexico/app/crm/clientes/detalles_clientes.dart';
-import 'package:asamexico/app/variables/colors.dart';
-import 'package:asamexico/app/variables/servicesurl.dart';
-import 'package:asamexico/models/clientes_model.dart';
+import 'package:Asamexico/app/crm/cotizaciones/homecotizacion_clientes.dart';
+import 'package:Asamexico/app/crm/clientes/detalles_clientes.dart';
+import 'package:Asamexico/app/variables/colors.dart';
+import 'package:Asamexico/app/variables/servicesurl.dart';
+import 'package:Asamexico/models/clientes_model.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

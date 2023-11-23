@@ -1,12 +1,12 @@
-import 'package:asamexico/app/home/lateral_app.dart';
+import 'package:Asamexico/app/home/lateral_app.dart';
 
-import 'package:asamexico/app/proyectos/menu_proyectos.dart';
-import 'package:asamexico/app/variables/colors.dart';
-import 'package:asamexico/app/variables/servicesurl.dart';
-import 'package:asamexico/app/variables/variables.dart';
-import 'package:asamexico/models/clientes_model.dart';
+import 'package:Asamexico/app/proyectos/menu_proyectos.dart';
+import 'package:Asamexico/app/variables/colors.dart';
+import 'package:Asamexico/app/variables/servicesurl.dart';
+import 'package:Asamexico/app/variables/variables.dart';
+import 'package:Asamexico/models/clientes_model.dart';
 
-import 'package:asamexico/models/proyectos_model.dart';
+import 'package:Asamexico/models/proyectos_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';

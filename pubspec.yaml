@@ -1,5 +1,5 @@
-name: asamexico
-description: manejador de proyectos.
+name: Asamexico
+description: Aplicación control interno.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -44,6 +44,9 @@ dependencies:
   datetime_picker_formfield: 
   url_launcher: ^6.1.10
   syncfusion_flutter_charts: ^23.1.38 
+  badges: ^3.1.2
+  permission_handler: ^11.0.1  
+  flutter_local_notifications: ^16.1.0
   
 
 dev_dependencies:
@@ -61,8 +64,9 @@ flutter_icons:
   android: "launcher_icon"
   ios: true
   
-  image_path: "assets/icon/Icon-asa.png"
-  adaptive_icon_background: "#233878"
+  image_path: "assets/icon/logoblanco.png"
+  adaptive_icon_background: "#ffffff"
+  #adaptive_icon_background: "#233878"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

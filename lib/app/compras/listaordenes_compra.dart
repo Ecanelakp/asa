@@ -1,9 +1,9 @@
-import 'package:asamexico/app/compras/crearorden_compras.dart';
-import 'package:asamexico/app/compras/pdforden_compra.dart';
-import 'package:asamexico/app/compras/previewordenpdf_compras.dart';
-import 'package:asamexico/app/variables/colors.dart';
-import 'package:asamexico/app/variables/servicesurl.dart';
-import 'package:asamexico/models/compras_model.dart';
+import 'package:Asamexico/app/compras/crearorden_compras.dart';
+import 'package:Asamexico/app/compras/pdforden_compra.dart';
+import 'package:Asamexico/app/compras/previewordenpdf_compras.dart';
+import 'package:Asamexico/app/variables/colors.dart';
+import 'package:Asamexico/app/variables/servicesurl.dart';
+import 'package:Asamexico/models/compras_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
@@ -38,7 +38,7 @@ class _listaordenes_compraState extends State<listaordenes_compra> {
 
     if (response.statusCode == 200) {
       final items = json.decode(response.body).cast<Map<String, dynamic>>();
-      // print(response.body);
+      //print(response.body);
 
       List<Modellisordenes> studentList = items.map<Modellisordenes>((json) {
         return Modellisordenes.fromJson(json);
@@ -52,16 +52,10 @@ class _listaordenes_compraState extends State<listaordenes_compra> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Lista ordenes de compra',
-            style: GoogleFonts.itim(
-              textStyle: TextStyle(),
-            )),
-        backgroundColor: azulp,
-      ),
-      backgroundColor: blanco,
-      body: FutureBuilder<List<Modellisordenes>>(
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      child: FutureBuilder<List<Modellisordenes>>(
           future: listaproveedoes(),
           builder: (context, snapshot) {
             if (!snapshot.hasData)
@@ -84,7 +78,7 @@ class _listaordenes_compraState extends State<listaordenes_compra> {
                                         style: GoogleFonts.itim(
                                           textStyle: TextStyle(),
                                         )),
-                                    title: Text(data.nombre,
+                                    title: Text(data.nombre.toString(),
                                         style: GoogleFonts.itim(
                                           textStyle: TextStyle(color: azulp),
                                         )),
@@ -110,7 +104,7 @@ class _listaordenes_compraState extends State<listaordenes_compra> {
                                                 builder: (context) =>
                                                     pdforden_compra(
                                                         data.id,
-                                                        data.nombre,
+                                                        data.nombre.toString(),
                                                         data.fechaRequerida
                                                             .toString(),
                                                         data.referencia,

@@ -37,7 +37,7 @@ class Modellisordenes {
   DateTime fecha;
   String iva;
   String status;
-  String nombre;
+  String? nombre;
   String total;
 
   Modellisordenes({
@@ -51,7 +51,7 @@ class Modellisordenes {
     required this.fecha,
     required this.iva,
     required this.status,
-    required this.nombre,
+    this.nombre,
     required this.total,
   });
 

@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
-import 'package:asamexico/app/variables/colors.dart';
-import 'package:asamexico/models/proyectos_model.dart';
+import 'package:Asamexico/app/variables/colors.dart';
+import 'package:Asamexico/models/proyectos_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';

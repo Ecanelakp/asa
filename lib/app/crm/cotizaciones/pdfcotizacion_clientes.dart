@@ -1,6 +1,6 @@
-import 'package:asamexico/app/crm/cotizaciones/altacotizacion_clientes.dart';
-import 'package:asamexico/app/variables/colors.dart';
-import 'package:asamexico/app/variables/servicesurl.dart';
+import 'package:Asamexico/app/crm/cotizaciones/altacotizacion_clientes.dart';
+import 'package:Asamexico/app/variables/colors.dart';
+import 'package:Asamexico/app/variables/servicesurl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';

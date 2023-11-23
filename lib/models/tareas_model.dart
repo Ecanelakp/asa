@@ -34,6 +34,7 @@ class Modellisttareas {
   DateTime fechaVencimiento;
   String tipo;
   String descripcion;
+  String usuario;
 
   Modellisttareas({
     required this.id,
@@ -41,16 +42,17 @@ class Modellisttareas {
     required this.fechaVencimiento,
     required this.tipo,
     required this.descripcion,
+    required this.usuario,
   });
 
   factory Modellisttareas.fromJson(Map<String, dynamic> json) =>
       Modellisttareas(
-        id: json["id"],
-        titulo: json["titulo"],
-        fechaVencimiento: DateTime.parse(json["fecha_vencimiento"]),
-        tipo: json["tipo"],
-        descripcion: json["descripcion"],
-      );
+          id: json["id"],
+          titulo: json["titulo"],
+          fechaVencimiento: DateTime.parse(json["fecha_vencimiento"]),
+          tipo: json["tipo"],
+          descripcion: json["descripcion"],
+          usuario: json["usuario"]);
 }
 
 class Modellisttareasusaasig {
@@ -105,6 +107,37 @@ class Modellisttareacomentarios {
         usuario: json["usuario"],
         comentario: json["comentario"],
         fecha: DateTime.parse(json["fecha"]),
+        status: json["status"],
+      );
+}
+
+class Modellistnotificaciones {
+  String id;
+  String usuario;
+  String asunto;
+  String descripcion;
+  DateTime fecha;
+  String leido;
+  String status;
+
+  Modellistnotificaciones({
+    required this.id,
+    required this.usuario,
+    required this.asunto,
+    required this.descripcion,
+    required this.fecha,
+    required this.leido,
+    required this.status,
+  });
+
+  factory Modellistnotificaciones.fromJson(Map<String, dynamic> json) =>
+      Modellistnotificaciones(
+        id: json["id"],
+        usuario: json["usuario"],
+        asunto: json["asunto"],
+        descripcion: json["descripcion"],
+        fecha: DateTime.parse(json["fecha"]),
+        leido: json["leido"],
         status: json["status"],
       );
 }

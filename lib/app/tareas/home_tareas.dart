@@ -1,9 +1,11 @@
-import 'package:asamexico/app/variables/colors.dart';
-import 'package:asamexico/app/variables/variables.dart';
-import 'package:flutter/material.dart';
-import 'package:asamexico/app/variables/servicesurl.dart';
+import 'package:Asamexico/app/notificaciones/alta_notificaciones.dart';
+import 'package:Asamexico/app/variables/colors.dart';
+import 'package:Asamexico/app/variables/servicesurl.dart';
+import 'package:Asamexico/app/variables/variables.dart';
+import 'package:Asamexico/models/tareas_model.dart';
 
-import 'package:asamexico/models/tareas_model.dart';
+import 'package:flutter/material.dart';
+
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -339,6 +341,8 @@ class _alta_tareasState extends State<alta_tareas> {
       print(reponse.body);
       comentarios_tarea(
           await reponse.body, elemento.idresponsable, elemento.comentario);
+      altanotificaciones(
+          elemento.idresponsable, _titulo.text, _descripcion.text);
     });
     final snackBar = SnackBar(
       content: Text(

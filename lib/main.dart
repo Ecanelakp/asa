@@ -2,11 +2,14 @@
 
 //import 'package:asa_mexico/src/pages/presupuestos/presupuestolist_home.dart';
 
-import 'package:asamexico/app/login/login_app.dart';
+import 'package:Asamexico/app/login/login_app.dart';
+import 'package:Asamexico/app/notificaciones/notificaciones_services.dart';
 import 'package:flutter/material.dart';
 //import 'package:firebase_messaging/firebase_messaging.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initNotifficacions();
   //WidgetsFlutterBinding.ensureInitialized();
   //PushNotificationsManager().init();
   runApp(MyApp());

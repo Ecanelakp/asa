@@ -1,6 +1,6 @@
-import 'package:asamexico/app/variables/colors.dart';
-import 'package:asamexico/app/variables/servicesurl.dart';
-import 'package:asamexico/models/proyectos_model.dart';
+import 'package:Asamexico/app/variables/colors.dart';
+import 'package:Asamexico/app/variables/servicesurl.dart';
+import 'package:Asamexico/models/proyectos_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
@@ -57,6 +57,23 @@ class _chartcotizacion_clientesState extends State<chartcotizacion_clientes> {
         backgroundColor: azulp,
       ),
       body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: FractionalOffset(0.0, 0.3),
+              end: FractionalOffset(0.0, 0.8),
+              colors: [
+                blanco,
+                blanco,
+              ]),
+          image: DecorationImage(
+            colorFilter: ColorFilter.mode(
+              Color.fromARGB(255, 255, 255, 255).withOpacity(0.1),
+              BlendMode.modulate,
+            ),
+            image: AssetImage('assets/images/asablanco.jpg'),
+            fit: BoxFit.contain,
+          ),
+        ),
         child: FutureBuilder(
             future: listacoti(),
             builder: (context, snapShot) {
@@ -87,10 +104,10 @@ class _chartcotizacion_clientesState extends State<chartcotizacion_clientes> {
                         dataSource: chartData,
 
                         xValueMapper: (Modelliscoti sales, _) =>
-                            DateFormat('dd/MM/yy').format(sales.fecha),
+                            DateFormat('dd/MM').format(sales.fecha),
                         yValueMapper: (Modelliscoti sales, _) =>
                             double.parse(sales.total.toString()),
-                        name: "Ventas",
+                        name: "Cotizaciones",
                         color: azulp,
                         animationDuration: 2000,
 

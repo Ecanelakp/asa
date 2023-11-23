@@ -1,10 +1,10 @@
-import 'package:asamexico/app/Productos/alta_productos.dart';
-import 'package:asamexico/app/Productos/detallemov_producto.dart';
-import 'package:asamexico/app/Productos/inventarios_productos.dart';
-import 'package:asamexico/app/home/lateral_app.dart';
-import 'package:asamexico/app/variables/colors.dart';
-import 'package:asamexico/app/variables/servicesurl.dart';
-import 'package:asamexico/models/productos_model.dart';
+import 'package:Asamexico/app/Productos/alta_productos.dart';
+import 'package:Asamexico/app/Productos/detallemov_producto.dart';
+import 'package:Asamexico/app/Productos/inventarios_productos.dart';
+import 'package:Asamexico/app/home/lateral_app.dart';
+import 'package:Asamexico/app/variables/colors.dart';
+import 'package:Asamexico/app/variables/servicesurl.dart';
+import 'package:Asamexico/models/productos_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';

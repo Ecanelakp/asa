@@ -1,7 +1,7 @@
-import 'package:asamexico/app/variables/colors.dart';
-import 'package:asamexico/app/variables/servicesurl.dart';
-import 'package:asamexico/app/variables/variables.dart';
-import 'package:asamexico/models/productos_model.dart';
+import 'package:Asamexico/app/variables/colors.dart';
+import 'package:Asamexico/app/variables/servicesurl.dart';
+import 'package:Asamexico/app/variables/variables.dart';
+import 'package:Asamexico/models/productos_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -53,6 +53,17 @@ class _detallemov_productosState extends State<detallemov_productos> {
       body: Column(
         children: [
           _cabecera(),
+          Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ExpansionTile(
+                title: Text('Descripción',
+                    style: GoogleFonts.itim(textStyle: TextStyle(color: gris))),
+                children: [
+                  Text(widget._descripcion,
+                      style:
+                          GoogleFonts.itim(textStyle: TextStyle(color: gris))),
+                ],
+              )),
           Text('Movimientos',
               style: GoogleFonts.itim(textStyle: TextStyle(color: gris))),
           _listamovprod(widget._id),
@@ -199,9 +210,6 @@ class _detallemov_productosState extends State<detallemov_productos> {
                       Text(widget._nombre,
                           style: GoogleFonts.itim(
                               textStyle: TextStyle(color: blanco))),
-                      Text('Descripcion: ' + widget._descripcion,
-                          style: GoogleFonts.itim(
-                              textStyle: TextStyle(color: azuls))),
                       Text('Presentacion: ' + widget._presentacion,
                           style: GoogleFonts.itim(
                               textStyle: TextStyle(color: azuls))),
@@ -214,7 +222,7 @@ class _detallemov_productosState extends State<detallemov_productos> {
                   child: Text(
                       NumberFormat.decimalPattern().format((_inventarioact)),
                       style: GoogleFonts.itim(
-                          textStyle: TextStyle(color: blanco, fontSize: 40)))),
+                          textStyle: TextStyle(color: blanco, fontSize: 20)))),
               Text(widget._unidad,
                   style: GoogleFonts.itim(
                       textStyle: TextStyle(

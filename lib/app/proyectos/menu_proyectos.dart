@@ -1,8 +1,8 @@
-import 'package:asamexico/app/proyectos/blog_proyectos.dart';
-import 'package:asamexico/app/proyectos/entregado_proyectos.dart';
-import 'package:asamexico/app/proyectos/envioprods_proyectos.dart';
-import 'package:asamexico/app/proyectos/retorno_proyectos.dart';
-import 'package:asamexico/app/variables/colors.dart';
+import 'package:Asamexico/app/proyectos/blog_proyectos.dart';
+import 'package:Asamexico/app/proyectos/entregado_proyectos.dart';
+import 'package:Asamexico/app/proyectos/envioprods_proyectos.dart';
+import 'package:Asamexico/app/proyectos/retorno_proyectos.dart';
+import 'package:Asamexico/app/variables/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

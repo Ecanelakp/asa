@@ -1,7 +1,7 @@
-import 'package:asamexico/app/crm/clientes/alta_clientes.dart';
-import 'package:asamexico/app/crm/clientes/lista_clientes.dart';
-import 'package:asamexico/app/home/lateral_app.dart';
-import 'package:asamexico/app/variables/colors.dart';
+import 'package:Asamexico/app/crm/clientes/alta_clientes.dart';
+import 'package:Asamexico/app/crm/clientes/lista_clientes.dart';
+import 'package:Asamexico/app/home/lateral_app.dart';
+import 'package:Asamexico/app/variables/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

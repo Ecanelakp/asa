@@ -1,10 +1,10 @@
-import 'package:asamexico/app/crm/cotizaciones/altacotizacion_clientes.dart';
-import 'package:asamexico/app/crm/cotizaciones/chartcotizacion_clientes.dart';
-import 'package:asamexico/app/crm/cotizaciones/pdfcotizacreada_clientes.dart';
-import 'package:asamexico/app/variables/colors.dart';
-import 'package:asamexico/app/variables/servicesurl.dart';
+import 'package:Asamexico/app/crm/cotizaciones/altacotizacion_clientes.dart';
+import 'package:Asamexico/app/crm/cotizaciones/chartcotizacion_clientes.dart';
+import 'package:Asamexico/app/crm/cotizaciones/pdfcotizacreada_clientes.dart';
+import 'package:Asamexico/app/variables/colors.dart';
+import 'package:Asamexico/app/variables/servicesurl.dart';
 
-import 'package:asamexico/models/proyectos_model.dart';
+import 'package:Asamexico/models/proyectos_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
@@ -154,7 +154,7 @@ class _homecotizacion_clientesState extends State<homecotizacion_clientes> {
                                     ),
                                   ),
                                   Flexible(
-                                    flex: 2,
+                                    flex: 1,
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.end,
@@ -178,34 +178,44 @@ class _homecotizacion_clientesState extends State<homecotizacion_clientes> {
                                                             color: azulp))),
                                               ),
                                             )),
-                                        SingleChildScrollView(
-                                          child: Row(
-                                            children: [
-                                              Card(
+                                        Row(
+                                          children: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                status(data.id, '2');
+                                              },
+                                              child: Card(
                                                   elevation: 10,
                                                   color: data.status == '2'
                                                       ? rojo
                                                       : blanco,
-                                                  child: TextButton(
-                                                      onPressed: () {
-                                                        status(data.id, '2');
-                                                      },
-                                                      child: Text('C',
-                                                          style: GoogleFonts.itim(
-                                                              textStyle: TextStyle(
-                                                                  color: data.status ==
-                                                                          '2'
-                                                                      ? blanco
-                                                                      : rojo))))),
-                                              Card(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Text('C',
+                                                        style: GoogleFonts.itim(
+                                                            textStyle: TextStyle(
+                                                                color:
+                                                                    data.status ==
+                                                                            '2'
+                                                                        ? blanco
+                                                                        : rojo))),
+                                                  )),
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                status(data.id, '1');
+                                              },
+                                              child: Card(
                                                   elevation: 10,
                                                   color: data.status == '1'
                                                       ? gris
                                                       : blanco,
-                                                  child: TextButton(
-                                                      onPressed: () {
-                                                        status(data.id, '1');
-                                                      },
+                                                  child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
                                                       child: Text('R',
                                                           style: GoogleFonts.itim(
                                                               textStyle: TextStyle(
@@ -213,15 +223,20 @@ class _homecotizacion_clientesState extends State<homecotizacion_clientes> {
                                                                           '1'
                                                                       ? blanco
                                                                       : gris))))),
-                                              Card(
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                status(data.id, '3');
+                                              },
+                                              child: Card(
                                                   elevation: 10,
                                                   color: data.status == '3'
                                                       ? azuls
                                                       : blanco,
-                                                  child: TextButton(
-                                                      onPressed: () {
-                                                        status(data.id, '3');
-                                                      },
+                                                  child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
                                                       child: Text('P',
                                                           style: GoogleFonts.itim(
                                                               textStyle: TextStyle(
@@ -229,15 +244,20 @@ class _homecotizacion_clientesState extends State<homecotizacion_clientes> {
                                                                           '3'
                                                                       ? blanco
                                                                       : azuls))))),
-                                              Card(
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                status(data.id, '4');
+                                              },
+                                              child: Card(
                                                   elevation: 10,
                                                   color: data.status == '4'
                                                       ? azulp
                                                       : blanco,
-                                                  child: TextButton(
-                                                      onPressed: () {
-                                                        status(data.id, '4');
-                                                      },
+                                                  child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
                                                       child: Text('A',
                                                           style: GoogleFonts.itim(
                                                               textStyle: TextStyle(
@@ -245,8 +265,8 @@ class _homecotizacion_clientesState extends State<homecotizacion_clientes> {
                                                                           '4'
                                                                       ? blanco
                                                                       : azulp))))),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),

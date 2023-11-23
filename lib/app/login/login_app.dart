@@ -1,11 +1,15 @@
-import 'package:asamexico/app/home/home_app.dart';
-import 'package:asamexico/app/variables/colors.dart';
-import 'package:asamexico/app/variables/servicesurl.dart';
-import 'package:asamexico/app/variables/variables.dart';
+import 'dart:async';
+
+import 'package:Asamexico/app/home/home_app.dart';
+import 'package:Asamexico/app/notificaciones/notificaciones_services.dart';
+import 'package:Asamexico/app/variables/colors.dart';
+import 'package:Asamexico/app/variables/servicesurl.dart';
+import 'package:Asamexico/app/variables/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 TextEditingController _usuario = TextEditingController();
@@ -16,6 +20,12 @@ bool _checkrecord = false;
 double _height = 0;
 double _width = 0;
 String _error = '';
+String _usuarioorigen = '';
+String _asunto = '';
+String _idmensaje = '';
+
+String _fecha = '';
+Timer? _timer;
 
 class login_app extends StatefulWidget {
   @override
@@ -29,9 +39,68 @@ class _login_appState extends State<login_app> {
     _height = 0;
     _width = 0;
     recordarcredenciales();
+    _checkPermissions();
+    startRepeatingAction();
+    //print('imprimir');
     // startRepeatingAction();
     // _checkPermissions();
     // _checkPermissionsfiles();
+  }
+
+  void startRepeatingAction() {
+    const duration = Duration(seconds: 30);
+    _timer = Timer.periodic(duration, (Timer timer) async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      // Realiza la acción repetitiva cada 5 segundos
+      // print('Acción repetitiva realizada cada 5 segundos');
+      var data = {
+        'usuario':
+            _usuario.text != '' ? _usuario.text : prefs.getString('user')!,
+        //'codigo': _codeactive.text,
+        'tipo': 'ultima_not'
+      };
+      var response =
+          await http.post(urlnotificaciones, body: json.encode(data));
+      //print(data);
+      // print(urllogin);
+      var jsondata = json.decode(response.body);
+      print(response.body);
+      setState(() {
+        _usuarioorigen = (jsondata["usuario"]).toString();
+        _notificacion = (jsondata["descripcion"]).toString();
+        _asunto = (jsondata["asunto"]).toString();
+        _fecha = (jsondata["fecha"]).toString();
+        _idmensaje = (jsondata["id"]).toString();
+      });
+
+      // print(_notificacion);
+      if (_notificacion != 'null') {
+        mostrarNotificaciones(_usuarioorigen, _asunto, _notificacion, _fecha,
+            int.parse(_idmensaje));
+        actnotificacion(_idmensaje);
+      } else {
+        // print('nada de nada');
+      }
+
+      if (response.statusCode == 200) {
+      } else {}
+    });
+  }
+
+  Future actnotificacion(String _id) async {
+    var data = {
+      'tipo': 'act_notificacion',
+      'id': _id,
+      'leido': '1',
+    };
+    print(data);
+    final reponse = await http.post(urlnotificaciones,
+        headers: {
+          "Accept": "application/json",
+        },
+        body: json.encode(data));
+
+    print(reponse.body);
   }
 
   Future<void> recordarcredenciales() async {
@@ -52,6 +121,25 @@ class _login_appState extends State<login_app> {
       _usuario.text = '';
       _password.text = '';
     }
+  }
+
+  Future<void> _checkPermissions() async {
+    final PermissionStatus statusnotification =
+        await Permission.notification.request();
+    // final PermissionStatus statusfiles = await Permission.storage.request();
+    if (statusnotification.isGranted) {
+      // Permiso concedido
+      print('Permiso de notificaciones concedido');
+    } else if (statusnotification.isDenied) {
+      // Permiso denegado pero no bloqueado permanentemente
+      print('Permiso de notificaciones denegado');
+      openAppSettings();
+    } else if (statusnotification.isPermanentlyDenied) {
+      // Permiso denegado permanentemente, abre la configuración de la app
+      print('Permiso de notificaciones denegado permanentemente');
+    }
+
+    // }
   }
 
   @override

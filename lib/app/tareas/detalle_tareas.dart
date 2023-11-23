@@ -1,7 +1,7 @@
-import 'package:asamexico/app/variables/colors.dart';
-import 'package:asamexico/app/variables/servicesurl.dart';
-import 'package:asamexico/app/variables/variables.dart';
-import 'package:asamexico/models/tareas_model.dart';
+import 'package:Asamexico/app/variables/colors.dart';
+import 'package:Asamexico/app/variables/servicesurl.dart';
+import 'package:Asamexico/app/variables/variables.dart';
+import 'package:Asamexico/models/tareas_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
@@ -16,7 +16,10 @@ class detalle_tareas extends StatefulWidget {
   final String _id;
   final String _titulo;
   final String _descripcion;
-  detalle_tareas(this._id, this._titulo, this._descripcion);
+  final DateTime _fechaVencimiento;
+  final String _usuario;
+  detalle_tareas(this._id, this._titulo, this._descripcion,
+      this._fechaVencimiento, this._usuario);
 
   @override
   State<detalle_tareas> createState() => _detalle_tareasState();
@@ -27,6 +30,7 @@ class _detalle_tareasState extends State<detalle_tareas> {
   void initState() {
     super.initState();
     listacoti();
+    // _lista_usr_tarea.clear();
   }
 
   Future<List<Modellisttareasusaasig>> listacoti() async {
@@ -50,7 +54,7 @@ class _detalle_tareasState extends State<detalle_tareas> {
       _lista_usr_tarea = items.map<Modellisttareasusaasig>((json) {
         return Modellisttareasusaasig.fromJson(json);
       }).toList();
-      //setState(() {});
+      setState(() {});
       return studentList;
     } else {
       throw Exception('Failed to load data from Server.');
@@ -61,7 +65,7 @@ class _detalle_tareasState extends State<detalle_tareas> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Detalle tareas',
+        title: Text('Detalle tarea',
             style: GoogleFonts.itim(
                 textStyle: TextStyle(
               color: blanco,
@@ -76,21 +80,20 @@ class _detalle_tareasState extends State<detalle_tareas> {
             SizedBox(
               height: 10,
             ),
-            Text('Título: ' + widget._titulo,
-                style: GoogleFonts.itim(
-                    textStyle: TextStyle(
-                  color: gris,
-                ))),
-            SizedBox(
-              height: 5,
-            ),
-            Text('Decripción ' + widget._descripcion,
-                style: GoogleFonts.itim(
-                    textStyle: TextStyle(
-                  color: azulp,
-                ))),
-            SizedBox(
-              height: 10,
+            Card(
+              elevation: 10,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListTile(
+                  title: Text(widget._titulo,
+                      style: GoogleFonts.itim(
+                          textStyle: TextStyle(
+                        color: azuls,
+                      ))),
+                  subtitle: Text(widget._descripcion,
+                      style: GoogleFonts.itim(textStyle: TextStyle())),
+                ),
+              ),
             ),
             Align(
               alignment: Alignment.center,
@@ -197,7 +200,45 @@ class _detalle_tareasState extends State<detalle_tareas> {
                       );
                     }),
               ),
-            )
+            ),
+            Card(
+              elevation: 10,
+              child: Row(
+                children: [
+                  Flexible(
+                    child: ListTile(
+                      subtitle: Text('Vencimiento',
+                          style: GoogleFonts.itim(
+                              textStyle: TextStyle(
+                            color: azuls,
+                          ))),
+                      title: Text(
+                          DateFormat('dd/MM/yyyy')
+                              .format(widget._fechaVencimiento),
+                          style: GoogleFonts.itim(
+                              textStyle: TextStyle(
+                            color: azuls,
+                          ))),
+                      trailing: widget._usuario == usuario
+                          ? Text('Cerrar tarea',
+                              style: GoogleFonts.itim(
+                                  textStyle: TextStyle(
+                                color: rojo,
+                              )))
+                          : Text(''),
+                    ),
+                  ),
+                  widget._usuario == usuario
+                      ? Card(
+                          color: Colors.green,
+                          child: Icon(
+                            Icons.check,
+                            color: blanco,
+                          ))
+                      : Container()
+                ],
+              ),
+            ),
           ],
         ),
       ),
