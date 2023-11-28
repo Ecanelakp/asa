@@ -26,6 +26,7 @@ String _idmensaje = '';
 
 String _fecha = '';
 Timer? _timer;
+bool _visibility = true;
 
 class login_app extends StatefulWidget {
   @override
@@ -41,6 +42,7 @@ class _login_appState extends State<login_app> {
     recordarcredenciales();
     _checkPermissions();
     startRepeatingAction();
+    _visibility = true;
     //print('imprimir');
     // startRepeatingAction();
     // _checkPermissions();
@@ -184,13 +186,23 @@ class _login_appState extends State<login_app> {
                       Container(
                         child: TextField(
                           controller: _password,
-                          obscureText: true,
+                          obscureText: _visibility,
                           style:
                               GoogleFonts.sulphurPoint(textStyle: TextStyle()),
                           decoration: InputDecoration(
                             filled: true,
                             hintText: 'Contraseña',
                             fillColor: Colors.white,
+                            suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _visibility = !_visibility;
+                                  });
+                                },
+                                icon: Icon(
+                                  Icons.visibility,
+                                  color: gris,
+                                )),
                             hintStyle: TextStyle(color: gris),
                             icon: Icon(
                               Icons.password,

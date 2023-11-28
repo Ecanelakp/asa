@@ -21,6 +21,7 @@ String _idcliente = '';
 String _idproducto = '';
 String _idordencompra = '';
 String _descripcion = '';
+String _tipomaterial = '';
 
 final _format = DateFormat("dd-MM-yyyy");
 TextEditingController _fechasol = new TextEditingController();
@@ -29,7 +30,7 @@ TextEditingController _notas = TextEditingController();
 TextEditingController _referencia = TextEditingController();
 TextEditingController _condicionesdepago = TextEditingController();
 TextEditingController _formadepago = TextEditingController();
-TextEditingController _nombrecontacto = TextEditingController();
+TextEditingController _descripcionmanual = TextEditingController();
 TextEditingController _telefono = TextEditingController();
 TextEditingController _productolinea = TextEditingController();
 TextEditingController _cantidadlinea = TextEditingController();
@@ -45,7 +46,8 @@ List<String> _unidades = [
   'PZA',
   'M',
   'M2',
-  'M3'
+  'M3',
+  'SER'
   // ... Agrega más códigos de monedas aquí ...
 ];
 
@@ -83,6 +85,7 @@ class _altacotizacion_clientesState extends State<altacotizacion_clientes> {
     _setTotal();
     listaproveedoes();
     listaprod();
+    _tipomaterial = 'MAT';
   }
 
   _setTotal() {
@@ -211,11 +214,50 @@ class _altacotizacion_clientesState extends State<altacotizacion_clientes> {
         child: Column(
           children: [
             _cabecera(),
-            Text('Crear lineas',
-                style: GoogleFonts.itim(
-                  textStyle: TextStyle(color: azuls),
-                )),
-            _crearlineas(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Tipo de producto a cotizar',
+                    style: GoogleFonts.itim(
+                      textStyle: TextStyle(color: azuls),
+                    )),
+                Card(
+                  color: _tipomaterial == 'MAT' ? rojo : gris,
+                  elevation: 10,
+                  child: TextButton(
+                    onPressed: () {
+                      setState(() {
+                        _tipomaterial = 'MAT';
+                      });
+                    },
+                    child: Text(
+                      'Material',
+                      style: GoogleFonts.itim(
+                        textStyle: TextStyle(color: blanco),
+                      ),
+                    ),
+                  ),
+                ),
+                Card(
+                  color: _tipomaterial == 'SER' ? rojo : gris,
+                  elevation: 10,
+                  child: TextButton(
+                    onPressed: () {
+                      setState(() {
+                        _tipomaterial = 'SER';
+                      });
+                    },
+                    child: Text(
+                      'Servicio',
+                      style: GoogleFonts.itim(
+                        textStyle: TextStyle(color: blanco),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            _tipomaterial == 'MAT' ? _crearlineas() : _lineasmanuales(),
             _lineas(),
             Spacer(),
             Container(
@@ -235,21 +277,33 @@ class _altacotizacion_clientesState extends State<altacotizacion_clientes> {
                         )),
                     Card(
                       elevation: 10,
-                      color: azuls,
+                      color: lineas.length == 0 ||
+                              _nombrecliente.text == '' ||
+                              _notas.text == '' ||
+                              _fechasol.text == '' ||
+                              _referencia.text == ''
+                          ? gris
+                          : azuls,
                       child: IconButton(
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        pdfcotizacion_clientes(
-                                            lineas,
-                                            _nombrecliente.text,
-                                            _fechasol.text,
-                                            _referencia.text,
-                                            _condicionesdepago.text,
-                                            _notas.text,
-                                            _total)));
+                            lineas.length == 0 ||
+                                    _nombrecliente.text == '' ||
+                                    _notas.text == '' ||
+                                    _fechasol.text == '' ||
+                                    _referencia.text == ''
+                                ? print('nada')
+                                : Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            pdfcotizacion_clientes(
+                                                lineas,
+                                                _nombrecliente.text,
+                                                _fechasol.text,
+                                                _referencia.text,
+                                                _condicionesdepago.text,
+                                                _notas.text,
+                                                _total)));
                           },
                           icon: Icon(
                             Icons.print,
@@ -257,11 +311,23 @@ class _altacotizacion_clientesState extends State<altacotizacion_clientes> {
                           )),
                     ),
                     Card(
-                      color: rojo,
+                      color: lineas.length == 0 ||
+                              _nombrecliente.text == '' ||
+                              _notas.text == '' ||
+                              _fechasol.text == '' ||
+                              _referencia.text == ''
+                          ? gris
+                          : rojo,
                       elevation: 10,
                       child: IconButton(
                           onPressed: () {
-                            guardar();
+                            lineas.length == 0 ||
+                                    _nombrecliente.text == '' ||
+                                    _notas.text == '' ||
+                                    _fechasol.text == '' ||
+                                    _referencia.text == ''
+                                ? print('nada')
+                                : guardar();
                           },
                           icon: Icon(
                             Icons.save,
@@ -277,6 +343,125 @@ class _altacotizacion_clientesState extends State<altacotizacion_clientes> {
       ),
     );
   }
+
+  Container _lineasmanuales() => Container(
+          child: Card(
+              child: Row(
+        children: [
+          Flexible(
+            flex: 1,
+            child: TextField(
+              controller: _cantidadlinea,
+              onChanged: (value) {
+                setState(() {});
+              },
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+              ], // Acepta solo dígitos
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                ),
+                labelText: 'Cant.',
+                labelStyle: GoogleFonts.itim(textStyle: TextStyle(color: gris)),
+              ),
+            ),
+          ),
+          Flexible(
+            flex: 3,
+            child: TextField(
+              controller: _descripcionmanual,
+              onChanged: (value) {
+                setState(() {});
+              },
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                ),
+                labelText: 'Descripción',
+                labelStyle: GoogleFonts.itim(textStyle: TextStyle(color: gris)),
+              ),
+            ),
+          ),
+          Flexible(
+            flex: 1,
+            child: TextField(
+              controller: _pulinea,
+              onChanged: (value) {
+                setState(() {});
+              },
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+              ], // Acepta solo dígitos
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                ),
+                labelText: 'PU',
+                labelStyle: GoogleFonts.itim(textStyle: TextStyle(color: gris)),
+              ),
+            ),
+          ),
+          Flexible(
+            flex: 1,
+            child: DropdownButton<String>(
+              value: _unidad,
+              isExpanded: true,
+              style: GoogleFonts.itim(
+                textStyle: TextStyle(color: azulp),
+              ),
+              onChanged: (newValue) {
+                setState(() {
+                  _unidad = newValue.toString();
+                });
+              },
+              items: _unidades.map((currency) {
+                return DropdownMenuItem<String>(
+                  value: currency,
+                  child: Text(currency),
+                );
+              }).toList(),
+            ),
+          ),
+          Card(
+            color: _cantidadlinea.text == '' ||
+                    _pulinea.text == '' ||
+                    _cantidadlinea.text == ''
+                ? gris
+                : rojo,
+            child: IconButton(
+                onPressed: () {
+                  _cantidadlinea.text == '' ||
+                          _pulinea.text == '' ||
+                          _cantidadlinea.text == ''
+                      ? print('nada')
+                      : setState(() {
+                          lineas.add(Lineascoti(
+                            _idproducto,
+                            _descripcionmanual.text,
+                            _unidad,
+                            _pulinea.text,
+                            _cantidadlinea.text,
+                            _descripcion,
+                          ));
+                          _idproducto = '';
+                          _descripcionmanual.clear();
+                          _unidad = 'Selecciona unidad...';
+                          _pulinea.clear();
+                          _cantidadlinea.clear();
+                          _descripcion = '';
+                          _setTotal();
+                        });
+                },
+                icon: Icon(
+                  Icons.add,
+                  color: blanco,
+                )),
+          )
+        ],
+      )));
 
   Container _lineas() => Container(
           child: Flexible(
@@ -385,7 +570,9 @@ class _altacotizacion_clientesState extends State<altacotizacion_clientes> {
                     ),
                     decoration: InputDecoration(
                         labelText: 'Selecciona un producto',
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        ),
                         hintStyle: TextStyle(color: azuls)));
               },
               onSelected: (Modellistaproductos selection) {
@@ -564,7 +751,9 @@ class _altacotizacion_clientesState extends State<altacotizacion_clientes> {
             child: TextField(
               controller: _notas,
               maxLines: 2,
-              onChanged: (value) {},
+              onChanged: (value) {
+                setState(() {});
+              },
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -582,7 +771,9 @@ class _altacotizacion_clientesState extends State<altacotizacion_clientes> {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               controller: _referencia,
-              onChanged: (value) {},
+              onChanged: (value) {
+                setState(() {});
+              },
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -600,7 +791,9 @@ class _altacotizacion_clientesState extends State<altacotizacion_clientes> {
               padding: const EdgeInsets.all(8.0),
               child: TextField(
                   controller: _condicionesdepago,
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    setState(() {});
+                  },
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),

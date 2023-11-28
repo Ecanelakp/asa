@@ -53,6 +53,7 @@ class _pdfcotizacion_clientesState extends State<pdfcotizacion_clientes> {
   Future<Uint8List> makePdf() async {
     final pdf = pw.Document();
     final image = await imageFromAssetBundle('assets/images/asablanco.jpg');
+    final PdfColor _azul = PdfColor.fromInt(0x23387A);
 
     // Función para crear una página con el contenido del inventario
     pw.Widget _buildInventarioPage() {
@@ -81,7 +82,7 @@ class _pdfcotizacion_clientesState extends State<pdfcotizacion_clientes> {
                 child: pw.Row(
               children: [
                 pw.Container(
-                    color: PdfColors.blue800,
+                    color: _azul,
                     padding: const pw.EdgeInsets.all(5.0),
                     child: pw.Column(
                         crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -111,7 +112,7 @@ class _pdfcotizacion_clientesState extends State<pdfcotizacion_clientes> {
             pw.Divider(),
             pw.Container(
                 width: double.infinity,
-                color: PdfColors.blue800,
+                color: _azul,
                 padding: const pw.EdgeInsets.all(5.0),
                 child: pw.Text('Proyecto/Notas',
                     textAlign: pw.TextAlign.center,
@@ -120,20 +121,6 @@ class _pdfcotizacion_clientesState extends State<pdfcotizacion_clientes> {
                 width: double.infinity,
                 padding: const pw.EdgeInsets.all(5.0),
                 child: pw.Text(widget._notas)),
-            pw.Divider(),
-            _productos(lineas),
-            pw.Container(
-                padding: const pw.EdgeInsets.all(8.0),
-                width: double.infinity,
-                color: PdfColors.blue800,
-                child: pw.Text(
-                    'Total: ' +
-                        NumberFormat.simpleCurrency().format(widget._total) +
-                        ' MN',
-                    textAlign: pw.TextAlign.right,
-                    style: pw.TextStyle(
-                        color: PdfColors.white,
-                        fontWeight: pw.FontWeight.bold))),
           ],
         ),
       );
@@ -144,7 +131,23 @@ class _pdfcotizacion_clientesState extends State<pdfcotizacion_clientes> {
       build: (context) {
         return [
           _buildInventarioPage(),
-          _notas()
+          pw.Divider(),
+          _productos(
+            lineas,
+            _azul,
+          ),
+          pw.Container(
+              padding: const pw.EdgeInsets.all(8.0),
+              width: double.infinity,
+              color: _azul,
+              child: pw.Text(
+                  'Total: ' +
+                      NumberFormat.simpleCurrency().format(widget._total) +
+                      ' MN',
+                  textAlign: pw.TextAlign.right,
+                  style: pw.TextStyle(
+                      color: PdfColors.white, fontWeight: pw.FontWeight.bold))),
+          _notas(_azul)
           // Puedes agregar más páginas de inventario aquí si es necesario.
           // _buildInventarioPage(),
           // _buildInventarioPage(),
@@ -162,7 +165,7 @@ class _pdfcotizacion_clientesState extends State<pdfcotizacion_clientes> {
     return pdf.save();
   }
 
-  pw.Widget _notas() {
+  pw.Widget _notas(PdfColor _azul) {
     return pw.Container(
       padding: pw.EdgeInsets.all(3),
       child: pw.Column(
@@ -176,7 +179,7 @@ class _pdfcotizacion_clientesState extends State<pdfcotizacion_clientes> {
                   width: 80,
                   height: 40,
                   padding: const pw.EdgeInsets.all(8.0),
-                  color: PdfColors.blue800,
+                  color: _azul,
                   child: pw.Text('Inicio:',
                       textAlign: pw.TextAlign.justify,
                       style:
@@ -197,7 +200,7 @@ class _pdfcotizacion_clientesState extends State<pdfcotizacion_clientes> {
               pw.Container(
                   width: 80,
                   padding: const pw.EdgeInsets.all(8.0),
-                  color: PdfColors.blue800,
+                  color: _azul,
                   child: pw.Text('Ejecucion:',
                       textAlign: pw.TextAlign.justify,
                       style:
@@ -218,7 +221,7 @@ class _pdfcotizacion_clientesState extends State<pdfcotizacion_clientes> {
               pw.Container(
                   width: 80,
                   padding: const pw.EdgeInsets.all(8.0),
-                  color: PdfColors.blue800,
+                  color: _azul,
                   child: pw.Text('Garantía:',
                       textAlign: pw.TextAlign.justify,
                       style:
@@ -240,7 +243,7 @@ class _pdfcotizacion_clientesState extends State<pdfcotizacion_clientes> {
                   width: 80,
                   height: 40,
                   padding: const pw.EdgeInsets.all(8.0),
-                  color: PdfColors.blue800,
+                  color: _azul,
                   child: pw.Text('Precios:',
                       textAlign: pw.TextAlign.justify,
                       style:
@@ -261,7 +264,7 @@ class _pdfcotizacion_clientesState extends State<pdfcotizacion_clientes> {
               pw.Container(
                   width: 80,
                   padding: const pw.EdgeInsets.all(8.0),
-                  color: PdfColors.blue800,
+                  color: _azul,
                   child: pw.Text('Condiciones:',
                       textAlign: pw.TextAlign.justify,
                       style:
@@ -282,7 +285,7 @@ class _pdfcotizacion_clientesState extends State<pdfcotizacion_clientes> {
               pw.Container(
                   width: 80,
                   padding: const pw.EdgeInsets.all(8.0),
-                  color: PdfColors.blue800,
+                  color: _azul,
                   child: pw.Text('Cancelaciones:',
                       textAlign: pw.TextAlign.justify,
                       style:
@@ -303,7 +306,7 @@ class _pdfcotizacion_clientesState extends State<pdfcotizacion_clientes> {
               pw.Container(
                   width: 80,
                   padding: const pw.EdgeInsets.all(8.0),
-                  color: PdfColors.blue800,
+                  color: _azul,
                   child: pw.Text('Notas:',
                       textAlign: pw.TextAlign.justify,
                       style:
@@ -355,14 +358,8 @@ class _pdfcotizacion_clientesState extends State<pdfcotizacion_clientes> {
         ]));
   }
 
-  pw.Widget _productos(List<Lineascoti> lineas) {
-    final headers = [
-      'Cantidad',
-      'Uni',
-      'Descripcion',
-      'Precio Unitario',
-      'Subtotal'
-    ];
+  pw.Widget _productos(List<Lineascoti> lineas, PdfColor _azul) {
+    final headers = ['Cant', 'Uni', 'Descripcion', 'PU', 'Subtotal'];
     final rows = lineas.map((producto) {
       return [
         NumberFormat.decimalPattern()
@@ -380,7 +377,7 @@ class _pdfcotizacion_clientesState extends State<pdfcotizacion_clientes> {
     return pw.Table.fromTextArray(
       //border: null,
 
-      headerDecoration: pw.BoxDecoration(color: PdfColors.blue800),
+      headerDecoration: pw.BoxDecoration(color: _azul),
       headerHeight: 15,
       headerStyle: pw.TextStyle(color: PdfColors.white),
       cellAlignments: {
@@ -400,11 +397,11 @@ class _pdfcotizacion_clientesState extends State<pdfcotizacion_clientes> {
         // fontStyle: pw.FontStyle.italic,
       ),
       columnWidths: {
-        0: pw.FlexColumnWidth(1), // Descripción centrada
+        0: pw.FlexColumnWidth(0.7), // Descripción centrada
         1: pw.FlexColumnWidth(0.7),
         2: pw.FlexColumnWidth(4), //// Cantidad centrada
         3: pw.FlexColumnWidth(1), // Precio centrado
-        4: pw.FlexColumnWidth(1), // Total centrado
+        4: pw.FlexColumnWidth(2), // Total centrado
       },
     );
   }

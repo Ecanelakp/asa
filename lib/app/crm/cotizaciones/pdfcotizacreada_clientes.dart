@@ -160,20 +160,6 @@ class _pdfcotizacioncreada_clientesState
                 width: double.infinity,
                 padding: const pw.EdgeInsets.all(5.0),
                 child: pw.Text(widget._notas)),
-            pw.Divider(),
-            _productos(_lineas, _azul),
-            pw.Container(
-                padding: const pw.EdgeInsets.all(8.0),
-                width: double.infinity,
-                color: _azul,
-                child: pw.Text(
-                    'Total: ' +
-                        NumberFormat.simpleCurrency().format(widget._total) +
-                        ' MN',
-                    textAlign: pw.TextAlign.right,
-                    style: pw.TextStyle(
-                        color: PdfColors.white,
-                        fontWeight: pw.FontWeight.bold))),
           ],
         ),
       );
@@ -184,6 +170,19 @@ class _pdfcotizacioncreada_clientesState
       build: (context) {
         return [
           _buildInventarioPage(_azul),
+          pw.Divider(),
+          _productos(_lineas, _azul),
+          pw.Container(
+              padding: const pw.EdgeInsets.all(8.0),
+              width: double.infinity,
+              color: _azul,
+              child: pw.Text(
+                  'Total: ' +
+                      NumberFormat.simpleCurrency().format(widget._total) +
+                      ' MN',
+                  textAlign: pw.TextAlign.right,
+                  style: pw.TextStyle(
+                      color: PdfColors.white, fontWeight: pw.FontWeight.bold))),
           _notas(_azul)
           // Puedes agregar más páginas de inventario aquí si es necesario.
           // _buildInventarioPage(),
