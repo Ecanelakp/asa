@@ -1,3 +1,4 @@
+import 'package:Asamexico/app/notificaciones/alta_notificaciones.dart';
 import 'package:Asamexico/app/variables/colors.dart';
 import 'package:Asamexico/app/variables/servicesurl.dart';
 import 'package:Asamexico/app/variables/variables.dart';
@@ -260,10 +261,24 @@ class _interacciones_clientesState extends State<interacciones_clientes> {
                             child: Padding(
                                 padding: const EdgeInsets.all(20.0),
                                 child: ElevatedButton(
-                                    style:
-                                        ElevatedButton.styleFrom(primary: rojo),
+                                    style: ElevatedButton.styleFrom(
+                                        primary: _titulo.text == '' ||
+                                                _descripcion.text == ''
+                                            ? gris
+                                            : rojo),
                                     onPressed: () {
-                                      guardar();
+                                      if (_titulo.text == '' ||
+                                          _descripcion.text == '') {
+                                        print('nada');
+                                      } else {
+                                        guardar();
+                                        altanotificaciones(
+                                            'fcortes@asamexico.mx',
+                                            _titulo.text,
+                                            usuario +
+                                                ' ha agregado el comentario:' +
+                                                _descripcion.text);
+                                      }
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
