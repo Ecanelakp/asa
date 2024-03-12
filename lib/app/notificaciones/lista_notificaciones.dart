@@ -48,51 +48,49 @@ class _lista_notifacionesState extends State<lista_notifaciones> {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: FutureBuilder<List<Modellistnotificaciones>>(
-          future: listacoti(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData)
-              return Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                ),
-              );
+    return FutureBuilder<List<Modellistnotificaciones>>(
+        future: listacoti(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData)
+            return Container(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+              ),
+            );
 
-            return ListView(
-                children: snapshot.data!
-                    .map((data) => Card(
-                          child: ListTile(
-                            onTap: (() {
-                              actnotificacion(data.id);
-                            }),
-                            trailing: IconButton(
-                                onPressed: () {
-                                  borranotificacion(data.id);
-                                },
-                                icon: Icon(
-                                  Icons.delete,
-                                  color: rojo,
-                                )),
-                            leading: data.leido == '2'
-                                ? Text('')
-                                : Text('Nueva!',
-                                    style: GoogleFonts.itim(
-                                      textStyle: TextStyle(color: Colors.amber),
-                                    )),
-                            title: Text(data.asunto,
-                                style: GoogleFonts.itim(
-                                  textStyle: TextStyle(color: azulp),
-                                )),
-                            subtitle: Text(data.descripcion,
-                                style: GoogleFonts.itim(
-                                  textStyle: TextStyle(color: gris),
-                                )),
-                          ),
-                        ))
-                    .toList());
-          }),
-    );
+          return ListView(
+              children: snapshot.data!
+                  .map((data) => Card(
+                        child: ListTile(
+                          onTap: (() {
+                            actnotificacion(data.id);
+                          }),
+                          trailing: IconButton(
+                              onPressed: () {
+                                borranotificacion(data.id);
+                              },
+                              icon: Icon(
+                                Icons.delete,
+                                color: rojo,
+                              )),
+                          leading: data.leido == '2'
+                              ? Text('')
+                              : Text('Nueva!',
+                                  style: GoogleFonts.itim(
+                                    textStyle: TextStyle(color: Colors.amber),
+                                  )),
+                          title: Text(data.asunto,
+                              style: GoogleFonts.itim(
+                                textStyle: TextStyle(color: azulp),
+                              )),
+                          subtitle: Text(data.descripcion,
+                              style: GoogleFonts.itim(
+                                textStyle: TextStyle(color: gris),
+                              )),
+                        ),
+                      ))
+                  .toList());
+        });
   }
 
   Future actnotificacion(String _id) async {

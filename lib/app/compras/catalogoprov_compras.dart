@@ -199,7 +199,7 @@ class _catalogoprov_comprasState extends State<catalogoprov_compras> {
                 child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(primary: rojo),
+                        style: ElevatedButton.styleFrom(backgroundColor: rojo),
                         onPressed: () {
                           Navigator.pop(context);
                         },
@@ -217,7 +217,7 @@ class _catalogoprov_comprasState extends State<catalogoprov_compras> {
                     padding: const EdgeInsets.all(20.0),
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            primary: _nombre.text != '' && _rfc.text != ''
+                           backgroundColor: _nombre.text != '' && _rfc.text != ''
                                 ? azulp
                                 : gris),
                         onPressed: () {

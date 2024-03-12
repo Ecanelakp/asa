@@ -1,5 +1,6 @@
 import 'package:Asamexico/app/home/lateral_app.dart';
 import 'package:Asamexico/app/notificaciones/lista_notificaciones.dart';
+import 'package:Asamexico/app/tareas/calendar.dart';
 import 'package:Asamexico/app/tareas/detalle_tareas.dart';
 import 'package:Asamexico/app/tareas/home_tareas.dart';
 import 'package:Asamexico/app/variables/colors.dart';
@@ -34,6 +35,14 @@ class _Home_appState extends State<Home_app> {
               textStyle: TextStyle(color: blanco),
             )),
         backgroundColor: azulp,
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => calendar()));
+              },
+              icon: Icon(Icons.calendar_month))
+        ],
       ),
       drawer: menulateral(),
       backgroundColor: blanco,
@@ -59,15 +68,12 @@ class _Home_appState extends State<Home_app> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-              height: 30,
-            ),
             Text('Notificaciones',
                 style: GoogleFonts.itim(
                   textStyle: TextStyle(color: gris),
                 )),
-            lista_notifaciones(),
-            Flexible(child: Tareas())
+            Flexible(flex: 1, child: lista_notifaciones()),
+            Flexible(flex: 2, child: Tareas())
           ],
         ),
       ),
@@ -100,6 +106,7 @@ class _TareasState extends State<Tareas> {
   void initState() {
     super.initState();
     listacoti();
+   
   }
 
   Future<List<Modellisttareas>> listacoti() async {
@@ -154,120 +161,73 @@ class _TareasState extends State<Tareas> {
                 )),
           ),
           Flexible(
-            child: FutureBuilder<List<Modellisttareas>>(
-                future: listacoti(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData)
-                    return Container(
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                      ),
-                    );
+              child: FutureBuilder<List<Modellisttareas>>(
+                  future: listacoti(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData)
+                      return Container(
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                        ),
+                      );
 
-                  return GridView(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 3,
-                          mainAxisSpacing: 5),
-                      children: snapshot.data!
-                          .map((data) => Container(
-                                child: badges.Badge(
-                                  badgeContent: Text(
-                                    ' ',
+                    return ListView(
+                        children: snapshot.data!
+                            .map((data) => Card(
+                                  child: ListTile(
+                                    onTap: (() {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  detalle_tareas(
+                                                      data.id,
+                                                      data.titulo,
+                                                      data.descripcion,
+                                                      data.fechaVencimiento,
+                                                      data.usuario)));
+                                    }),
+                                    trailing: IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            borrantareas(data.id);
+                                          });
+                                        },
+                                        icon: Icon(
+                                          Icons.delete,
+                                          color: rojo,
+                                        )),
+                                    leading: Text(DateFormat('dd/MM/yy')
+                                        .format(data.fechaVencimiento)),
+                                    title: Text(data.titulo + '' + data.id,
+                                        style: GoogleFonts.itim(
+                                          textStyle: TextStyle(color: azulp),
+                                        )),
+                                    subtitle: Text(data.descripcion,
+                                        style: GoogleFonts.itim(
+                                          textStyle: TextStyle(color: gris),
+                                        )),
                                   ),
-                                  badgeAnimation: badges.BadgeAnimation.slide(
-                                    toAnimate: false,
-                                    colorChangeAnimationDuration:
-                                        Duration(milliseconds: 200),
-                                    curve: Curves.easeInCubic,
-                                  ),
-                                  position: badges.BadgePosition.topEnd(
-                                      top: -5, end: 0),
-                                  showBadge: true,
-                                  ignorePointer: false,
-                                  child: GestureDetector(
-                                      onTap: (() {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    detalle_tareas(
-                                                        data.id,
-                                                        data.titulo,
-                                                        data.descripcion,
-                                                        data.fechaVencimiento,
-                                                        data.usuario)));
-                                      }),
-                                      child: Card(
-                                          elevation: 10,
-                                          color: data.tipo == 'Creador'
-                                              ? blanco
-                                              : azuls,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              children: [
-                                                Text(data.tipo,
-                                                    style: GoogleFonts.itim(
-                                                      textStyle: TextStyle(
-                                                          color: data.tipo ==
-                                                                  'Creador'
-                                                              ? gris
-                                                              : blanco),
-                                                    )),
-
-                                                Icon(
-                                                  Icons.calendar_today,
-                                                  color: data.tipo == 'Creador'
-                                                      ? azuls
-                                                      : blanco,
-                                                ),
-                                                Text(data.titulo,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: GoogleFonts.itim(
-                                                      textStyle: TextStyle(
-                                                          color: data.tipo ==
-                                                                  'Creador'
-                                                              ? gris
-                                                              : blanco),
-                                                    )),
-
-                                                // Text(data.descripcion,
-                                                //     style: GoogleFonts.itim(
-                                                //       textStyle: TextStyle(color: gris),
-                                                //     )),
-                                                // Text(data.usuario,
-                                                //     style: GoogleFonts.itim(
-                                                //       textStyle: TextStyle(color: gris),
-                                                //     )),
-                                                Text(
-                                                    DateFormat('dd/MM/yy')
-                                                        .format(data
-                                                            .fechaVencimiento),
-                                                    style: GoogleFonts.itim(
-                                                      textStyle: TextStyle(
-                                                          color: gris),
-                                                    )),
-                                                _hoy.isAfter(
-                                                        data.fechaVencimiento)
-                                                    ? Icon(
-                                                        Icons.warning_amber,
-                                                        color: Colors.amber,
-                                                      )
-                                                    : Container()
-                                              ],
-                                            ),
-                                          ))),
-                                ),
-                              ))
-                          .toList());
-                }),
-          ),
+                                ))
+                            .toList());
+                  }))
         ],
       ),
     );
+  }
+
+  Future borrantareas(String _id) async {
+    var data = {
+      'tipo': 'baja_tarea',
+      'id_tarea': _id,
+    };
+    print(data);
+    final reponse = await http.post(urltareas,
+        headers: {
+          "Accept": "application/json",
+        },
+        body: json.encode(data));
+
+    print(reponse.body);
   }
 }

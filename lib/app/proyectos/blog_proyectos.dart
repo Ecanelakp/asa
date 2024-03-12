@@ -3,7 +3,7 @@ import 'package:Asamexico/app/variables/servicesurl.dart';
 import 'package:Asamexico/app/variables/variables.dart';
 import 'package:Asamexico/models/clientes_model.dart';
 import 'package:Asamexico/models/proyectos_model.dart';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:datetime_picker_formfield_new/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -185,7 +185,7 @@ class _blog_proyectosState extends State<blog_proyectos> {
                                   padding: const EdgeInsets.all(20.0),
                                   child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                          primary: rojo),
+                                          backgroundColor: rojo),
                                       onPressed: () {
                                         guardar();
                                       },

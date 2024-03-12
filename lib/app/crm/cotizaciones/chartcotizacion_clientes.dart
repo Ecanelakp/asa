@@ -88,76 +88,76 @@ class _chartcotizacion_clientesState extends State<chartcotizacion_clientes> {
         ),
         child: Column(
           children: [
-            Expanded(
-              child: FutureBuilder(
-                  future: listacoti(),
-                  builder: (context, snapShot) {
-                    if (snapShot.hasData) {
-                      return SfCartesianChart(
-                          enableAxisAnimation: true,
-                          primaryXAxis: CategoryAxis(),
-                          primaryYAxis: NumericAxis(
-                              title: AxisTitle(
-                                text: 'Ventas MN',
-                              ),
-                              numberFormat: NumberFormat(),
-                              isVisible:
-                                  MediaQuery.of(context).size.width >= 600
-                                      ? true
-                                      : false),
-                          //isVisible: false),
+            // Expanded(
+            //   child: FutureBuilder(
+            //       future: listacoti(),
+            //       builder: (context, snapShot) {
+            //         if (snapShot.hasData) {
+            //           return SfCartesianChart(
+            //               enableAxisAnimation: true,
+            //               primaryXAxis: CategoryAxis(),
+            //               primaryYAxis: NumericAxis(
+            //                   title: AxisTitle(
+            //                     text: 'Ventas MN',
+            //                   ),
+            //                   numberFormat: NumberFormat(),
+            //                   isVisible:
+            //                       MediaQuery.of(context).size.width >= 600
+            //                           ? true
+            //                           : false),
+            //               //isVisible: false),
 
-                          //primaryXAxis: NumericAxis(isInversed: true),
-                          // Chart title
-                          title: ChartTitle(text: 'Cotizaciones'),
-                          //legend: Legend(isVisible: true),
-                          tooltipBehavior: TooltipBehavior(enable: true),
-                          //enableSideBySideSeriesPlacement: false,
-                          legend: Legend(
-                              isVisible: true, position: LegendPosition.bottom),
-                          series: <ChartSeries<Modelliscoti, String>>[
-                            StackedColumnSeries<Modelliscoti, String>(
-                              dataSource: chartData,
+            //               //primaryXAxis: NumericAxis(isInversed: true),
+            //               // Chart title
+            //               title: ChartTitle(text: 'Cotizaciones'),
+            //               //legend: Legend(isVisible: true),
+            //               tooltipBehavior: TooltipBehavior(enable: true),
+            //               //enableSideBySideSeriesPlacement: false,
+            //               legend: Legend(
+            //                   isVisible: true, position: LegendPosition.bottom),
+            //               series: <ChartSeries<Modelliscoti, String>>[
+            //                 StackedColumnSeries<Modelliscoti, String>(
+            //                   dataSource: chartData,
 
-                              xValueMapper: (Modelliscoti sales, _) =>
-                                  DateFormat('dd/MM').format(sales.fecha),
-                              yValueMapper: (Modelliscoti sales, _) =>
-                                  double.parse(sales.total.toString()),
-                              name: "Cotizaciones",
-                              color: _color,
-                              animationDuration: 2000,
+            //                   xValueMapper: (Modelliscoti sales, _) =>
+            //                       DateFormat('dd/MM').format(sales.fecha),
+            //                   yValueMapper: (Modelliscoti sales, _) =>
+            //                       double.parse(sales.total.toString()),
+            //                   name: "Cotizaciones",
+            //                   color: _color,
+            //                   animationDuration: 2000,
 
-                              // Enable data label
-                              dataLabelSettings: DataLabelSettings(
-                                  isVisible: true, useSeriesColor: true),
-                            )
-                            // ColumnSeries<Modellistacabped, String>(
-                            //     animationDuration: 4500,
-                            //     dataSource: chartData,
-                            //     color: cologris2,
-                            //     xValueMapper: (Modellistacabped sales, _) => sales.mes,
-                            //     yValueMapper: (Modellistacabped sales, _) => sales.utilidad,
-                            //     name: "Utilidad",
+            //                   // Enable data label
+            //                   dataLabelSettings: DataLabelSettings(
+            //                       isVisible: true, useSeriesColor: true),
+            //                 )
+            //                 // ColumnSeries<Modellistacabped, String>(
+            //                 //     animationDuration: 4500,
+            //                 //     dataSource: chartData,
+            //                 //     color: cologris2,
+            //                 //     xValueMapper: (Modellistacabped sales, _) => sales.mes,
+            //                 //     yValueMapper: (Modellistacabped sales, _) => sales.utilidad,
+            //                 //     name: "Utilidad",
 
-                            //     // Enable data label
-                            //     dataLabelSettings: MediaQuery.of(context).size.width >=
-                            //             600
-                            //         ? DataLabelSettings(isVisible: true, color: color6)
-                            //         : DataLabelSettings(
-                            //             isVisible: false,
-                            //           ))
-                          ]);
-                    } else {
-                      return Center(
-                        child: CircularProgressIndicator(
-                          semanticsLabel: 'Espere por favor',
-                          valueColor: AlwaysStoppedAnimation<Color>(gris),
-                          backgroundColor: Colors.grey[300],
-                        ),
-                      );
-                    }
-                  }),
-            ),
+            //                 //     // Enable data label
+            //                 //     dataLabelSettings: MediaQuery.of(context).size.width >=
+            //                 //             600
+            //                 //         ? DataLabelSettings(isVisible: true, color: color6)
+            //                 //         : DataLabelSettings(
+            //                 //             isVisible: false,
+            //                 //           ))
+            //               ]);
+            //         } else {
+            //           return Center(
+            //             child: CircularProgressIndicator(
+            //               semanticsLabel: 'Espere por favor',
+            //               valueColor: AlwaysStoppedAnimation<Color>(gris),
+            //               backgroundColor: Colors.grey[300],
+            //             ),
+            //           );
+            //         }
+            //       }),
+            // ),
             Container(
               color: azulp,
               child: Row(

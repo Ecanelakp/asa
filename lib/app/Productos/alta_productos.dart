@@ -242,7 +242,7 @@ class _alta_productosState extends State<alta_productos> {
                       child: Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(primary: rojo),
+                              style: ElevatedButton.styleFrom(backgroundColor: rojo),
                               onPressed: () {
                                 guardardatos();
                               },

@@ -6,7 +6,7 @@ import 'package:Asamexico/models/tareas_model.dart';
 
 import 'package:flutter/material.dart';
 
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:datetime_picker_formfield_new/datetime_picker_formfield.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
@@ -25,6 +25,7 @@ class Tareas {
   );
 }
 
+TextEditingController _usuarioselect = TextEditingController();
 TextEditingController _titulo = TextEditingController();
 TextEditingController _descripcion = TextEditingController();
 final _format = DateFormat("dd-MM-yyyy");
@@ -122,7 +123,7 @@ class _alta_tareasState extends State<alta_tareas> {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               controller: _descripcion,
-              maxLines: 3,
+              maxLines: 2,
               onChanged: (value) {
                 setState(() {});
               },
@@ -157,11 +158,11 @@ class _alta_tareasState extends State<alta_tareas> {
                     displayStringForOption: (Modellistusers option) =>
                         option.nombre,
                     fieldViewBuilder: (BuildContext context,
-                        TextEditingController fieldTextEditingController,
+                        _usuarioselect,
                         FocusNode fieldFocusNode,
                         VoidCallback onFieldSubmitted) {
                       return TextField(
-                          controller: fieldTextEditingController,
+                          controller: _usuarioselect,
                           focusNode: fieldFocusNode,
                           style: GoogleFonts.sulphurPoint(
                             textStyle: TextStyle(color: azulp),
@@ -175,6 +176,10 @@ class _alta_tareasState extends State<alta_tareas> {
                         print(selection.nombre);
                         _emailusuario = selection.email;
                         _usuario = selection.nombre;
+                        _usuarioselect.clear();
+                        _usuarioselect.text = '';
+
+                        //fieldTextEditingController
                         // _idcliente = selection.id;
                       });
                     },
@@ -200,9 +205,11 @@ class _alta_tareasState extends State<alta_tareas> {
             )
           ],
         ),
+        Text('Lista de participantes'),
         Flexible(
-            flex: 4,
+            flex: 8,
             child: Container(
+                color: azulp,
                 child: ListView.builder(
                     itemCount: _tareas.length,
                     itemBuilder: (BuildContext context, int index) {
@@ -213,46 +220,41 @@ class _alta_tareasState extends State<alta_tareas> {
                         child: Card(
                           elevation: 10,
                           child: ListTile(
-                            trailing: IconButton(
-                                onPressed: () {},
-                                icon: IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        _tareas.removeAt(index);
-                                      });
-                                    },
-                                    icon: Icon(
-                                      Icons.delete,
-                                      color: rojo,
-                                    ))),
-                            title: Column(
-                              children: [
-                                Text(_tareas[index].responsable.toString()),
-                                TextField(
-                                    controller: _comentarios[index],
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _tareas[index] = Tareas(
-                                            _tareas[index].idresponsable,
-                                            _tareas[index].responsable,
-                                            _comentarios[index].text);
-                                      });
-                                    },
-                                    maxLines: 2,
-                                    decoration: InputDecoration(
-                                        hintText: 'Comentarios para  ' +
-                                            _tareas[index]
-                                                .responsable
-                                                .toString(),
-                                        labelText: 'Comentarios',
-                                        border: OutlineInputBorder(),
-                                        floatingLabelBehavior:
-                                            FloatingLabelBehavior.always,
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey))),
-                              ],
-                            ),
-                          ),
+                              trailing: IconButton(
+                                  onPressed: () {},
+                                  icon: IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          _tareas.removeAt(index);
+                                        });
+                                      },
+                                      icon: Icon(
+                                        Icons.delete,
+                                        color: rojo,
+                                      ))),
+                              subtitle: TextField(
+                                  controller: _comentarios[index],
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _tareas[index] = Tareas(
+                                          _tareas[index].idresponsable,
+                                          _tareas[index].responsable,
+                                          _comentarios[index].text);
+                                    });
+                                  },
+                                  maxLines: 1,
+                                  decoration: InputDecoration(
+                                      hintText: 'Comentarios para  ' +
+                                          _tareas[index].responsable.toString(),
+                                      labelText: 'Comentarios',
+                                      border: OutlineInputBorder(),
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.always,
+                                      hintStyle:
+                                          TextStyle(color: Colors.grey))),
+                              title: Text(_tareas[index].responsable.toString(),
+                                  style: GoogleFonts.sulphurPoint(
+                                      textStyle: TextStyle(color: azulp)))),
                         ),
                       );
                     }))),
@@ -265,7 +267,7 @@ class _alta_tareasState extends State<alta_tareas> {
               ? gris
               : azulp,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(4.0),
             child: IconButton(
                 onPressed: () {
                   setState(() {

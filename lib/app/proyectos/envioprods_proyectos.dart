@@ -176,7 +176,7 @@ class _envioprods_proyectosState extends State<envioprods_proyectos> {
           child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: rojo),
+                  style: ElevatedButton.styleFrom(backgroundColor: rojo),
                   onPressed: () {
                     Navigator.push(
                         context,
@@ -268,7 +268,7 @@ class _envioprods_proyectosState extends State<envioprods_proyectos> {
               padding: const EdgeInsets.all(20.0),
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      primary: _cantenviada > _cantsuf ? gris : rojo),
+                      backgroundColor: _cantenviada > _cantsuf ? gris : rojo),
                   onPressed: () {
                     _cantenviada > _cantsuf
                         ? print('Nada')

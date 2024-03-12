@@ -43,6 +43,7 @@ class _login_appState extends State<login_app> {
     _checkPermissions();
     startRepeatingAction();
     _visibility = true;
+    _checkgps();
     //print('imprimir');
     // startRepeatingAction();
     // _checkPermissions();
@@ -144,6 +145,25 @@ class _login_appState extends State<login_app> {
     // }
   }
 
+  Future<void> _checkgps() async {
+    final PermissionStatus statusnotification =
+        await Permission.location.request();
+    // final PermissionStatus statusfiles = await Permission.storage.request();
+    if (statusnotification.isGranted) {
+      // Permiso concedido
+      print('Permiso de Localizacion concedido');
+    } else if (statusnotification.isDenied) {
+      // Permiso denegado pero no bloqueado permanentemente
+      print('Permisode Localizacion denegado');
+      openAppSettings();
+    } else if (statusnotification.isPermanentlyDenied) {
+      // Permiso denegado permanentemente, abre la configuración de la app
+      print('Permisode Localizacion denegado permanentemente');
+    }
+
+    // }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -215,7 +235,7 @@ class _login_appState extends State<login_app> {
                         child: Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(primary: rojo),
+                                style: ElevatedButton.styleFrom(backgroundColor: rojo),
                                 onPressed: () {
                                   login();
                                   // Navigator.push(

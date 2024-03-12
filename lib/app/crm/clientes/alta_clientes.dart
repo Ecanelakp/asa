@@ -230,7 +230,7 @@ class _alta_clientesState extends State<alta_clientes> {
                     padding: const EdgeInsets.all(20.0),
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            primary: _selregimen != '' &&
+                            backgroundColor: _selregimen != '' &&
                                     _razonsocial.text != '' &&
                                     _selusocfdi != ''
                                 ? azulp

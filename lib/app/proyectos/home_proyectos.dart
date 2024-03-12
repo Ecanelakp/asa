@@ -327,7 +327,7 @@ class _home_proyectosState extends State<home_proyectos> {
                 child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(primary: rojo),
+                        style: ElevatedButton.styleFrom(backgroundColor: rojo),
                         onPressed: () {
                           Navigator.pop(context);
                         },
@@ -345,7 +345,7 @@ class _home_proyectosState extends State<home_proyectos> {
                     padding: const EdgeInsets.all(20.0),
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            primary: _titulo.text != '' &&
+                            backgroundColor: _titulo.text != '' &&
                                     _observaciones.text != '' &&
                                     _idcliente != ''
                                 ? azulp

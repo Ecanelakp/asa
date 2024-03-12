@@ -1,8 +1,9 @@
+import 'package:Asamexico/app/notificaciones/alta_notificaciones.dart';
 import 'package:Asamexico/app/variables/colors.dart';
 import 'package:Asamexico/app/variables/servicesurl.dart';
 import 'package:Asamexico/app/variables/variables.dart';
 import 'package:Asamexico/models/clientes_model.dart';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:datetime_picker_formfield_new/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -260,10 +261,24 @@ class _interacciones_clientesState extends State<interacciones_clientes> {
                             child: Padding(
                                 padding: const EdgeInsets.all(20.0),
                                 child: ElevatedButton(
-                                    style:
-                                        ElevatedButton.styleFrom(primary: rojo),
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: _titulo.text == '' ||
+                                                _descripcion.text == ''
+                                            ? gris
+                                            : rojo),
                                     onPressed: () {
-                                      guardar();
+                                      if (_titulo.text == '' ||
+                                          _descripcion.text == '') {
+                                        print('nada');
+                                      } else {
+                                        guardar();
+                                        altanotificaciones(
+                                            'fcortes@asamexico.mx',
+                                            _titulo.text,
+                                            usuario +
+                                                ' ha agregado el comentario:' +
+                                                _descripcion.text);
+                                      }
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),

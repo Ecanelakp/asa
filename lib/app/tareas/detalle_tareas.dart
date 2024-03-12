@@ -1,3 +1,4 @@
+import 'package:Asamexico/app/notificaciones/alta_notificaciones.dart';
 import 'package:Asamexico/app/variables/colors.dart';
 import 'package:Asamexico/app/variables/servicesurl.dart';
 import 'package:Asamexico/app/variables/variables.dart';
@@ -184,6 +185,17 @@ class _detalle_tareasState extends State<detalle_tareas> {
                                             comentarios_tarea(
                                                 _lista_usr_tarea[index].id,
                                                 _comentarios[index].text);
+                                            altanotificaciones(
+                                                usuario ==
+                                                        _lista_usr_tarea[index]
+                                                            .id
+                                                    ? widget._usuario
+                                                    : _lista_usr_tarea[index]
+                                                        .id,
+                                                widget._titulo,
+                                                usuario +
+                                                    ' ha agregado el comentario:' +
+                                                    _comentarios[index].text);
                                           },
                                           icon: Icon(
                                             Icons.add,
@@ -284,6 +296,7 @@ class _detalle_tareasState extends State<detalle_tareas> {
         },
         body: json.encode(data));
     print(reponse.body);
+
     _comentarios.clear();
     setState(() {});
   }

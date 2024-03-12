@@ -1,7 +1,9 @@
 import 'package:Asamexico/app/Productos/home_productos.dart';
+import 'package:Asamexico/app/configuracion/home_configuracion.dart';
 import 'package:Asamexico/app/crm/cotizaciones/homecotizacion_clientes.dart';
 import 'package:Asamexico/app/crm/clientes/home_clientes.dart';
 import 'package:Asamexico/app/compras/home_compras.dart';
+import 'package:Asamexico/app/crm/facturacion/homefacturacion.dart';
 import 'package:Asamexico/app/home/home_app.dart';
 import 'package:Asamexico/app/proyectos/home_proyectos.dart';
 import 'package:Asamexico/app/variables/colors.dart';
@@ -148,6 +150,25 @@ class menulateral extends StatelessWidget {
                     },
                   ),
                 ),
+                Card(
+                  elevation: 10,
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.request_quote_outlined,
+                      color: azuls,
+                    ),
+                    title: Text('Facturación',
+                        style: GoogleFonts.itim(
+                          textStyle: TextStyle(),
+                        )),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => homefacturacion()));
+                    },
+                  ),
+                ),
               ],
             ),
           ),
@@ -165,6 +186,28 @@ class menulateral extends StatelessWidget {
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => home_compras()));
+                  //Navigator.pop(context);
+                }),
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Card(
+            elevation: 10,
+            child: ListTile(
+                leading: Icon(
+                  Icons.settings,
+                  color: gris,
+                ),
+                title: Text('Configuración',
+                    style: GoogleFonts.itim(
+                      textStyle: TextStyle(),
+                    )),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => home_configuracion()));
                   //Navigator.pop(context);
                 }),
           ),

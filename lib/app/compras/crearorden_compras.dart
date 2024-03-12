@@ -3,7 +3,7 @@ import 'package:Asamexico/app/variables/colors.dart';
 import 'package:Asamexico/app/variables/servicesurl.dart';
 import 'package:Asamexico/app/variables/variables.dart';
 import 'package:Asamexico/models/compras_model.dart';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:datetime_picker_formfield_new/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';

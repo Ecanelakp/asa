@@ -251,7 +251,7 @@ class _detalles_clientesState extends State<detalles_clientes> {
                 child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(primary: rojo),
+                        style: ElevatedButton.styleFrom(backgroundColor: rojo),
                         onPressed: () {
                           Navigator.pop(context);
                         },
@@ -268,7 +268,7 @@ class _detalles_clientesState extends State<detalles_clientes> {
                 child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(primary: azulp),
+                        style: ElevatedButton.styleFrom(backgroundColor: azulp),
                         onPressed: () {
                           guardar();
                           Navigator.pop(context);
