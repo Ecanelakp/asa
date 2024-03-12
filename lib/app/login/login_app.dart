@@ -176,6 +176,7 @@ class _login_appState extends State<login_app> {
             child: Card(
               elevation: 10,
               shadowColor: gris,
+              color: blanco,
               child: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
