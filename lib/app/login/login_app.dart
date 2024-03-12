@@ -174,7 +174,7 @@ class _login_appState extends State<login_app> {
             width: MediaQuery.of(context).size.width * 0.80,
             // height: MediaQuery.of(context).size.height * 0.40,
             child: Card(
-              color: blanco,
+              color: azulp,
               elevation: 10,
               shadowColor: blanco,
               
