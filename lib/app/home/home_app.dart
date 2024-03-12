@@ -41,7 +41,7 @@ class _Home_appState extends State<Home_app> {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => calendar()));
               },
-              icon: Icon(Icons.calendar_month))
+              icon: Icon(Icons.calendar_month, color: blanco,))
         ],
       ),
       drawer: menulateral(),
