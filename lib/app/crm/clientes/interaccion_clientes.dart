@@ -262,11 +262,7 @@ class _interacciones_clientesState extends State<interacciones_clientes> {
                                 padding: const EdgeInsets.all(20.0),
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-<<<<<<< HEAD
                                         backgroundColor: _titulo.text == '' ||
-=======
-                                        primary: _titulo.text == '' ||
->>>>>>> 3214898632e2f739ea6b38796211f1b6d357f9cd
                                                 _descripcion.text == ''
                                             ? gris
                                             : rojo),
