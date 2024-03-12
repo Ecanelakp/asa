@@ -16,7 +16,7 @@ class menulateral extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: blanco,
+      //backgroundColor: azulp,
       // Agrega un ListView al drawer. Esto asegura que el usuario pueda desplazarse
       // a través de las opciones en el Drawer si no hay suficiente espacio vertical
       // para adaptarse a todo.
