@@ -15,7 +15,7 @@ import flutter_local_notifications
   }
     GeneratedPluginRegistrant.register(with: self)
 
-    if #available(iOS 10.0, *) {
+    if #available(iOS 14.0, *) {
   UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
 }
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)

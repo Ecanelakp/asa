@@ -5,7 +5,7 @@
 import 'package:Asamexico/app/login/login_app.dart';
 import 'package:Asamexico/app/notificaciones/notificaciones_services.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
+
 //import 'package:firebase_messaging/firebase_messaging.dart';
 
 Future<void> main() async {
