@@ -20,3 +20,9 @@ var urltareas = new Uri.https(webservice, '/php/general/tareas.php');
 
 var urlnotificaciones =
     new Uri.https(webservice, '/php/general/notificaciones.php');
+
+
+var urluser =
+    new Uri.https(webservice, 'php/general/usuarios.php');
+
+

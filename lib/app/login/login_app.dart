@@ -176,111 +176,114 @@ class _login_appState extends State<login_app> {
             child: Card(
               elevation: 10,
               shadowColor: gris,
-              color: blanco,
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      new Image.asset(
-                        'assets/images/asablanco.jpg',
-                        height: 100.0,
-                        fit: BoxFit.contain,
-                      ),
-                      Container(
-                        child: TextField(
-                          controller: _usuario,
-                          style:
-                              GoogleFonts.sulphurPoint(textStyle: TextStyle()),
-                          decoration: InputDecoration(
-                            filled: true,
-                            hintText: 'Usuario',
-                            fillColor: Colors.white,
-                            hintStyle: TextStyle(color: gris),
-                            icon: Icon(
-                              Icons.person,
-                              color: gris,
+         
+              child: Container(
+                color: blanco,
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        new Image.asset(
+                          'assets/images/asablanco.jpg',
+                          height: 100.0,
+                          fit: BoxFit.contain,
+                        ),
+                        Container(
+                          child: TextField(
+                            controller: _usuario,
+                            style:
+                                GoogleFonts.sulphurPoint(textStyle: TextStyle()),
+                            decoration: InputDecoration(
+                              filled: true,
+                              hintText: 'Usuario',
+                              fillColor: Colors.white,
+                              hintStyle: TextStyle(color: gris),
+                              icon: Icon(
+                                Icons.person,
+                                color: gris,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Container(
-                        child: TextField(
-                          controller: _password,
-                          obscureText: _visibility,
-                          style:
-                              GoogleFonts.sulphurPoint(textStyle: TextStyle()),
-                          decoration: InputDecoration(
-                            filled: true,
-                            hintText: 'Contraseña',
-                            fillColor: Colors.white,
-                            suffixIcon: IconButton(
-                                onPressed: () {
+                        Container(
+                          child: TextField(
+                            controller: _password,
+                            obscureText: _visibility,
+                            style:
+                                GoogleFonts.sulphurPoint(textStyle: TextStyle()),
+                            decoration: InputDecoration(
+                              filled: true,
+                              hintText: 'Contraseña',
+                              fillColor: Colors.white,
+                              suffixIcon: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      _visibility = !_visibility;
+                                    });
+                                  },
+                                  icon: Icon(
+                                    Icons.visibility,
+                                    color: gris,
+                                  )),
+                              hintStyle: TextStyle(color: gris),
+                              icon: Icon(
+                                Icons.password,
+                                color: gris,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(backgroundColor: rojo),
+                                  onPressed: () {
+                                    login();
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) => Home_app()));
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      'Entrar',
+                                      style: GoogleFonts.itim(
+                                          textStyle: TextStyle(color: blanco)),
+                                    ),
+                                  ))),
+                        ),
+                        Container(
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                              Checkbox(
+                                value: _checkrecord,
+                                activeColor: azuls,
+                                onChanged: (value) {
                                   setState(() {
-                                    _visibility = !_visibility;
+                                    _checkrecord = value!;
                                   });
                                 },
-                                icon: Icon(
-                                  Icons.visibility,
-                                  color: gris,
-                                )),
-                            hintStyle: TextStyle(color: gris),
-                            icon: Icon(
-                              Icons.password,
-                              color: gris,
-                            ),
+                              ),
+                              Text(
+                                'Recordar usuario',
+                                style: GoogleFonts.itim(
+                                    textStyle: TextStyle(color: azuls)),
+                              )
+                            ])),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            version,
+                            style: GoogleFonts.sulphurPoint(
+                                textStyle: TextStyle(color: gris)),
                           ),
                         ),
-                      ),
-                      Container(
-                        child: Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(backgroundColor: rojo),
-                                onPressed: () {
-                                  login();
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //         builder: (context) => Home_app()));
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'Entrar',
-                                    style: GoogleFonts.itim(
-                                        textStyle: TextStyle(color: blanco)),
-                                  ),
-                                ))),
-                      ),
-                      Container(
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                            Checkbox(
-                              value: _checkrecord,
-                              activeColor: azuls,
-                              onChanged: (value) {
-                                setState(() {
-                                  _checkrecord = value!;
-                                });
-                              },
-                            ),
-                            Text(
-                              'Recordar usuario',
-                              style: GoogleFonts.itim(
-                                  textStyle: TextStyle(color: azuls)),
-                            )
-                          ])),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          version,
-                          style: GoogleFonts.sulphurPoint(
-                              textStyle: TextStyle(color: gris)),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

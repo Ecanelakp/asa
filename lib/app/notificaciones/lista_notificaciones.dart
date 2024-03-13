@@ -61,32 +61,35 @@ class _lista_notifacionesState extends State<lista_notifaciones> {
           return ListView(
               children: snapshot.data!
                   .map((data) => Card(
-                        child: ListTile(
-                          onTap: (() {
-                            actnotificacion(data.id);
-                          }),
-                          trailing: IconButton(
-                              onPressed: () {
-                                borranotificacion(data.id);
-                              },
-                              icon: Icon(
-                                Icons.delete,
-                                color: rojo,
-                              )),
-                          leading: data.leido == '2'
-                              ? Text('')
-                              : Text('Nueva!',
-                                  style: GoogleFonts.itim(
-                                    textStyle: TextStyle(color: Colors.amber),
-                                  )),
-                          title: Text(data.asunto,
-                              style: GoogleFonts.itim(
-                                textStyle: TextStyle(color: azulp),
-                              )),
-                          subtitle: Text(data.descripcion,
-                              style: GoogleFonts.itim(
-                                textStyle: TextStyle(color: gris),
-                              )),
+                        child: Container(
+                          color: blanco,
+                          child: ListTile(
+                            onTap: (() {
+                              actnotificacion(data.id);
+                            }),
+                            trailing: IconButton(
+                                onPressed: () {
+                                  borranotificacion(data.id);
+                                },
+                                icon: Icon(
+                                  Icons.delete,
+                                  color: rojo,
+                                )),
+                            leading: data.leido == '2'
+                                ? Text('')
+                                : Text('Nueva!',
+                                    style: GoogleFonts.itim(
+                                      textStyle: TextStyle(color: Colors.amber),
+                                    )),
+                            title: Text(data.asunto,
+                                style: GoogleFonts.itim(
+                                  textStyle: TextStyle(color: azulp),
+                                )),
+                            subtitle: Text(data.descripcion,
+                                style: GoogleFonts.itim(
+                                  textStyle: TextStyle(color: gris),
+                                )),
+                          ),
                         ),
                       ))
                   .toList());

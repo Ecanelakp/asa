@@ -44,8 +44,10 @@ class _Home_appState extends State<Home_app> {
               icon: Icon(Icons.calendar_month))
         ],
       ),
+      
       drawer: menulateral(),
       backgroundColor: blanco,
+
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -174,39 +176,43 @@ class _TareasState extends State<Tareas> {
                     return ListView(
                         children: snapshot.data!
                             .map((data) => Card(
-                                  child: ListTile(
-                                    onTap: (() {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  detalle_tareas(
-                                                      data.id,
-                                                      data.titulo,
-                                                      data.descripcion,
-                                                      data.fechaVencimiento,
-                                                      data.usuario)));
-                                    }),
-                                    trailing: IconButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            borrantareas(data.id);
-                                          });
-                                        },
-                                        icon: Icon(
-                                          Icons.delete,
-                                          color: rojo,
-                                        )),
-                                    leading: Text(DateFormat('dd/MM/yy')
-                                        .format(data.fechaVencimiento)),
-                                    title: Text(data.titulo + '' + data.id,
-                                        style: GoogleFonts.itim(
-                                          textStyle: TextStyle(color: azulp),
-                                        )),
-                                    subtitle: Text(data.descripcion,
-                                        style: GoogleFonts.itim(
-                                          textStyle: TextStyle(color: gris),
-                                        )),
+                            
+                                  child: Container(
+                                    color: blanco,
+                                    child: ListTile(
+                                      onTap: (() {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    detalle_tareas(
+                                                        data.id,
+                                                        data.titulo,
+                                                        data.descripcion,
+                                                        data.fechaVencimiento,
+                                                        data.usuario)));
+                                      }),
+                                      trailing: IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              borrantareas(data.id);
+                                            });
+                                          },
+                                          icon: Icon(
+                                            Icons.delete,
+                                            color: rojo,
+                                          )),
+                                      leading: Text(DateFormat('dd/MM/yy')
+                                          .format(data.fechaVencimiento)),
+                                      title: Text(data.titulo + '' + data.id,
+                                          style: GoogleFonts.itim(
+                                            textStyle: TextStyle(color: azulp),
+                                          )),
+                                      subtitle: Text(data.descripcion,
+                                          style: GoogleFonts.itim(
+                                            textStyle: TextStyle(color: gris),
+                                          )),
+                                    ),
                                   ),
                                 ))
                             .toList());

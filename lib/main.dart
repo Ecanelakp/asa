@@ -34,6 +34,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
+        
         //navigatorKey: navigatorkey,
         title: 'Asamexico',
         initialRoute: 'login',
@@ -42,6 +43,7 @@ class _MyAppState extends State<MyApp> {
           //'presupesto': (BuildContext context) => Presupuestos(),
           'login': (BuildContext context) => login_app(),
         },
-        theme: ThemeData());
+        
+        theme: ThemeData( useMaterial3: false,));
   }
 }

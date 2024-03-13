@@ -1,4 +1,4 @@
-import 'package:Asamexico/app/configuracion/usuarios_configuracion.dart';
+import 'package:Asamexico/app/configuracion/usuarios/usuarios_configuracion.dart';
 import 'package:Asamexico/app/variables/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
