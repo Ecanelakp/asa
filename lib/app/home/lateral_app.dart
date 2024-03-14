@@ -5,6 +5,7 @@ import 'package:Asamexico/app/crm/clientes/home_clientes.dart';
 import 'package:Asamexico/app/compras/home_compras.dart';
 import 'package:Asamexico/app/crm/facturacion/homefacturacion.dart';
 import 'package:Asamexico/app/home/home_app.dart';
+import 'package:Asamexico/app/personal/home_personal.dart';
 import 'package:Asamexico/app/proyectos/home_proyectos.dart';
 import 'package:Asamexico/app/variables/colors.dart';
 import 'package:Asamexico/app/variables/variables.dart';
@@ -16,7 +17,6 @@ class menulateral extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      
       //backgroundColor: azulp,
       // Agrega un ListView al drawer. Esto asegura que el usuario pueda desplazarse
       // a través de las opciones en el Drawer si no hay suficiente espacio vertical
@@ -187,6 +187,23 @@ class menulateral extends StatelessWidget {
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => home_compras()));
+                  //Navigator.pop(context);
+                }),
+          ),
+          Card(
+            elevation: 10,
+            child: ListTile(
+                leading: Icon(
+                  Icons.person_4,
+                  color: azuls,
+                ),
+                title: Text('Personal',
+                    style: GoogleFonts.itim(
+                      textStyle: TextStyle(),
+                    )),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => home_personal()));
                   //Navigator.pop(context);
                 }),
           ),

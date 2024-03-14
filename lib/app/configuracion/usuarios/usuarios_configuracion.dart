@@ -27,8 +27,10 @@ class usuarios_configuracion extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: azulp,
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => altausuarios_configuracion()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => altausuarios_configuracion()));
         },
         child: Icon(
           Icons.add,
@@ -48,15 +50,8 @@ class _listausuarios extends StatefulWidget {
   State<_listausuarios> createState() => _listausuariosState();
 }
 
-
-
 class _listausuariosState extends State<_listausuarios> {
-
-
   Future<List<usuariosmodel>> listausuarios() async {
-
-
-    
     //print('======$notmes======');
     var data = {
       'tipo': 'lista',
@@ -82,65 +77,109 @@ class _listausuariosState extends State<_listausuarios> {
     }
   }
 
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    listausuarios() ;
+    listausuarios();
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-    
-      child: FutureBuilder<List<usuariosmodel>>(
-          future: listausuarios(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData)
-              return Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                ),
-              );
-
-            return ListView(
-                children: snapshot.data!
-                    .map((data) => Container(
-                          child: Card(
-                            elevation: 10,
-                            child: ListTile(title: 
-                          Text(data.nombre.toString()), 
-                          onTap: (() {
-                              Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => 
-                                detalleusuarios_configuracion(data.id, data.email, data.nombre, data.perfil, data.status)));
-                          }),
-                          subtitle: Text(data.email.toString()), 
-                          leading: CircleAvatar(
-                            backgroundColor: azulp,
-                            child: Icon(Icons.person_4, color:blanco )),
-                          trailing:IconButton(onPressed: (){
-                              showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text("Confirmas que deseas borrar a este usuario?"),
-                  content: Text(" Se borra y no podra entrar al sistem, ¿Estas de acuerdo?"),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text("Close"),
-                    ),
-                  ],
+        child: FutureBuilder<List<usuariosmodel>>(
+            future: listausuarios(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData)
+                return Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                  ),
                 );
-              },
-            );
-                          }, icon:  Icon(Icons.delete, color: rojo,))),
-                          
-                          ))).toList());}));
+
+              return ListView(
+                  children: snapshot.data!
+                      .map((data) => Container(
+                              child: Card(
+                            elevation: 10,
+                            child: ListTile(
+                                title: Text(data.nombre.toString(),
+                                    style: GoogleFonts.sulphurPoint(
+                                      textStyle: TextStyle(color: gris),
+                                    )),
+                                onTap: (() {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              detalleusuarios_configuracion(
+                                                  data.id,
+                                                  data.email,
+                                                  data.nombre,
+                                                  data.perfil,
+                                                  data.status)));
+                                }),
+                                subtitle: Text(data.email.toString(),
+                                    style: GoogleFonts.sulphurPoint(
+                                      textStyle: TextStyle(color: azulp),
+                                    )),
+                                leading: CircleAvatar(
+                                    backgroundColor: azulp,
+                                    child: Icon(Icons.person_4, color: blanco)),
+                                trailing: IconButton(
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text("¿Estas seguro?",
+                                                style: GoogleFonts.sulphurPoint(
+                                                  textStyle:
+                                                      TextStyle(color: gris),
+                                                )),
+                                            content: Text(
+                                                data.nombre.toString() +
+                                                    " se borra y no podra entrar al sistema, ¿Estas de acuerdo?",
+                                                style: GoogleFonts.sulphurPoint(
+                                                  textStyle:
+                                                      TextStyle(color: azulp),
+                                                )),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: Text("Cancelar",
+                                                    style: GoogleFonts
+                                                        .sulphurPoint(
+                                                      textStyle: TextStyle(
+                                                          color: gris),
+                                                    )),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: Text(
+                                                  "Si, borrar",
+                                                  style:
+                                                      GoogleFonts.sulphurPoint(
+                                                    textStyle:
+                                                        TextStyle(color: rojo),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                    icon: Icon(
+                                      Icons.delete,
+                                      color: rojo,
+                                    ))),
+                          )))
+                      .toList());
+            }));
   }
 }

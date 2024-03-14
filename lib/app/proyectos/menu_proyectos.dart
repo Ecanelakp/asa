@@ -1,6 +1,7 @@
 import 'package:Asamexico/app/proyectos/blog_proyectos.dart';
 import 'package:Asamexico/app/proyectos/entregado_proyectos.dart';
 import 'package:Asamexico/app/proyectos/envioprods_proyectos.dart';
+import 'package:Asamexico/app/proyectos/personal/personal_proyectos.dart';
 import 'package:Asamexico/app/proyectos/productos/productosproyec_home.dart';
 import 'package:Asamexico/app/proyectos/retorno_proyectos.dart';
 import 'package:Asamexico/app/variables/colors.dart';
@@ -105,7 +106,12 @@ class menu_proyectos extends StatelessWidget {
                     style: GoogleFonts.sulphurPoint(
                       textStyle: TextStyle(color: gris),
                     )),
-                onTap: (() {}),
+                onTap: (() {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => personal_proyectos()));
+                }),
                 trailing: Icon(
                   Icons.arrow_forward_ios,
                   color: gris,
