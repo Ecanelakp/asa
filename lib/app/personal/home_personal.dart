@@ -2,7 +2,9 @@ import 'package:Asamexico/app/configuracion/usuarios/detalle_usuarios.configurac
 import 'package:Asamexico/app/variables/colors.dart';
 import 'package:Asamexico/app/variables/servicesurl.dart';
 import 'package:Asamexico/models/usuarios_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -75,39 +77,58 @@ class _home_personalState extends State<home_personal> {
                             .map((data) => Container(
                                     child: Card(
                                   elevation: 10,
-                                  child: ListTile(
-                                      title: Text(data.nombre.toString(),
-                                          style: GoogleFonts.sulphurPoint(
-                                            textStyle: TextStyle(color: gris),
-                                          )),
-                                      onTap: (() {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    detalleusuarios_configuracion(
-                                                        data.id,
-                                                        data.email,
-                                                        data.nombre,
-                                                        data.perfil,
-                                                        data.status)));
-                                      }),
-                                      subtitle: Text(data.perfil.toString(),
-                                          style: GoogleFonts.sulphurPoint(
-                                            textStyle: TextStyle(color: azulp),
-                                          )),
-                                      leading: CircleAvatar(
-                                        backgroundImage: AssetImage(
-                                          "assets/images/profile.png",
-                                        ),
+                                  child: Row(
+                                    children: [
+                                      Flexible(
+                                        child: ListTile(
+                                            title:Text(data.nombre.toString(),
+                                                      style: GoogleFonts.sulphurPoint(
+                                                        textStyle: TextStyle(color: gris),
+                                                      ),
+                                                
+                                                
+                                            
+                                            ),
+                                            onTap: (() {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          detalleusuarios_configuracion(
+                                                              data.id,
+                                                              data.email,
+                                                              data.nombre,
+                                                              data.perfil,
+                                                              data.status)));
+                                            }),
+                                            subtitle: Text(data.perfil.toString(),
+                                                style: GoogleFonts.sulphurPoint(
+                                                  textStyle: TextStyle(color: azulp),
+                                                )),
+                                            leading: CircleAvatar(
+                                              backgroundImage: AssetImage(
+                                                "assets/images/profile.png",
+                                              ),
+                                            ),
+                                           ),
                                       ),
-                                      trailing: TextButton.icon(
-                                          onPressed: () {},
-                                          icon: Icon(
-                                            Icons.star,
-                                            color: Colors.amber,
-                                          ),
-                                          label: Text('4.86'))),
+
+                                       TextButton.icon(
+                                                onPressed: () {},
+                                                icon: Icon(
+                                                  Icons.star,
+                                                  color: Colors.amber,
+                                                ),
+                                                label: Text('4.86')),
+                                              TextButton.icon(
+                                              onPressed: () {},
+                                              icon: Icon(
+                                                Icons.av_timer,
+                                                color:Colors.green,
+                                              ),
+                                              label: Text('11:00'))
+                                    ],
+                                  ),
                                 )))
                             .toList());
                   }))),
