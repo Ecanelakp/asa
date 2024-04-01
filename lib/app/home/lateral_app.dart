@@ -118,7 +118,7 @@ class menulateral extends StatelessWidget {
                   child: ListTile(
                     leading: Icon(
                       Icons.person,
-                      color: azuls,
+                      color: azulp,
                     ),
                     title: Text('Clientes',
                         style: GoogleFonts.itim(
@@ -137,7 +137,7 @@ class menulateral extends StatelessWidget {
                   child: ListTile(
                     leading: Icon(
                       Icons.request_quote,
-                      color: azuls,
+                      color: azulp,
                     ),
                     title: Text('Cotizaciones',
                         style: GoogleFonts.itim(
@@ -156,7 +156,7 @@ class menulateral extends StatelessWidget {
                   child: ListTile(
                     leading: Icon(
                       Icons.request_quote_outlined,
-                      color: azuls,
+                      color: azulp,
                     ),
                     title: Text('Facturación',
                         style: GoogleFonts.itim(
