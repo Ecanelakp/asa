@@ -74,3 +74,40 @@ class Modellistaprodmov {
         proyecto: json["proyecto"],
       );
 }
+
+
+
+
+class Modelunidadssat {
+  String numUnidad;
+  String descripcion;
+
+  Modelunidadssat({
+    required this.numUnidad,
+    required this.descripcion,
+  });
+
+  factory Modelunidadssat.fromJson(Map<String, dynamic> json) =>
+      Modelunidadssat(
+        numUnidad: json["num_unidad"],
+        descripcion: json["descripcion"],
+      );
+}
+
+
+class Modelproductosat {
+  String numProd;
+  String descripcion;
+
+  Modelproductosat({
+    required this.numProd,
+    required this.descripcion,
+  });
+
+  factory Modelproductosat.fromJson(Map<String, dynamic> json) =>
+      Modelproductosat(
+        numProd: json["num_prod"],
+        descripcion: json["descripcion"],
+      );
+}
+

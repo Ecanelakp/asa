@@ -1,9 +1,12 @@
 import 'package:Asamexico/app/compras/previewordenpdf_compras.dart';
+import 'package:Asamexico/app/crm/cotizaciones/altacotizacion_clientes.dart';
 import 'package:Asamexico/app/crm/cotizaciones/pdfcotizacion_clientes.dart';
+import 'package:Asamexico/app/crm/facturacion/datos_facturacion.dart';
 import 'package:Asamexico/app/variables/colors.dart';
 import 'package:Asamexico/app/variables/servicesurl.dart';
 import 'package:Asamexico/app/variables/variables.dart';
 import 'package:Asamexico/models/clientes_model.dart';
+import 'package:Asamexico/models/facturacion_model.dart';
 import 'package:Asamexico/models/productos_model.dart';
 
 import 'package:datetime_picker_formfield_new/datetime_picker_formfield.dart';
@@ -19,11 +22,15 @@ import 'package:http/http.dart' as http;
 
 List<Modellistaclientes> _sugesttioncliente = [];
 List<Modellistaproductos> _sugesttionproducto = [];
+List<Modelunidadssat> _sugesttionsunidades = [];
+List<Modelproductosat> _sugesttionsproductosat = [];
 String _idcliente = '';
 String _idproducto = '';
 String _idordencompra = '';
 String _descripcion = '';
 String _tipomaterial = '';
+String formapago = '01: Efectivo';
+String metodopago = 'PUE PAGO EN UNA SOLA EXHIBICIÓN';
 
 final _format = DateFormat("dd-MM-yyyy");
 TextEditingController _fechasol = new TextEditingController();
@@ -39,7 +46,8 @@ TextEditingController _cantidadlinea = TextEditingController();
 TextEditingController _pulinea = TextEditingController();
 double _total = 0;
 String _unidad = 'Selecciona unidad...';
-
+String _selunidadessat = '';
+String _selproductosat = '';
 List<String> _unidades = [
   'Selecciona unidad...',
   'KG',
@@ -53,28 +61,68 @@ List<String> _unidades = [
   // ... Agrega más códigos de monedas aquí ...
 ];
 
-List<Lineascoti> lineas = [];
 
-class Lineascoti {
-  String? id;
-  String? producto;
-  String? unidad;
+var _formaspago = [
+  '01: Efectivo',
+  '02: Cheque nominativo',
+  '03: Transferencia electrónica de fondos',
+  '04: Tarjeta de crédito',
+  '05: Monedero electrónico',
+  '06: Dinero electrónico',
+  '08: Vales de despensa',
+  '12: Dación en pago',
+  '13: Pago por subrogación',
+  '14: Pago por consignación',
+  '15: Condonación',
+  '17: Compensación',
+  '23: Novación',
+  '24: Confusión',
+  '25: Remisión de deuda',
+  '26: Prescripción o caducidad',
+  '27: A satisfacción del acreedor',
+  '28: Tarjeta de débito',
+  '29: Tarjeta de servicios',
+  '30: Aplicación de anticipos',
+];
+
+
+final _metodospago = [
+  'PUE PAGO EN UNA SOLA EXHIBICIÓN',
+  'PPD PAGO EN PARCIALIDADES O DIFERIDO',
+];
+
+List<Lineas> lineas = [];
+
+class Lineas {
+  String? numProdSat;
+  String? unidadSat;
+  String? descripcion;
+  // String? unidad;
+  // String? satDescripcion;
   String? valorunitario;
   String? cantidad;
-  String? descripcion;
-
-  Lineascoti(this.id, this.producto, this.unidad, this.valorunitario,
-      this.cantidad, this.descripcion);
+  String? ivatrasladado;
+  String? unidad;
+  String? numeroidentificacion;
+  Lineas(
+      this.numProdSat,
+      this.unidadSat,
+      this.descripcion,
+      this.valorunitario,
+      this.cantidad,
+      this.ivatrasladado,
+      this.unidad,
+      this.numeroidentificacion);
 }
 
-class homefacturacion extends StatefulWidget {
-  const homefacturacion({super.key});
+class Altafactura_facturacion extends StatefulWidget {
+  const Altafactura_facturacion({super.key});
 
   @override
-  State<homefacturacion> createState() => _homefacturacionState();
+  State<Altafactura_facturacion> createState() => _Altafactura_facturacionState();
 }
 
-class _homefacturacionState extends State<homefacturacion> {
+class _Altafactura_facturacionState extends State<Altafactura_facturacion> {
  @override
   void initState() {
     // TODO: implement initState
@@ -85,7 +133,10 @@ class _homefacturacionState extends State<homefacturacion> {
     _descripcion = '';
     _setTotal();
     listaproveedoes();
+    getunidades();
     listaprod();
+     getproductos();
+     getseries();
     _tipomaterial = 'MAT';
   }
 
@@ -159,6 +210,36 @@ class _homefacturacionState extends State<homefacturacion> {
       throw Exception('Failed to load data from Server.');
     }
   }
+  
+  Future<List<Modellistaseries>> getseries() async {
+    //print('======$notmes======');
+    var data = {
+      'tipo': 'lista_series',
+      'rfc': 'ASA911031GJ0',
+    };
+    // print(data);
+    final response = await http.post(urlaltaclientes,
+        headers: {
+          "Accept": "application/json",
+        },
+        body: json.encode(data));
+
+    if (response.statusCode == 200) {
+      final items = json.decode(response.body).cast<Map<String, dynamic>>();
+      print(response.body);
+
+      List<Modellistaseries> studentList = items.map<Modellistaseries>((json) {
+        return Modellistaseries.fromJson(json);
+      }).toList();
+
+      // _sugesttionsseries = items.map<Modellistaseries>((json) {
+      //   return Modellistaseries.fromJson(json);
+      // }).toList();
+      return studentList;
+    } else {
+      throw Exception('Failed to load data from Server.');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -170,28 +251,10 @@ class _homefacturacionState extends State<homefacturacion> {
             )),
         backgroundColor: azulp,
         actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: IconButton(
-                onPressed: () {
-                  setState(() {
-                    // lineobservaciones.clear();
-                    // cantidad.clear();
-                    // preciounitario.clear();
-                    _idcliente = '';
-                    _fechasol.clear();
-                    _notas.clear();
-                    _referencia.clear();
-                    _condicionesdepago.clear();
-                    lineas.clear();
-                    _total = 0;
-                  });
-                },
-                icon: Icon(
-                  Icons.cleaning_services,
-                  color: blanco,
-                )),
-          )
+         
+         
+ 
+        
         ],
       ),
       body: Container(
@@ -219,14 +282,20 @@ class _homefacturacionState extends State<homefacturacion> {
               collapsedBackgroundColor: azulp,
               collapsedTextColor: blanco,
               collapsedIconColor: blanco,
-                            title: Text('Cabecera'),
+              textColor: azulp,
+                            title: Text('Cabecera',style: GoogleFonts.itim(
+                          textStyle: TextStyle(),
+                        )),
               children:[ _cabecera()]),
              ExpansionTile(
               backgroundColor: blanco,
               collapsedBackgroundColor: azulp,
               collapsedTextColor: blanco,
               collapsedIconColor: blanco,
-                            title: Text('Crear Lineas'),
+              textColor: azulp,
+                            title: Text('Crear Lineas', style: GoogleFonts.itim(
+                          textStyle: TextStyle(),
+                        )),
               children:[Column(
                 children: [
                    ResponsiveGridRow(
@@ -281,6 +350,81 @@ class _homefacturacionState extends State<homefacturacion> {
               )]),
            _lineas() ,
            Spacer(),
+           ExpansionTile(
+              backgroundColor: blanco,
+              collapsedBackgroundColor: azulp,
+              collapsedTextColor: blanco,
+              collapsedIconColor: blanco,
+              textColor: azulp,
+                            title: Text('Metodo y forma de pago', style: GoogleFonts.itim(
+                          textStyle: TextStyle(),
+                        )),
+              children:[ Column(
+          children: [
+            Card(
+                child: ListTile(
+              title: Text('Metodo de pago',
+                  style: GoogleFonts.itim(
+                    textStyle: TextStyle(color: gris),
+                  )),
+              subtitle: DropdownButton(
+                style: GoogleFonts.itim(
+                  textStyle: TextStyle(color: azulp),
+                ),
+                value: metodopago,
+                isExpanded: true,
+                icon: const Icon(Icons.keyboard_arrow_down),
+                items: _metodospago.map((String items) {
+                  return DropdownMenuItem(
+                    value: items,
+                    child: Text(items),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    metodopago = newValue!;
+                    metodopago != 'PUE PAGO EN UNA SOLA EXHIBICIÓN'
+                        ? formapago = '99'
+                        : formapago = '01: Efectivo';
+                  });
+                },
+              ),
+            )),
+            Card(
+                child: ListTile(
+              title: Text('Forma de pago',
+                  style: GoogleFonts.itim(
+                    textStyle: TextStyle(color: gris),
+                  )),
+              subtitle: metodopago == 'PUE PAGO EN UNA SOLA EXHIBICIÓN'
+                  ? DropdownButton(
+                      style: GoogleFonts.itim(
+                        textStyle: TextStyle(color: azulp),
+                      ),
+                      value: formapago,
+                      isExpanded: true,
+                      icon: const Icon(Icons.keyboard_arrow_down),
+                      items: _formaspago.map((String items) {
+                        return DropdownMenuItem(
+                          value: items,
+                          child: Text(items),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          formapago = newValue!;
+                        });
+                      },
+                    )
+                  : Container(
+                      child: Text(
+                        '99: Por definir',
+                        style: GoogleFonts.itim(
+                          textStyle: TextStyle(color: azulp),
+                        ),
+                      ),
+                    ),
+            )),])]),
             Container(
               color: azulp,
               child: Padding(
@@ -308,13 +452,7 @@ class _homefacturacionState extends State<homefacturacion> {
                       elevation: 10,
                       child: IconButton(
                           onPressed: () {
-                            lineas.length == 0 ||
-                                    _nombrecliente.text == '' ||
-                                    _notas.text == '' ||
-                                    _fechasol.text == '' ||
-                                    _referencia.text == ''
-                                ? print('nada')
-                                : guardar();
+                           timbrartxt();
                           },
                           icon: Icon(
                             Icons.code,
@@ -356,6 +494,49 @@ class _homefacturacionState extends State<homefacturacion> {
               ),
             ),
           ),
+           Flexible(
+            flex: 1,
+            child:  Autocomplete<Modelunidadssat>(
+                      optionsBuilder: (TextEditingValue textEditingValue) {
+                        return _sugesttionsunidades
+                            .where((Modelunidadssat county) =>
+                                county.descripcion.toLowerCase().startsWith(
+                                    textEditingValue.text.toLowerCase()) ||
+                                county.numUnidad.toLowerCase().startsWith(
+                                    textEditingValue.text.toLowerCase()))
+                            .toList();
+                      },
+                      displayStringForOption: (Modelunidadssat option) =>
+                          option.descripcion,
+                          
+                      fieldViewBuilder: (BuildContext context,
+                          TextEditingController fieldTextEditingController,
+                          FocusNode fieldFocusNode,
+                          VoidCallback onFieldSubmitted) {
+                        return TextField(
+                          onChanged: (value) {
+                            setState(() {});
+                          },
+                          controller: fieldTextEditingController,
+                          focusNode: fieldFocusNode,
+                          decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                ),
+                labelText: 'Selecciona unidad SAT',
+                labelStyle: GoogleFonts.itim(textStyle: TextStyle(color: gris)),
+              ),
+                        );
+                      },
+                      onSelected: (Modelunidadssat selection) {
+                        setState(() {
+                          _selunidadessat = selection.numUnidad;
+                        });
+                        print(_selunidadessat);
+                      },
+                    ),
+                  
+          ),
           Flexible(
             flex: 3,
             child: TextField(
@@ -372,6 +553,45 @@ class _homefacturacionState extends State<homefacturacion> {
               ),
             ),
           ),
+          
+            Flexible(
+            flex: 1,
+            child:  Autocomplete<Modelproductosat>(
+                    optionsBuilder: (TextEditingValue textEditingValue) {
+                      return _sugesttionsproductosat
+                          .where((Modelproductosat county) =>
+                              county.descripcion.toLowerCase().startsWith(
+                                  textEditingValue.text.toLowerCase()) ||
+                              county.numProd.toLowerCase().startsWith(
+                                  textEditingValue.text.toLowerCase()))
+                          .toList();
+                    },
+                    displayStringForOption: (Modelproductosat option) =>
+                        option.descripcion,
+                    fieldViewBuilder: (BuildContext context,
+                        TextEditingController fieldTextEditingController,
+                        FocusNode fieldFocusNode,
+                        VoidCallback onFieldSubmitted) {
+                      return TextField(
+                        controller: fieldTextEditingController,
+                        focusNode: fieldFocusNode,
+                        onChanged: (value) {
+                          setState(() {});
+                        },
+                      decoration: InputDecoration(
+                border:    OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                ),
+                labelText: 'Selecciona unidad SAT',
+                labelStyle: GoogleFonts.itim(textStyle: TextStyle(color: gris))),
+                      );
+                    },
+                    onSelected: (Modelproductosat selection) {
+                      setState(() {
+                        _selproductosat = selection.numProd;
+                      });
+                    },
+                  )),
           Flexible(
             flex: 1,
             child: TextField(
@@ -392,27 +612,7 @@ class _homefacturacionState extends State<homefacturacion> {
               ),
             ),
           ),
-          Flexible(
-            flex: 1,
-            child: DropdownButton<String>(
-              value: _unidad,
-              isExpanded: true,
-              style: GoogleFonts.itim(
-                textStyle: TextStyle(color: azulp),
-              ),
-              onChanged: (newValue) {
-                setState(() {
-                  _unidad = newValue.toString();
-                });
-              },
-              items: _unidades.map((currency) {
-                return DropdownMenuItem<String>(
-                  value: currency,
-                  child: Text(currency),
-                );
-              }).toList(),
-            ),
-          ),
+          
           Card(
             color: _cantidadlinea.text == '' ||
                     _pulinea.text == '' ||
@@ -426,13 +626,17 @@ class _homefacturacionState extends State<homefacturacion> {
                           _cantidadlinea.text == ''
                       ? print('nada')
                       : setState(() {
-                          lineas.add(Lineascoti(
-                            _idproducto,
-                            _descripcionmanual.text,
-                            _unidad,
-                            _pulinea.text,
-                            _cantidadlinea.text,
-                            _descripcion,
+                          lineas.add(Lineas(
+                           _selproductosat,
+                           _selunidadessat,
+                           _descripcionmanual.text,
+                           _pulinea.text,
+                           _cantidadlinea.text,
+                           _pulinea.text,                          
+                           _unidad, 
+                           _idproducto,
+                           
+                           
                           ));
                           _idproducto = '';
                           _descripcionmanual.clear();
@@ -472,16 +676,18 @@ class _homefacturacionState extends State<homefacturacion> {
                   )),
               Flexible(
                 child: ListTile(
-                  title: Text(lineas[index].producto.toString(),
-                      style: GoogleFonts.sulphurPoint(
+                  title: Text(lineas[index].numProdSat.toString().toLowerCase()+ ' - '+lineas[index].descripcion.toString(),
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.itim(
+                        
                         textStyle: TextStyle(color: gris),
                       )),
                   leading: Text(
                       NumberFormat.decimalPattern().format(double.tryParse(
                               lineas[index].cantidad.toString())) +
                           ' ' +
-                          lineas[index].unidad.toString().toLowerCase(),
-                      style: GoogleFonts.sulphurPoint(
+                          lineas[index].numProdSat.toString().toLowerCase(),
+                      style: GoogleFonts.itim(
                         textStyle: TextStyle(color: gris),
                       )),
                   subtitle: Text(
@@ -489,7 +695,7 @@ class _homefacturacionState extends State<homefacturacion> {
                           NumberFormat.simpleCurrency().format(
                               double.tryParse(
                                   lineas[index].valorunitario.toString())),
-                      style: GoogleFonts.sulphurPoint(
+                      style: GoogleFonts.itim(
                         textStyle: TextStyle(color: gris),
                       )),
                   trailing: Text(
@@ -497,7 +703,7 @@ class _homefacturacionState extends State<homefacturacion> {
                               lineas[index].cantidad.toString())! *
                           (double.tryParse(
                               lineas[index].valorunitario.toString()))!)),
-                      style: GoogleFonts.sulphurPoint(
+                      style: GoogleFonts.itim(
                         textStyle: TextStyle(color: gris),
                       )),
                 ),
@@ -629,13 +835,15 @@ class _homefacturacionState extends State<homefacturacion> {
                         _cantidadlinea.text == ''
                     ? print('nada')
                     : setState(() {
-                        lineas.add(Lineascoti(
+                        lineas.add(Lineas(
                           _idproducto,
                           _productolinea.text,
                           _unidad,
                           _pulinea.text,
                           _cantidadlinea.text,
                           _descripcion,
+                          _selproductosat,
+                          _selunidadessat
                         ));
                         _idproducto = '';
                         _productolinea.clear();
@@ -663,47 +871,109 @@ class _homefacturacionState extends State<homefacturacion> {
           xs: 6,
           md: 2,
           child: Container(
-            child: ListTile(
-              subtitle: Text('Selecciona un cliente',
-                  style: GoogleFonts.sulphurPoint(
-                    textStyle: TextStyle(color: azulp),
-                  )),
-              title: Autocomplete<Modellistaclientes>(
-                optionsBuilder: (TextEditingValue textEditingValue) {
-                  return _sugesttioncliente
-                      .where((Modellistaclientes county) => county.razonSocial
-                          .toLowerCase()
-                          .startsWith(textEditingValue.text.toLowerCase()))
-                      .toList();
-                },
-                displayStringForOption: (Modellistaclientes option) =>
-                    option.razonSocial,
-                fieldViewBuilder: (BuildContext context,
-                    TextEditingController fieldTextEditingController,
-                    FocusNode fieldFocusNode,
-                    VoidCallback onFieldSubmitted) {
-                  return TextField(
-                      controller: fieldTextEditingController,
-                      focusNode: fieldFocusNode,
-                      style: GoogleFonts.sulphurPoint(
-                        textStyle: TextStyle(color: azulp),
-                      ),
-                      decoration: InputDecoration(
-                          labelText: 'Selecciona un cliente',
-                          border: OutlineInputBorder(),
-                          hintStyle: TextStyle(color: azuls)));
-                },
-                onSelected: (Modellistaclientes selection) {
-                  setState(() {
-                    print(selection.razonSocial);
-                    _idcliente = selection.id;
-                    _nombrecliente.text = selection.razonSocial;
-                  });
-                },
+            child:  Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Autocomplete<Modellistaclientes>(
+                  optionsBuilder: (TextEditingValue textEditingValue) {
+                    return _sugesttioncliente
+                        .where((Modellistaclientes county) => county.razonSocial
+                            .toLowerCase()
+                            .startsWith(textEditingValue.text.toLowerCase()))
+                        .toList();
+                  },
+                  displayStringForOption: (Modellistaclientes option) =>
+                      option.razonSocial,
+                  fieldViewBuilder: (BuildContext context,
+                      TextEditingController fieldTextEditingController,
+                      FocusNode fieldFocusNode,
+                      VoidCallback onFieldSubmitted) {
+                    return TextField(
+                        controller: fieldTextEditingController,
+                        focusNode: fieldFocusNode,
+                        style: GoogleFonts.sulphurPoint(
+                          textStyle: TextStyle(color: azulp),
+                        ),
+                        decoration: InputDecoration(
+                            labelText: 'Selecciona un cliente',
+                            border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                            hintStyle: TextStyle(color: azuls)));
+                  },
+                  onSelected: (Modellistaclientes selection) {
+                    setState(() {
+                      print(selection.razonSocial);
+                      _idcliente = selection.id;
+                      _nombrecliente.text = selection.razonSocial;
+                    });
+                  },
+                
               ),
             ),
           ),
         ),
+       ResponsiveGridCol(
+          xs: 6,
+          md: 2,
+          child:  Container(
+            
+              width: double.infinity,
+              height: 50,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: 
+                 
+                    FutureBuilder<List<Modellistaseries>>(
+                        future: getseries(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData)
+                            return Container(
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                ),
+                              ),
+                            );
+
+                          return ListView(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              children: snapshot.data!
+                                  .map((data) => GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            selfolio = data.folioInicial;
+                                            selserie = data.serie;
+                                            seltipo = data.tipoDocumento;
+                                            idserie = data.id;
+                                            tipocfdi =
+                                                data.tipoDocumento == 'Factura'
+                                                    ? 'I'
+                                                    : data.tipoDocumento ==
+                                                            'Recibo de Pagos'
+                                                        ? 'P'
+                                                        : 'E';
+                                          });
+                                         
+                                        },
+                                        child: Container(
+                                          width: 100,
+                                          height: 80,
+                                          color:  selserie==''?gris: azulp,
+                                          child: Center(
+                                            child: Text(
+                                                data.serie + data.folioInicial,
+                                                style: GoogleFonts.sulphurPoint(
+                                                  textStyle:
+                                                      TextStyle(color: blanco),
+                                                )),
+                                          ),
+                                        ),
+                                      ))
+                                  .toList());
+                        }),
+               
+              ))),
         ResponsiveGridCol(
             xs: 6,
             md: 2,
@@ -733,13 +1003,13 @@ class _homefacturacionState extends State<homefacturacion> {
               ),
             )),
         ResponsiveGridCol(
-          xs: 12,
+          xs: 6,
           md: 6,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               controller: _notas,
-              maxLines: 2,
+              maxLines: 1,
               onChanged: (value) {
                 setState(() {});
               },
@@ -755,7 +1025,7 @@ class _homefacturacionState extends State<homefacturacion> {
         ),
         ResponsiveGridCol(
           xs: 6,
-          md: 2,
+          md: 6,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
@@ -773,24 +1043,7 @@ class _homefacturacionState extends State<homefacturacion> {
             ),
           ),
         ),
-        ResponsiveGridCol(
-            xs: 6,
-            md: 2,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                  controller: _condicionesdepago,
-                  onChanged: (value) {
-                    setState(() {});
-                  },
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      ),
-                      labelText: 'Condiciones de pago',
-                      labelStyle:
-                          GoogleFonts.itim(textStyle: TextStyle(color: gris)))),
-            ))
+       
       ],
     ));
   }
@@ -827,7 +1080,7 @@ class _homefacturacionState extends State<homefacturacion> {
       var data = {
         'tipo': 'alta_lin_ventas',
         'id_venta': _idordencompra,
-        'id_producto': elemento.producto,
+        'id_producto': elemento.numProdSat,
         'cantidad': elemento.cantidad,
         'descripcion': elemento.descripcion,
         'pu': elemento.valorunitario
@@ -863,4 +1116,61 @@ class _homefacturacionState extends State<homefacturacion> {
     });
     Navigator.pop(context);
   }
+
+
+  Future<List<Modelunidadssat>> getunidades() async {
+    //print('======$notmes======');
+    var data = {'tipo': 'lista_unidades_sat'};
+    //print(data);
+    final response = await http.post(urlaltaprodcutos,
+        headers: {
+          "Accept": "application/json",
+        },
+        body: json.encode(data));
+
+    if (response.statusCode == 200) {
+      final items = json.decode(response.body).cast<Map<String, dynamic>>();
+      //print(response.body);
+
+      List<Modelunidadssat> studentList = items.map<Modelunidadssat>((json) {
+        return Modelunidadssat.fromJson(json);
+      }).toList();
+      _sugesttionsunidades = items.map<Modelunidadssat>((json) {
+        return Modelunidadssat.fromJson(json);
+      }).toList();
+
+      return studentList;
+    } else {
+      throw Exception('Failed to load data from Server.');
+    }
+  }
+
+  
+  Future<List<Modelproductosat>> getproductos() async {
+    //print('======$notmes======');
+    var data = {'tipo': 'lista_productos_sat'};
+    //print(data);
+    final response = await http.post(urlaltaprodcutos,
+        headers: {
+          "Accept": "application/json",
+        },
+        body: json.encode(data));
+
+    if (response.statusCode == 200) {
+      final items = json.decode(response.body).cast<Map<String, dynamic>>();
+      // print(response.body);
+
+      List<Modelproductosat> studentList = items.map<Modelproductosat>((json) {
+        return Modelproductosat.fromJson(json);
+      }).toList();
+      _sugesttionsproductosat = items.map<Modelproductosat>((json) {
+        return Modelproductosat.fromJson(json);
+      }).toList();
+
+      return studentList;
+    } else {
+      throw Exception('Failed to load data from Server.');
+    }
+  }
+
 }
