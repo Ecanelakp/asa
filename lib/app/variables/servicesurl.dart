@@ -1,7 +1,6 @@
 var webservice = 'webapp.asamexico.mx';
 var webserviceCFDI = 'webapp.puntodefacturacion.com';
 
-
 var urllogin = new Uri.https(webservice, '/php/general/login.php');
 
 var urlproductos = new Uri.https(webservice, 'php/general/productos.php');
@@ -23,19 +22,13 @@ var urltareas = new Uri.https(webservice, '/php/general/tareas.php');
 var urlnotificaciones =
     new Uri.https(webservice, '/php/general/notificaciones.php');
 
+var urluser = new Uri.https(webservice, 'php/general/usuarios.php');
 
-var urluser =
-    new Uri.https(webservice, 'php/general/usuarios.php');
-
-
+var urlchecador = new Uri.https(webservice, '/php/general/checador.php');
 
 var urlaltaprodcutos =
     new Uri.https(webserviceCFDI, '/php/general/alta_productos.php');
-    var urldocumentostimbrados =
+var urldocumentostimbrados =
     new Uri.https(webserviceCFDI, 'php/general/documentos_timbrados.php');
-    var urlaltaclientes =
+var urlaltaclientes =
     new Uri.https(webserviceCFDI, 'php/general/alta_clientes.php');
-
-
-
-

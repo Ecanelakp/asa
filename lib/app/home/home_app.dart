@@ -44,10 +44,8 @@ class _Home_appState extends State<Home_app> {
               icon: Icon(Icons.calendar_month))
         ],
       ),
-      
       drawer: menulateral(),
       backgroundColor: blanco,
-
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -108,7 +106,6 @@ class _TareasState extends State<Tareas> {
   void initState() {
     super.initState();
     listacoti();
-   
   }
 
   Future<List<Modellisttareas>> listacoti() async {
@@ -176,7 +173,6 @@ class _TareasState extends State<Tareas> {
                     return ListView(
                         children: snapshot.data!
                             .map((data) => Card(
-                            
                                   child: Container(
                                     color: blanco,
                                     child: ListTile(
@@ -235,5 +231,6 @@ class _TareasState extends State<Tareas> {
         body: json.encode(data));
 
     print(reponse.body);
+    setState(() {});
   }
 }

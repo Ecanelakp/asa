@@ -3,26 +3,34 @@ import 'package:Asamexico/app/variables/servicesurl.dart';
 import 'package:Asamexico/models/tareas_model.dart';
 import 'package:Asamexico/models/usuarios_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-
-
 class Asignados {
   String? idresponsable;
   String? responsable;
- 
 
   Asignados(
     this.idresponsable,
     this.responsable,
-   
   );
 }
 
+class Entradapersonal {
+  String? idpersonal;
+  String? nombrepersonal;
+  DateTime? horaentrada;
+  DateTime? horasalida;
+  String? referencia;
 
-List <Asignados>_selectperson =[];
+  Entradapersonal(this.idpersonal, this.nombrepersonal, this.horaentrada,
+      this.horasalida, this.referencia);
+}
+
+List<Asignados> _selectperson = [];
+List<Entradapersonal> _Registroentrda = [];
 List<usuariosmodel> _sugesttioncliente = [];
 String _emailusuario = '';
 String _usuario = '';
@@ -36,11 +44,11 @@ class personal_proyectos extends StatefulWidget {
 }
 
 class _personal_proyectosState extends State<personal_proyectos> {
-@override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
-     listaclientes();
+    listaclientes();
   }
 
   @override
@@ -55,23 +63,23 @@ class _personal_proyectosState extends State<personal_proyectos> {
             )),
       ),
       body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: FractionalOffset(0.0, 0.3),
-                end: FractionalOffset(0.0, 0.8),
-                colors: [
-                  blanco,
-                  blanco,
-                ]),
-            image: DecorationImage(
-              colorFilter: ColorFilter.mode(
-                Color.fromARGB(255, 255, 255, 255).withOpacity(0.1),
-                BlendMode.modulate,
-              ),
-              image: AssetImage('assets/images/asablanco.jpg'),
-              fit: BoxFit.contain,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: FractionalOffset(0.0, 0.3),
+              end: FractionalOffset(0.0, 0.8),
+              colors: [
+                blanco,
+                blanco,
+              ]),
+          image: DecorationImage(
+            colorFilter: ColorFilter.mode(
+              Color.fromARGB(255, 255, 255, 255).withOpacity(0.1),
+              BlendMode.modulate,
             ),
+            image: AssetImage('assets/images/asablanco.jpg'),
+            fit: BoxFit.contain,
           ),
+        ),
         child: Column(
           children: [
             Row(
@@ -86,9 +94,11 @@ class _personal_proyectosState extends State<personal_proyectos> {
                       title: Autocomplete<usuariosmodel>(
                         optionsBuilder: (TextEditingValue textEditingValue) {
                           return _sugesttioncliente
-                              .where((usuariosmodel county) => county.nombre.toString()
+                              .where((usuariosmodel county) => county.nombre
+                                  .toString()
                                   .toLowerCase()
-                                  .startsWith(textEditingValue.text.toLowerCase()))
+                                  .startsWith(
+                                      textEditingValue.text.toLowerCase()))
                               .toList();
                         },
                         displayStringForOption: (usuariosmodel option) =>
@@ -114,7 +124,7 @@ class _personal_proyectosState extends State<personal_proyectos> {
                             _usuario = selection.nombre.toString();
                             _usuarioselect.clear();
                             _usuarioselect.text = '';
-            
+
                             //fieldTextEditingController
                             // _idcliente = selection.id;
                           });
@@ -129,8 +139,7 @@ class _personal_proyectosState extends State<personal_proyectos> {
                     color: rojo,
                     child: IconButton(
                         onPressed: () {
-                         _selectperson.add(Asignados(
-                              _emailusuario, _usuario ));
+                          _selectperson.add(Asignados(_emailusuario, _usuario));
                           setState(() {});
                         },
                         icon: Icon(
@@ -141,53 +150,131 @@ class _personal_proyectosState extends State<personal_proyectos> {
                 )
               ],
             ),
-
-             Text('Lista de personal asigando',style: GoogleFonts.sulphurPoint(
-                            textStyle: TextStyle(color: azulp),
-                          )),
-        Flexible(
-            flex: 8,
-            child: Container(
-               
-                child: ListView.builder(
-                    itemCount: _selectperson.length,
-                    itemBuilder: (BuildContext context, int index) {
-                    
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Card(
-                          elevation: 10,
-                          child: ListTile(
-                            leading: CircleAvatar(
-                                        backgroundImage: AssetImage(
-                                          "assets/images/profile.png",
+            Text('Lista de personal asigando',
+                style: GoogleFonts.sulphurPoint(
+                  textStyle: TextStyle(color: azulp),
+                )),
+            Flexible(
+                flex: 8,
+                child: Container(
+                    child: ListView.builder(
+                        itemCount: _selectperson.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Card(
+                              elevation: 10,
+                              child: Row(
+                                children: [
+                                  Flexible(
+                                    child: ListTile(
+                                        leading: CircleAvatar(
+                                          backgroundImage: AssetImage(
+                                            "assets/images/profile.png",
+                                          ),
                                         ),
-                                      ),
-                              trailing: IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                           _selectperson.removeAt(index);
-                                        });
-                                      },
-                                      icon: Icon(
-                                        Icons.delete,
-                                        color: rojo,
-                                      )),
-                            
-                              title: Text(_selectperson[index].responsable.toString(),
-                                  style: GoogleFonts.sulphurPoint(
-                                      textStyle: TextStyle(color: azulp)))),
-                        ),
-                      );
-                    }))),
+                                        title: Text(
+                                            _selectperson[index]
+                                                .responsable
+                                                .toString(),
+                                            style: GoogleFonts.sulphurPoint(
+                                                textStyle:
+                                                    TextStyle(color: azulp)))),
+                                  ),
+                                  Card(
+                                    color: azuls,
+                                    child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: IconButton(
+                                          onPressed: () {},
+                                          icon: Icon(
+                                            Icons.punch_clock,
+                                            color: blanco,
+                                          ),
+                                        )),
+                                  ),
+                                  Card(
+                                    color: rojo,
+                                    child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: IconButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                _selectperson.removeAt(index);
+                                              });
+                                            },
+                                            icon: Icon(
+                                              Icons.delete,
+                                              color: blanco,
+                                            ))),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }))),
+            Flexible(
+                flex: 8,
+                child: Container(
+                    child: ListView.builder(
+                        itemCount: _selectperson.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Card(
+                              elevation: 10,
+                              child: Row(
+                                children: [
+                                  Flexible(
+                                    child: ListTile(
+                                        leading: CircleAvatar(
+                                          backgroundImage: AssetImage(
+                                            "assets/images/profile.png",
+                                          ),
+                                        ),
+                                        title: Text(
+                                            _selectperson[index]
+                                                .responsable
+                                                .toString(),
+                                            style: GoogleFonts.sulphurPoint(
+                                                textStyle:
+                                                    TextStyle(color: azulp)))),
+                                  ),
+                                  Card(
+                                    color: rojo,
+                                    child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: IconButton(
+                                          onPressed: () {},
+                                          icon: Icon(
+                                            Icons.arrow_forward_ios_rounded,
+                                            color: blanco,
+                                          ),
+                                        )),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }))),
           ],
         ),
       ),
-     
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: azuls,
+      //   onPressed: () {
+      //     // Navigator.push(context,
+      //     //     MaterialPageRoute(builder: (context) => alta_productos()));
+      //   },
+      //   child: Icon(
+      //     Icons.punch_clock,
+      //     color: blanco,
+      //   ),
+      // ),
     );
   }
 
-   Future<List<usuariosmodel>> listaclientes() async {
+  Future<List<usuariosmodel>> listaclientes() async {
     //print('======$notmes======');
     var data = {
       'tipo': 'lista',
